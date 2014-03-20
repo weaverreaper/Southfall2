@@ -10,10 +10,52 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\aiLogic.cpp" />
+    <ClCompile Include="source\audio.cpp" />
+    <ClCompile Include="source\Box.cpp" />
+    <ClCompile Include="source\Camera.cpp" />
+    <ClCompile Include="source\Southfall.cpp" />
+    <ClCompile Include="source\d3dApp.cpp" />
+    <ClCompile Include="source\GameTimer.cpp" />
+    <ClCompile Include="source\GeoObject.cpp" />
+    <ClCompile Include="source\input.cpp" />
+    <ClCompile Include="source\Line.cpp" />
+    <ClCompile Include="source\Origin.cpp" />
+    <ClCompile Include="source\Pyramid.cpp" />
+    <ClCompile Include="source\Square.cpp" />
+    <ClCompile Include="source\textDX.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\color.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\aiLogic.h" />
+    <ClInclude Include="source\audio.h" />
+    <ClInclude Include="source\Box.h" />
+    <ClInclude Include="source\Camera.h" />
+    <ClInclude Include="source\constants.h" />
+    <ClInclude Include="source\d3dApp.h" />
+    <ClInclude Include="source\d3dUtil.h" />
+    <ClInclude Include="source\enemy.h" />
+    <ClInclude Include="source\gameError.h" />
+    <ClInclude Include="source\GameTimer.h" />
+    <ClInclude Include="source\Geometry.h" />
+    <ClInclude Include="source\GeoObject.h" />
+    <ClInclude Include="source\input.h" />
+    <ClInclude Include="source\Line.h" />
+    <ClInclude Include="source\Origin.h" />
+    <ClInclude Include="source\Pyramid.h" />
+    <ClInclude Include="source\Square.h" />
+    <ClInclude Include="source\textDX.h" />
+    <ClInclude Include="source\Vertex.h" />
+    <ClInclude Include="source\Wave.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EFB7FFF1-3E24-4A4E-B50A-5E90B88EFD20}</ProjectGuid>
     <RootNamespace>InitDirect3D</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>Southfall3D</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -85,46 +127,6 @@
       <AdditionalDependencies>d3d10.lib;d3dx10d.lib;dxerr.lib;dxguid.lib;d3d10_1.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="aiLogic.cpp" />
-    <ClCompile Include="audio.cpp" />
-    <ClCompile Include="Box.cpp" />
-    <ClCompile Include="Colored Cube App.cpp" />
-    <ClCompile Include="d3dApp.cpp" />
-    <ClCompile Include="GameTimer.cpp" />
-    <ClCompile Include="GeoObject.cpp" />
-    <ClCompile Include="input.cpp" />
-    <ClCompile Include="Line.cpp" />
-    <ClCompile Include="Origin.cpp" />
-    <ClCompile Include="Pyramid.cpp" />
-    <ClCompile Include="Square.cpp" />
-    <ClCompile Include="textDX.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Common\GameTimer.h" />
-    <ClInclude Include="aiLogic.h" />
-    <ClInclude Include="audio.h" />
-    <ClInclude Include="Box.h" />
-    <ClInclude Include="constants.h" />
-    <ClInclude Include="d3dApp.h" />
-    <ClInclude Include="d3dUtil.h" />
-    <ClInclude Include="enemy.h" />
-    <ClInclude Include="gameError.h" />
-    <ClInclude Include="Geometry.h" />
-    <ClInclude Include="GeoObject.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="Line.h" />
-    <ClInclude Include="Origin.h" />
-    <ClInclude Include="Pyramid.h" />
-    <ClInclude Include="Square.h" />
-    <ClInclude Include="textDX.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="Wave.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="color.fx" />
-    <None Include="toDoList.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

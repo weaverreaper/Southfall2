@@ -8,7 +8,6 @@
 //
 //=============================================================================
 
-//#include "C:\Users\weaverem1\Dropbox\S14\Games2\PartII\Common\d3dApp.h"
 #include "d3dApp.h"
 #include "Box.h"
 #include "Line.h"
@@ -23,17 +22,17 @@
 #include "enemy.h"
 #include <sstream>
 #include "Wave.h"
-
+#include "Camera.h"
 
 #include "aiLogic.h"
 
 const static float delta = .000001f;
 
-class ColoredCubeApp : public D3DApp
+class Southfall : public D3DApp
 {
 public:
-	ColoredCubeApp(HINSTANCE hInstance);
-	~ColoredCubeApp();
+	Southfall(HINSTANCE hInstance);
+	~Southfall();
 
 	void initApp();
 	void onResize();
@@ -88,6 +87,8 @@ private:
 	D3DXMATRIX mProj;
 	D3DXMATRIX mWVP;
 
+	Camera camera;
+
 	float mTheta;
 	float mPhi;
 
@@ -103,14 +104,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 #endif
 
 
-	ColoredCubeApp theApp(hInstance);
+	Southfall theApp(hInstance);
 	
 	theApp.initApp();
 
 	return theApp.run();
 }
 
-ColoredCubeApp::ColoredCubeApp(HINSTANCE hInstance)
+Southfall::Southfall(HINSTANCE hInstance)
 : D3DApp(hInstance), mFX(0), mTech(0), mVertexLayout(0),
   mfxWVPVar(0), mTheta(0.0f), mPhi(PI*0.25f), lastFrameTime(0), gameState(0), hiveMind(18, 8, 0, 4, 17, 4)
 {
@@ -131,7 +132,7 @@ ColoredCubeApp::ColoredCubeApp(HINSTANCE hInstance)
 	mBox = Box(D3DXCOLOR(.3,.3,.3,1),D3DXCOLOR(.5,.3,.3,1),D3DXCOLOR(.3,.3,.5,1),D3DXCOLOR(.5,.3,.5,1));
 }
 
-ColoredCubeApp::~ColoredCubeApp()
+Southfall::~Southfall()
 {
 	for(int i = 0; i < LENGTH; ++i)
 		for(int j = 0; j < HEIGHT; ++j)
@@ -148,7 +149,7 @@ ColoredCubeApp::~ColoredCubeApp()
 	ReleaseCOM(mVertexLayout);
 }
 
-void ColoredCubeApp::initApp()
+void Southfall::initApp()
 {
 	D3DApp::initApp();
 	
@@ -157,6 +158,8 @@ void ColoredCubeApp::initApp()
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
 	/////////////////////////
+
+	camera.init(&input);
 
 
 	buildFX();
@@ -254,7 +257,7 @@ void ColoredCubeApp::initApp()
 	//go3.world = temp;
 }
 
-void ColoredCubeApp::onResize()
+void Southfall::onResize()
 {
 	D3DApp::onResize();
 
@@ -262,7 +265,7 @@ void ColoredCubeApp::onResize()
 	D3DXMatrixPerspectiveFovLH(&mProj, 0.25f*PI, aspect, 1.0f, 1000.0f);
 }
 
-void ColoredCubeApp::updateScene(float dt)
+void Southfall::updateScene(float dt)
 {
 	//dt *= 5;
 	D3DApp::updateScene(dt);
@@ -275,17 +278,21 @@ void ColoredCubeApp::updateScene(float dt)
 	Matrix temp;
 	int w1,w2;
 	bool done = false;
+	camera.update(dt);
+
+
 	switch (gameState)
 	{
 	case 0:
 		if(input.wasKeyPressed(' '))
 		{
-			audio.playCue(DISCO);
+			//audio.playCue(DISCO);
 			gameState = 2;
 		}
 
 		break;
 	case 1:
+		
 		if(enemiesDone >= MAXENEMIES*currentWave)
 		{
 			if(currentWave == 15)
@@ -375,41 +382,36 @@ void ColoredCubeApp::updateScene(float dt)
 		}
 
 
-		if(GetAsyncKeyState('A') & 0x8000)
-		{
-			mTheta -= 2.0f*dt;
-		}
-		if(GetAsyncKeyState('D') & 0x8000)
-		{
-			mTheta += 2.0f*dt;
-		}
-		if(GetAsyncKeyState('W') & 0x8000)	
-		{
-			mPhi -= 2.0f*dt;
-		}
-		if(GetAsyncKeyState('S') & 0x8000)	
-		{
-			mPhi += 2.0f*dt;
-		}
+		//if(GetAsyncKeyState('A') & 0x8000)
+		//{
+		//	mTheta -= 2.0f*dt;
+		//}
+		//if(GetAsyncKeyState('D') & 0x8000)
+		//{
+		//	mTheta += 2.0f*dt;
+		//}
+		//if(GetAsyncKeyState('W') & 0x8000)	
+		//{
+		//	mPhi -= 2.0f*dt;
+		//}
+		//if(GetAsyncKeyState('S') & 0x8000)	
+		//{
+		//	mPhi += 2.0f*dt;
+		//}
 
-		// Restrict the angle mPhi.
-		if( mPhi < 0.1f )	mPhi = 0.1f;
-		if( mPhi > PI-0.1f)	mPhi = PI-0.1f;
+		//// Restrict the angle mPhi.
+		//if( mPhi < 0.1f )	mPhi = 0.1f;
+		//if( mPhi > PI-0.1f)	mPhi = PI-0.1f;
 
-		//if( mPhi < 0 )	{mPhi += 2*PI; mTheta += PI;}
-		//if( mPhi > PI)	{mPhi -= 2*PI; mTheta += PI;}
+		////if( mPhi < 0 )	{mPhi += 2*PI; mTheta += PI;}
+		////if( mPhi > PI)	{mPhi -= 2*PI; mTheta += PI;}
 
-		// Convert Spherical to Cartesian coordinates: mPhi measured from +y
-		// and mTheta measured counterclockwise from -z.
-		xf =  45.0f*sinf(mPhi)*sinf(mTheta) + 20;
-		yf =  45.0f*cosf(mPhi);
-		zf = -45.0f*sinf(mPhi)*cosf(mTheta) + 10;
-
-		// Build the view matrix.
-		pos = D3DXVECTOR3(xf, yf, zf);
-		target = D3DXVECTOR3(20.0f, 0.0f, 10.0f);
-		up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-		D3DXMatrixLookAtLH(&mView, &pos, &target, &up);
+		//// Convert Spherical to Cartesian coordinates: mPhi measured from +y
+		//// and mTheta measured counterclockwise from -z.
+		//xf =  45.0f*sinf(mPhi)*sinf(mTheta) + 20;
+		//yf =  45.0f*cosf(mPhi);
+		//zf = -45.0f*sinf(mPhi)*cosf(mTheta) + 10;
+	
 
 		if(input.wasKeyPressed(VK_LEFT) && selectObj.position.x > 3)
 		{
@@ -634,9 +636,15 @@ void ColoredCubeApp::updateScene(float dt)
 		break;
 	}
 	input.clearAll();
+
+	// Build the view matrix.
+	pos = D3DXVECTOR3(0.f, 10.f, -40.f);
+	target = camera.getTarget();
+	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH(&mView, &pos, &target, &up);
 }
 
-void ColoredCubeApp::drawScene()
+void Southfall::drawScene()
 {
        D3DApp::drawScene();
 
@@ -679,23 +687,8 @@ void ColoredCubeApp::drawScene()
                      enemies[i]->draw(&mWVP);
 
        selectObj.draw(&mWVP);
-       }
-       
-       //FOLLOWING CODE IS ABSTRACTED NOW
-       //mfxWVPVar->SetMatrix((float*)&mWVP);
-       /*
-    D3D10_TECHNIQUE_DESC techDesc;
-    mTech->GetDesc( &techDesc );
-    for(UINT p = 0; p < techDesc.Passes; ++p)
-    {
-        mTech->GetPassByIndex( p )->Apply(0);
-        
-              go1.draw(&mWVP);
-              go2.draw(&mWVP);
-              go3.draw(&mWVP);
-              
-    }
-       */
+       }     
+
 
        // We specify DT_NOCLIP, so we do not care about width/height of the rect.
        RECT R = {5, 5, 0, 0};
@@ -800,7 +793,7 @@ void ColoredCubeApp::drawScene()
        mSwapChain->Present(0, 0);
 }
 
-void ColoredCubeApp::buildFX()
+void Southfall::buildFX()
 {
 	DWORD shaderFlags = D3D10_SHADER_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
@@ -810,7 +803,7 @@ void ColoredCubeApp::buildFX()
  
 	ID3D10Blob* compilationErrors = 0;
 	HRESULT hr = 0;
-	hr = D3DX10CreateEffectFromFile(L"color.fx", 0, 0, 
+	hr = D3DX10CreateEffectFromFile(L"source\\color.fx", 0, 0, 
 		"fx_4_0", shaderFlags, 0, md3dDevice, 0, 0, &mFX, &compilationErrors, 0);
 	if(FAILED(hr))
 	{
@@ -827,7 +820,7 @@ void ColoredCubeApp::buildFX()
 	mfxWVPVar = mFX->GetVariableByName("gWVP")->AsMatrix();
 }
 
-void ColoredCubeApp::buildVertexLayouts()
+void Southfall::buildVertexLayouts()
 {
 	// Create the vertex input layout.
 	D3D10_INPUT_ELEMENT_DESC vertexDesc[] =
@@ -843,7 +836,7 @@ void ColoredCubeApp::buildVertexLayouts()
 		PassDesc.IAInputSignatureSize, &mVertexLayout));
 }
 
-int ColoredCubeApp::cost(tower t)
+int Southfall::cost(tower t)
 {
 	int sum = t.r+t.b+t.g;
 	switch(sum)
