@@ -23,6 +23,7 @@
 #include <sstream>
 #include "Wave.h"
 #include "Camera.h"
+#include "Terrain.h"
 
 #include "aiLogic.h"
 
@@ -91,6 +92,9 @@ private:
 
 	float mTheta;
 	float mPhi;
+
+	Terrain terrain;
+	GeoObject terrainObj;
 
 	AIMind hiveMind;
 };
@@ -178,8 +182,13 @@ void Southfall::initApp()
 	RGpyramid.init(md3dDevice);
 	RBpyramid.init(md3dDevice);
 	GBpyramid.init(md3dDevice);
+	terrain.init(md3dDevice,3);
 	
 	D3DXMATRIX temp;
+
+	terrainObj.init(mTech, mfxWVPVar, &terrain);
+	Translate(&temp,0,-23,-20);
+	terrainObj.world = temp;
 
 	for(int i =0; i< 100; i++)
 	{
@@ -279,7 +288,8 @@ void Southfall::updateScene(float dt)
 	int w1,w2;
 	bool done = false;
 	camera.update(dt);
-
+	if(input.wasKeyPressed(VK_ESCAPE))
+		exit(0);
 
 	switch (gameState)
 	{
@@ -660,7 +670,7 @@ void Southfall::drawScene()
        
        mWVP = mView*mProj;
        //go1.draw(&mWVP);
-       //originObj.draw(&mWVP);
+       originObj.draw(&mWVP);
        //go3.draw(&mWVP);
        if(gameState == 1 || gameState == 2)
        {
@@ -671,7 +681,7 @@ void Southfall::drawScene()
                      for(int k = 0; k < WIDTH; ++k)
                      {
                            if(baseObj[i][j][k])
-                                  baseObj[i][j][k]->draw(&mWVP);
+                                  ;//baseObj[i][j][k]->draw(&mWVP);
                      }
               }
        }
@@ -688,7 +698,7 @@ void Southfall::drawScene()
 
        selectObj.draw(&mWVP);
        }     
-
+	   terrainObj.draw(&mWVP);
 
        // We specify DT_NOCLIP, so we do not care about width/height of the rect.
        RECT R = {5, 5, 0, 0};
