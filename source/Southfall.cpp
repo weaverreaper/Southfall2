@@ -638,10 +638,11 @@ void Southfall::updateScene(float dt)
 	input.clearAll();
 
 	// Build the view matrix.
-	pos = D3DXVECTOR3(0.f, 10.f, -40.f);
+	pos = camera.getPos();
 	target = camera.getTarget();
 	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	D3DXMatrixLookAtLH(&mView, &pos, &target, &up);
+	camera.set(&mView);
 }
 
 void Southfall::drawScene()
