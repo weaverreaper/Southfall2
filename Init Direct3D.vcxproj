@@ -51,7 +51,6 @@
     <ClInclude Include="source\Terrain.h" />
     <ClInclude Include="source\textDX.h" />
     <ClInclude Include="source\Vertex.h" />
-    <ClInclude Include="source\Wave.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EFB7FFF1-3E24-4A4E-B50A-5E90B88EFD20}</ProjectGuid>

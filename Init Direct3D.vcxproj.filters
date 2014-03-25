@@ -116,9 +116,6 @@
     <ClInclude Include="source\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Wave.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
