@@ -23,6 +23,7 @@ public:
 	void setVert1(Vertex v){vertices[0]=v;}
 	void setVert2(Vertex v){vertices[0]=v;}
 	void setColor(D3DXCOLOR c) {return;}
+	
 private:
 	static const int x = 10, z = 10;
 	static const DWORD mNumVertices = (x-1)*(z-1);

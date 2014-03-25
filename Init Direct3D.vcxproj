@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\aiLogic.cpp" />
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
@@ -29,24 +28,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="source\color.fx" />
+    <None Include="source\lighthelper.fx" />
+    <None Include="source\lighting.fx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\aiLogic.h" />
     <ClInclude Include="source\audio.h" />
     <ClInclude Include="source\Box.h" />
     <ClInclude Include="source\Camera.h" />
     <ClInclude Include="source\constants.h" />
     <ClInclude Include="source\d3dApp.h" />
     <ClInclude Include="source\d3dUtil.h" />
-    <ClInclude Include="source\enemy.h" />
     <ClInclude Include="source\gameError.h" />
     <ClInclude Include="source\GameTimer.h" />
     <ClInclude Include="source\Geometry.h" />
     <ClInclude Include="source\GeoObject.h" />
     <ClInclude Include="source\input.h" />
+    <ClInclude Include="source\Light.h" />
     <ClInclude Include="source\Line.h" />
     <ClInclude Include="source\Origin.h" />
     <ClInclude Include="source\Pyramid.h" />
+    <ClInclude Include="source\Southfall.h" />
     <ClInclude Include="source\Square.h" />
     <ClInclude Include="source\Terrain.h" />
     <ClInclude Include="source\textDX.h" />

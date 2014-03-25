@@ -1,17 +1,18 @@
-
-
 #ifndef VERTEX_H
 #define VERTEX_H
 
-//#include "C:\Users\weaverem1\Dropbox\S14\Games2\PartII\Common\d3dUtil.h"
 #include "d3dUtil.h"
+#include "constants.h"
 
 struct Vertex
 {
-	Vertex(D3DXVECTOR3 pos = D3DXVECTOR3(0,0,0),	D3DXCOLOR color = BLACK):pos(pos),color(color){}
+	Vertex(Vector3 pos = ZERO, Color col = BLACK):
+		pos(pos), normal(Vector3(0,1,0)), diffuse(col), spec(Vector3(0,0,0)){}
 	
-	D3DXVECTOR3 pos;
-	D3DXCOLOR   color;
+	Vector3 pos;
+	Vector3 normal;
+	Color   diffuse;
+	Color   spec; // (r, g, b, specPower);
 };
  
 #endif // VERTEX_H

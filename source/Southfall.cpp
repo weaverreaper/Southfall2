@@ -8,71 +8,10 @@
 //
 //=============================================================================
 
-#include "d3dApp.h"
-#include "Box.h"
-#include "Line.h"
-#include "Origin.h"
-#include "Pyramid.h"
-#include "Geometry.h"
-#include "GeoObject.h"
-#include "textDX.h"
-#include "audio.h"
-#include "input.h"
-#include "Square.h"
-#include "enemy.h"
-#include <sstream>
-#include "Camera.h"
-#include "Terrain.h"
 
-#include "aiLogic.h"
+#include "Southfall.h"
 
 const static float delta = .000001f;
-
-class Southfall : public D3DApp
-{
-public:
-	Southfall(HINSTANCE hInstance);
-	~Southfall();
-
-	void initApp();
-	void onResize();
-	void updateScene(float dt);
-	void drawScene(); 
-
-private:
-	void buildFX();
-	void buildVertexLayouts();
- 
-private:
-	
-	//This tells weather the game is at menu(state 0), playing(state 1), playing and paused(state 3)
-	int gameState;
-	float lastFrameTime;
-	float dtime;
-
-	int score;
-	Origin origin;
-	GeoObject originObj;
-	TextDX theText;
-	
-	ID3D10Effect* mFX;
-	ID3D10EffectTechnique* mTech;
-	ID3D10InputLayout* mVertexLayout;
-	ID3D10EffectMatrixVariable* mfxWVPVar;
-
-	D3DXMATRIX mView;
-	D3DXMATRIX mProj;
-	D3DXMATRIX mWVP;
-
-	Camera camera;
-
-	float mTheta;
-	float mPhi;
-
-	Terrain terrain;
-	GeoObject terrainObj,t1,t2,t3;
-
-};
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 				   PSTR cmdLine, int showCmd)
@@ -111,15 +50,14 @@ Southfall::~Southfall()
 
 void Southfall::initApp()
 {
-	D3DApp::initApp();
-	
-	///////////Font /////////////////
+	D3DApp::initApp();	
+
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
-	/////////////////////////
-
 	camera.init(&input);
+
+	initLights();
 
 	buildFX();
 	buildVertexLayouts();
@@ -149,6 +87,14 @@ void Southfall::initApp()
 	
 	score = 0;
 	
+}
+
+void Southfall::initLights()
+{
+	light.dir		= Vector3(1,1,1);
+	light.ambient	= Color(0.0f, 0.0f, 1.0f, 1.0f);
+	light.diffuse	= Color(0.0f, 1.0f, 0.0f, 1.0f);
+	light.specular	= Color(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void Southfall::onResize()
@@ -219,6 +165,10 @@ void Southfall::drawScene()
 	float blendFactors[] = {0.0f, 0.0f, 0.0f, 0.0f};
 	md3dDevice->OMSetBlendState(0, blendFactors, 0xffffffff);
 	md3dDevice->IASetInputLayout(mVertexLayout);
+
+	//lighting
+	mfxEyePosVar->SetRawValue(&camera.getPos(), 0, sizeof(D3DXVECTOR3));
+	mfxLightVar->SetRawValue(&light, 0, sizeof(Light));	
        
 	mWVP = mView*mProj;
 	originObj.draw(&mWVP);
@@ -263,6 +213,9 @@ void Southfall::buildFX()
 	mTech = mFX->GetTechniqueByName("ColorTech");
 	
 	mfxWVPVar = mFX->GetVariableByName("gWVP")->AsMatrix();
+	mfxWorldVar  = mFX->GetVariableByName("gWorld")->AsMatrix();
+	mfxEyePosVar = mFX->GetVariableByName("gEyePosW");
+	mfxLightVar  = mFX->GetVariableByName("gLight");
 }
 
 void Southfall::buildVertexLayouts()
@@ -271,13 +224,15 @@ void Southfall::buildVertexLayouts()
 	D3D10_INPUT_ELEMENT_DESC vertexDesc[] =
 	{
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0},
-		{"COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D10_INPUT_PER_VERTEX_DATA, 0}
+		{"NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D10_INPUT_PER_VERTEX_DATA, 0},
+		{"DIFFUSE",  0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D10_INPUT_PER_VERTEX_DATA, 0},
+		{"SPECULAR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 40, D3D10_INPUT_PER_VERTEX_DATA, 0}
 	};
 
 	// Create the input layout
     D3D10_PASS_DESC PassDesc;
     mTech->GetPassByIndex(0)->GetDesc(&PassDesc);
-    HR(md3dDevice->CreateInputLayout(vertexDesc, 2, PassDesc.pIAInputSignature,
+    HR(md3dDevice->CreateInputLayout(vertexDesc, 4, PassDesc.pIAInputSignature,
 		PassDesc.IAInputSignatureSize, &mVertexLayout));
 }
 

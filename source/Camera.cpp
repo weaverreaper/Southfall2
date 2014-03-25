@@ -10,15 +10,15 @@ void Camera::update(float dt)
 		dir.y = 0;
 		D3DXVec3Normalize(&dir, &dir);		
 		
-		if (input->isKeyDown('W')){ position += 10*dt*dir; target += 10*dt*dir; }	
-		if (input->isKeyDown('S')){ position -= 10*dt*dir; target -= 10*dt*dir; }
+		if (input->isKeyDown('W')){ position += 50*dt*dir; target += 10*dt*dir; }	
+		if (input->isKeyDown('S')){ position -= 50*dt*dir; target -= 10*dt*dir; }
 		if (input->isKeyDown('A'))
 		{
 			Matrix rot;
 			RotateY(&rot, ToRadian(-90));
 			D3DXVECTOR4 out;
 			D3DXVec3Transform(&out, &dir, &rot);
-			position += Vector3(out);
+			position += 50*dt*Vector3(out);
 			target += Vector3(out);
 			
 		}
@@ -28,7 +28,7 @@ void Camera::update(float dt)
 			RotateY(&rot, ToRadian(90));
 			D3DXVECTOR4 out;
 			D3DXVec3Transform(&out, &dir, &rot);
-			position += Vector3(out);
+			position += 50*dt*Vector3(out);
 			target += Vector3(out);
 
 		}
@@ -42,7 +42,7 @@ void Camera::update(float dt)
 	//ShowCursor(false);
 
 //Restrict angles	
-	if( mPhi > PI-.001) mPhi = PI-.001; 
+	if(mPhi > PI-.001) mPhi = PI-.001; 
 	if(mPhi < 0.001) mPhi = .001;
 
 	if (mTheta < 0)  mTheta += 2*PI;	
