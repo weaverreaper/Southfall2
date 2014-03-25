@@ -3,14 +3,15 @@
 
 void Camera::update(float dt)
 {
+
 	if(input->anyKeyPressed())
 	{
 		Vector3 dir = target - position;
 		dir.y = 0;
 		D3DXVec3Normalize(&dir, &dir);		
 		
-		if (input->isKeyDown('W')){ position += dir; target += dir; }	
-		if (input->isKeyDown('S')){ position -= dir; target -= dir; }
+		if (input->isKeyDown('W')){ position += 10*dt*dir; target += 10*dt*dir; }	
+		if (input->isKeyDown('S')){ position -= 10*dt*dir; target -= 10*dt*dir; }
 		if (input->isKeyDown('A'))
 		{
 			Matrix rot;
@@ -33,19 +34,23 @@ void Camera::update(float dt)
 		}
 	}
 
-	//Restrict angles	
-	if( mPhi > PI) mPhi = PI; 
-	if (mTheta < 0)  mTheta = 2*PI;	
-	if(mPhi < 0) mPhi = 0;
+	
 
 	mPhi += input->getMouseRawY()*dt*sensitivity;
 	mTheta -= input->getMouseRawX()*dt*sensitivity;	
 	//SetCursorPos(GAME_WIDTH/2,GAME_HEIGHT/2);
 	//ShowCursor(false);
 
- 	float x =  lookRadius * sinf(mPhi)*sinf(mTheta);
-	float y =  lookRadius * cosf(mPhi);
-	float z = -lookRadius * sinf(mPhi)*cosf(mTheta);
+//Restrict angles	
+	if( mPhi > PI-.001) mPhi = PI-.001; 
+	if(mPhi < 0.001) mPhi = .001;
+
+	if (mTheta < 0)  mTheta += 2*PI;	
+	else if (mTheta > 2*PI)  mTheta -= 2*PI;	
+	
+ 	float x =  lookRadius * sinf(mPhi)*sinf(mTheta) + position.x;
+	float y =  lookRadius * cosf(mPhi) + position.y;
+	float z = -lookRadius * sinf(mPhi)*cosf(mTheta) + position.z;
 
 	target = Vector3(x,y,z);
 }

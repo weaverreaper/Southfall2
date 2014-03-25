@@ -70,7 +70,7 @@ private:
 	float mPhi;
 
 	Terrain terrain;
-	GeoObject terrainObj;
+	GeoObject terrainObj,t1,t2,t3;
 
 };
 
@@ -132,6 +132,18 @@ void Southfall::initApp()
 	terrainObj.init(mTech, mfxWVPVar, &terrain);
 	Translate(&temp,0,-23,-20);
 	terrainObj.world = temp;
+
+	t1.init(mTech, mfxWVPVar, &terrain);
+	Translate(&temp,0,-23,-50);
+	t1.world = temp;
+
+	t2.init(mTech, mfxWVPVar, &terrain);
+	Translate(&temp,-30,-23,-50);
+	t2.world = temp;
+
+	t3.init(mTech, mfxWVPVar, &terrain);
+	Translate(&temp,0-30,-23,-20);
+	t3.world = temp;
 	
 	originObj.init(mTech, mfxWVPVar, &origin);
 	
@@ -185,13 +197,14 @@ void Southfall::updateScene(float dt)
 		
 		break;
 	}
-	input.clearAll();
+	//input.clearAll();
 
 	// Build the view matrix.
 	pos = camera.getPos();
 	target = camera.getTarget();
 	up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	D3DXMatrixLookAtLH(&mView, &pos, &target, &up);
+
 	camera.set(&mView);
 }
 
@@ -210,6 +223,9 @@ void Southfall::drawScene()
 	mWVP = mView*mProj;
 	originObj.draw(&mWVP);
 	terrainObj.draw(&mWVP);
+	t1.draw(&mWVP);
+	t2.draw(&mWVP);
+	t3.draw(&mWVP);
 
 	// We specify DT_NOCLIP, so we do not care about width/height of the rect.
 	RECT R = {5, 5, 0, 0};

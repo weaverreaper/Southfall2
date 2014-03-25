@@ -131,7 +131,7 @@ void D3DApp::initApp()
 	//--------------------------------------------------------------
 	
 	D3D10_RASTERIZER_DESC rasterizerState;
-	rasterizerState.CullMode = D3D10_CULL_NONE;
+	rasterizerState.CullMode = D3D10_CULL_FRONT;
 	rasterizerState.FillMode = D3D10_FILL_SOLID;
 	rasterizerState.FrontCounterClockwise = true;
     rasterizerState.DepthBias = false;

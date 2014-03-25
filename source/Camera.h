@@ -24,7 +24,7 @@ private:
 	float mPhi, mTheta;
 	float sensitivity;
 	float lookRadius;
-
+	
 	Vector3 position;
 	Vector3 target;
 	Vector3 up;
