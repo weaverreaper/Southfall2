@@ -1,23 +1,22 @@
 //=============================================================================
-// color.fx by Frank Luna (C) 2008 All Rights Reserved.
+// lighting.fx by Frank Luna (C) 2008 All Rights Reserved.
 //
-// Transforms and colors geometry.
+// Transforms and lights geometry.
 //=============================================================================
 
 #include "lighthelper.fx"
-
+ 
 cbuffer cbPerFrame
 {
 	Light gLight;
 	int gLightType; 
-	float3 gEyePosW;
-	
+	float3 gEyePosW;	
 };
 
 cbuffer cbPerObject
 {
 	float4x4 gWorld;
-	float4x4 gWVP; 
+	float4x4 gWVP;
 };
 
 struct VS_IN
@@ -54,18 +53,36 @@ VS_OUT VS(VS_IN vIn)
 	
 	return vOut;
 }
-
+ 
 float4 PS(VS_OUT pIn) : SV_Target
 {
 	// Interpolating normal can make it not be of unit length so normalize it.
-	pIn.normalW = normalize(pIn.normalW);  
-	SurfaceInfo v = {pIn.posW, pIn.normalW, pIn.diffuse, pIn.spec};
-
-	float3 litColor = ParallelLight(v, gLight, gEyePosW);
-	return float4(litColor, pIn.diffuse.a);
+    pIn.normalW = normalize(pIn.normalW);  
+   
+    SurfaceInfo v = {pIn.posW, pIn.normalW, pIn.diffuse, pIn.spec};
+    
+    float3 litColor;
+    if( gLightType == 0 ) // Parallel
+    {
+		litColor = ParallelLight(v, gLight, gEyePosW);
+    }
+    else if( gLightType == 1 ) // Point
+    {
+		litColor = PointLight(v, gLight, gEyePosW);
+	}
+	else if (gLightType == 2)// Spot
+	{
+		litColor = Spotlight(v, gLight, gEyePosW);
+	}
+	else
+	{
+		litColor = PointLight(v, gLight, gEyePosW);
+	}
+	   
+    return float4(litColor, pIn.diffuse.a);
 }
 
-technique10 ColorTech
+technique10 LightTech
 {
     pass P0
     {

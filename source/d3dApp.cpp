@@ -14,7 +14,7 @@ MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	static D3DApp* app = 0;
 
 	switch( msg )
-	{
+{	
 		case WM_CREATE:
 		{
 			// Get the 'this' pointer we passed to CreateWindow via the lpParam parameter.
@@ -53,12 +53,17 @@ D3DApp::D3DApp(HINSTANCE hInstance)
 	mMainWndCaption = L"D3D10 Application";
 	md3dDriverType  = D3D10_DRIVER_TYPE_HARDWARE;
 	mClearColor     = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f); //backcolor
-	mClientWidth    = 800;
-	mClientHeight   = 600;
+	mClientWidth    = GAME_WIDTH;
+	mClientHeight   = GAME_HEIGHT;
+
+	ShowCursor(false);
+
 }
 
 D3DApp::~D3DApp()
 {
+	mSwapChain->SetFullscreenState(FALSE, NULL);    // switch to windowed mode
+	
 	ReleaseCOM(mRenderTargetView);
 	ReleaseCOM(mDepthStencilView);
 	ReleaseCOM(mSwapChain);
@@ -413,7 +418,6 @@ LRESULT D3DApp::msgProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(mhMainWnd, msg, wParam, lParam);
 }
 
-
 void D3DApp::initMainWindow()
 {
 	WNDCLASS wc;
@@ -464,6 +468,7 @@ void D3DApp::initDirect3D()
 	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	// No multisampling.
 	sd.SampleDesc.Count   = 1;
@@ -472,7 +477,7 @@ void D3DApp::initDirect3D()
 	sd.BufferUsage  = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.BufferCount  = 1;
 	sd.OutputWindow = mhMainWnd;
-	sd.Windowed     = true;
+	sd.Windowed     = false;
 	sd.SwapEffect   = DXGI_SWAP_EFFECT_DISCARD;
 	sd.Flags        = 0;
 
