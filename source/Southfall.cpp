@@ -55,7 +55,13 @@ void Southfall::initApp()
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
+<<<<<<< HEAD
 	camera.init(&input, &mView);
+
+	initLights();
+=======
+	camera.init(&input);
+>>>>>>> 28612056ddcf453f08d19447851415d44155e737
 
 	initLights();
 

@@ -1,0 +1,65 @@
+﻿Build started 3/25/2014 4:05:53 PM.
+     1>Project "C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Init Direct3D.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\Southfall3D.unsuccessfulbuild".
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt source\Southfall.cpp
+         Southfall.cpp
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(9): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(9): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(9): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(48): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(122): warning C4101: 'y' : unreferenced local variable
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(122): warning C4101: 'x' : unreferenced local variable
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(121): warning C4101: 'yf' : unreferenced local variable
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(124): warning C4101: 'w1' : unreferenced local variable
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(121): warning C4101: 'xf' : unreferenced local variable
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(122): warning C4101: 'z' : unreferenced local variable
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(124): warning C4101: 'w2' : unreferenced local variable
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(121): warning C4101: 'zf' : unreferenced local variable
+       ManifestResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Southfall3D.exe.embed.manifest.res" Debug\Southfall3D_manifest.rc 
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Debug\Southfall3D.exe" /INCREMENTAL /NOLOGO d3d10.lib d3dx10d.lib dxerr.lib dxguid.lib d3d10_1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Southfall3D.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Debug\Southfall3D.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Debug\Southfall3D.lib" /MACHINE:X86 Debug\Southfall3D.exe.embed.manifest.res
+         Debug\audio.obj
+         Debug\Box.obj
+         Debug\Camera.obj
+         Debug\Southfall.obj
+         Debug\d3dApp.obj
+         Debug\GameTimer.obj
+         Debug\GeoObject.obj
+         Debug\input.obj
+         Debug\Line.obj
+         Debug\Origin.obj
+         Debug\Pyramid.obj
+         Debug\Square.obj
+         Debug\Terrain.obj
+         Debug\textDX.obj
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Southfall3D.exe.embed.manifest" /manifest Debug\Southfall3D.exe.intermediate.manifest
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Southfall3D.exe.embed.manifest.res" Debug\Southfall3D_manifest.rc 
+       LinkEmbedManifest:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Debug\Southfall3D.exe" /INCREMENTAL /NOLOGO d3d10.lib d3dx10d.lib dxerr.lib dxguid.lib d3d10_1.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Southfall3D.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Debug\Southfall3D.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Debug\Southfall3D.lib" /MACHINE:X86 Debug\Southfall3D.exe.embed.manifest.res
+         Debug\audio.obj
+         Debug\Box.obj
+         Debug\Camera.obj
+         Debug\Southfall.obj
+         Debug\d3dApp.obj
+         Debug\GameTimer.obj
+         Debug\GeoObject.obj
+         Debug\input.obj
+         Debug\Line.obj
+         Debug\Origin.obj
+         Debug\Pyramid.obj
+         Debug\Square.obj
+         Debug\Terrain.obj
+         Debug\textDX.obj
+         Init Direct3D.vcxproj -> C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Debug\Southfall3D.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Southfall3D.unsuccessfulbuild".
+         Touching "Debug\Southfall3D.lastbuildstate".
+     1>Done Building Project "C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Init Direct3D.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.73
