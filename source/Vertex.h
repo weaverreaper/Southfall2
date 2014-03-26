@@ -7,7 +7,7 @@
 struct Vertex
 {
 	Vertex(Vector3 pos = ZERO, Color col = BLACK):
-		pos(pos), normal(Vector3(0,1,0)), diffuse(col), spec(col){}
+		pos(pos), normal(Vector3(0,1,0)), diffuse(col), spec(Color(1,1,1,64)){}
 
 	//to allow for simple default values
 	Vertex(float num) 
