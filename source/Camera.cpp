@@ -1,9 +1,24 @@
 #include "Camera.h"
-#include <math.h>
+
+void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, float sens)
+{
+	position = pos;
+	target = tar;
+	up = Vector3(0.0f, 1.0f, 0.0f);
+	sensitivity = sens;
+	input = i; 
+	mView = view;
+			
+	Vector3 temp(target - position);
+	lookRadius = D3DXVec3Length(&temp);
+
+	//initialize angles based on target position (convert Cartesian to Spherical)
+	mPhi = acos(temp.y / lookRadius);
+	mTheta = asin(temp.x/(lookRadius*sin(mPhi)));			
+}
 
 void Camera::update(float dt)
 {
-
 	if(input->anyKeyPressed())
 	{
 		Vector3 dir = target - position;
@@ -19,8 +34,7 @@ void Camera::update(float dt)
 			D3DXVECTOR4 out;
 			D3DXVec3Transform(&out, &dir, &rot);
 			position += 50*dt*Vector3(out);
-			target += Vector3(out);
-			
+			target += Vector3(out);			
 		}
 		if (input->isKeyDown('D'))
 		{
@@ -30,18 +44,13 @@ void Camera::update(float dt)
 			D3DXVec3Transform(&out, &dir, &rot);
 			position += 50*dt*Vector3(out);
 			target += Vector3(out);
-
 		}
-	}
-
-	
+	}	
 
 	mPhi += input->getMouseRawY()*dt*sensitivity;
 	mTheta -= input->getMouseRawX()*dt*sensitivity;	
-	//SetCursorPos(GAME_WIDTH/2,GAME_HEIGHT/2);
-	//ShowCursor(false);
 
-//Restrict angles	
+	//Restrict angles	
 	if(mPhi > PI-.001) mPhi = PI-.001; 
 	if(mPhi < 0.001) mPhi = .001;
 

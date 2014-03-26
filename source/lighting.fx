@@ -62,8 +62,7 @@ float4 PS(VS_OUT pIn) : SV_Target
     SurfaceInfo v = {pIn.posW, pIn.normalW, pIn.diffuse, pIn.spec};
   
 	float3 litColor  =	ParallelLight(v, gLight, gEyePosW);
-
-	   
+			   
     return float4(litColor, pIn.diffuse.a);
 }
 

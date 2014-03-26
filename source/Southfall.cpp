@@ -56,7 +56,7 @@ void Southfall::initApp()
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
 	lights.init(mfxLightVar);
-	camera.init(&input, &mView);
+	camera.init(Vector3(100,0,-10), Vector3(0,0,0), &input, &mView);
 	//action.init() <- haha
 
 	buildFX();
