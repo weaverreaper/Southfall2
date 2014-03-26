@@ -17,8 +17,7 @@ Terrain::Terrain()
 				vertices[i*(x-1)+j] = Vertex(D3DXVECTOR3(i,grid[i][j],j),D3DXCOLOR(4*float(i%2)/x,.4,4*float(j%2)/z,1));
 		}
 	}
-	ifs.close();
-        
+	ifs.close();        
 }
 
 Terrain::Terrain(D3DXCOLOR col)

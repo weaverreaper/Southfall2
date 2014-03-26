@@ -16,7 +16,7 @@
 #include <sstream>
 #include "Camera.h"
 #include "Terrain.h"
-#include "Light.h"
+#include "Lighting.h"
 
 class Southfall : public D3DApp
 {
@@ -32,7 +32,6 @@ public:
 private:
 	void buildFX();
 	void buildVertexLayouts();
-	void initLights();
 	
 	//This tells whether the game is at menu(state 0), playing(state 1), playing and paused(state 3)
 	int gameState;
@@ -55,7 +54,7 @@ private:
 
 	Camera camera;
 
-	Light light;
+	LightingManager lights;
 
 	float mTheta;
 	float mPhi;

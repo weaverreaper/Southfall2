@@ -2,7 +2,6 @@
 #ifndef GEOOBJECT_H
 #define GEOOBJECT_H
 
-//#include "C:\Users\weaverem1\Dropbox\S14\Games2\PartII\Common\d3dUtil.h"
 #include "d3dUtil.h"
 #include "Geometry.h"
 #include "constants.h"
@@ -14,32 +13,41 @@ public:
 	GeoObject();
 	~GeoObject();
 
-	virtual void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, Geometry* g);
-	virtual void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, Geometry* g, Vertex v1, Vertex v2);
+	virtual void init(	ID3D10EffectTechnique* t, 
+						ID3D10EffectMatrixVariable* f,
+						ID3D10EffectMatrixVariable* w,
+						Geometry* g, Vertex v1=0, Vertex v2=0);
+
 	virtual void draw(D3DXMATRIX* vp);
 	
 	virtual void update(float dt);
 
-	void setPosition (Vector3 pos) {position = pos;}
-	Vector3 getPosition() {return position;}
-	void setVelocity (Vector3 vel) {velocity = vel;}
-	Vector3 getVelocity() {return velocity;}
-	void setSpeed(float s) {speed = s;}
-	float getSpeed() {return speed;}
-	void setRadius(float r) {radius = r; radiusSquared = (scale*r)*(scale*r);}
-	float getRadiusSquare() {return radiusSquared;}
-	float getRadius() {return radius;}
-	Matrix getWorldMatrix() {return world;}
-	void setScale(float s) {scale = s; radiusSquared = (s*radius)*(s*radius);}
-	float getScale() {return scale;}
-	void setActive() {active = true;}
-	void setInActive() {active = false;}
-	bool getActiveState() {return active;}
-	void setMTech(ID3D10EffectTechnique* m){ tech = m;}
-	bool collided(GeoObject *gameObject);
-	void setVert1(Vertex v){geom->setVert1(v);}
-	void setVert2(Vertex v){geom->setVert2(v);}
-	Vertex getPoint(){return geom->getPoint();}
+	//Setters
+	void setPosition (Vector3 pos)			{position = pos;}
+	void setVelocity (Vector3 vel)			{velocity = vel;}
+	void setSpeed(float s)					{speed = s;}
+	void setRadius(float r)					{radius = r; radiusSquared = (scale*r)*(scale*r);}
+	void setScale(float s)					{scale = s; radiusSquared = (s*radius)*(s*radius);}
+	void setActive()						{active = true;}
+	void setInActive()						{active = false;}
+	void setVert1(Vertex v)					{geom->setVert1(v);}
+	void setVert2(Vertex v)					{geom->setVert2(v);}
+	void setMTech(ID3D10EffectTechnique* m)	{ tech = m;}
+
+	//Getters
+	Vertex getPoint()						{return geom->getPoint();}
+	Vector3 getVelocity()					{return velocity;}	
+	Vector3 getPosition()					{return position;}	
+	Matrix getWorldMatrix()					{return world;}	
+	float getSpeed()						{return speed;}	
+	float getRadiusSquare()					{return radiusSquared;}
+	float getRadius()						{return radius;}
+	float getScale()						{return scale;}
+	bool getActiveState()					{return active;}
+
+	bool collided(GeoObject *gameObject);		
+
+protected:
 
 	Geometry* geom;
 	D3DXMATRIX world, wvp;
@@ -47,6 +55,7 @@ public:
 	//ID3D10Device* md3dDevice;
 	ID3D10EffectTechnique* tech;
 	ID3D10EffectMatrixVariable* fxMatrix;
+	ID3D10EffectMatrixVariable* fxWorld;
 
 	Vector3 position;
 	Vector3 velocity;

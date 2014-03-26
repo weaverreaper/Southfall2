@@ -55,15 +55,9 @@ void Southfall::initApp()
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
-<<<<<<< HEAD
+	lights.init(mfxLightVar);
 	camera.init(&input, &mView);
-
-	initLights();
-=======
-	camera.init(&input);
->>>>>>> 28612056ddcf453f08d19447851415d44155e737
-
-	initLights();
+	//action.init() <- haha
 
 	buildFX();
 	buildVertexLayouts();
@@ -73,35 +67,16 @@ void Southfall::initApp()
 	
 	D3DXMATRIX temp;
 
-	terrainObj.init(mTech, mfxWVPVar, &terrain);
-	Translate(&temp,0,-23,-20);
-	terrainObj.world = temp;
-
-	t1.init(mTech, mfxWVPVar, &terrain);
-	Translate(&temp,0,-23,-50);
-	t1.world = temp;
-
-	t2.init(mTech, mfxWVPVar, &terrain);
-	Translate(&temp,-30,-23,-50);
-	t2.world = temp;
-
-	t3.init(mTech, mfxWVPVar, &terrain);
-	Translate(&temp,0-30,-23,-20);
-	t3.world = temp;
+	terrainObj.init(mTech, mfxWVPVar, mfxWorldVar, &terrain);
+	terrainObj.setPosition(Vector3(0,0,0));
+	//terrainObj.world = temp;
 	
-	originObj.init(mTech, mfxWVPVar, &origin);
+	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin);
 	
 	score = 0;
 	
 }
 
-void Southfall::initLights()
-{
-	light.dir		= Vector3(1,1,1);
-	light.ambient	= Color(0.0f, 0.0f, 1.0f, 1.0f);
-	light.diffuse	= Color(0.0f, 1.0f, 0.0f, 1.0f);
-	light.specular	= Color(1.0f, 0.0f, 0.0f, 1.0f);
-}
 
 void Southfall::onResize()
 {
@@ -126,7 +101,7 @@ void Southfall::updateScene(float dt)
 	camera.update(dt);
 
 	if(input.wasKeyPressed(VK_ESCAPE))
-		exit(0);
+		PostQuitMessage(0);
 
 	switch (gameState)
 	{
@@ -159,16 +134,13 @@ void Southfall::drawScene()
 	md3dDevice->OMSetBlendState(0, blendFactors, 0xffffffff);
 	md3dDevice->IASetInputLayout(mVertexLayout);
 
-	//lighting
-	mfxEyePosVar->SetRawValue(&camera.getPos(), 0, sizeof(D3DXVECTOR3));
-	mfxLightVar->SetRawValue(&light, 0, sizeof(Light));	
+	
+	mfxEyePosVar->SetRawValue(&camera.getPos(), 0, sizeof(D3DXVECTOR3));	
+	mfxLightVar->SetRawValue(&lights.ambientDiffuse, 0, sizeof(Light));	
        
 	mWVP = mView*mProj;
 	originObj.draw(&mWVP);
 	terrainObj.draw(&mWVP);
-	t1.draw(&mWVP);
-	t2.draw(&mWVP);
-	t3.draw(&mWVP);
 
 	// We specify DT_NOCLIP, so we do not care about width/height of the rect.
 	RECT R = {5, 5, 0, 0};

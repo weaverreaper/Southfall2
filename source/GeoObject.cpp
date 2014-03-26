@@ -25,20 +25,14 @@ GeoObject::~GeoObject()
 	
 }
 
-void GeoObject::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, Geometry* g)
+void GeoObject::init(ID3D10EffectTechnique* t,
+					ID3D10EffectMatrixVariable* f, 
+					ID3D10EffectMatrixVariable* w, 
+					Geometry* g, Vertex v1, Vertex v2)
 {
-	//md3dDevice = device;
 	geom = g;
 	fxMatrix = f;
-	tech = t;
-	D3DXMatrixIdentity(&world);
-	D3DXMatrixIdentity(&wvp);
-}
-void GeoObject::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, Geometry* g, Vertex v1, Vertex v2)
-{
-	//md3dDevice = device;
-	geom = g;
-	fxMatrix = f;
+	fxWorld = w;
 	tech = t;
 	geom->setVert1(v1);
 	geom->setVert2(v2);
@@ -48,10 +42,11 @@ void GeoObject::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, Ge
 
 void GeoObject::draw(D3DXMATRIX* vp)
 {
-	if(!active)
-		return;
+	if(!active) return;
+
 	D3DXMatrixMultiply(&wvp,&world,vp);
 	fxMatrix->SetMatrix((float*)&(wvp));
+	fxWorld->SetMatrix((float*)&world);
 
 	D3D10_TECHNIQUE_DESC techDesc;
     tech->GetDesc( &techDesc );
@@ -74,8 +69,7 @@ void GeoObject::update(float dt)
 	Scale(&temp,scale,scale,scale);
 	world *= temp;
 	Translate(&temp, position.x, position.y, position.z);
-	world *= temp;
-	
+	world *= temp;	
 }
 
 bool GeoObject::collided(GeoObject *gameObject)

@@ -57,6 +57,9 @@
     <ClCompile Include="source\Terrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Lighting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\color.fx" />
@@ -118,10 +121,10 @@
     <ClInclude Include="source\Terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Light.h">
+    <ClInclude Include="source\Southfall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Southfall.h">
+    <ClInclude Include="source\Lighting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

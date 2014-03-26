@@ -40,7 +40,7 @@ VS_OUT VS(VS_IN vIn)
 {
 	VS_OUT vOut;
 	
-	// Transform to world space space.
+	// Transform to world space.
 	vOut.posW    = mul(float4(vIn.posL, 1.0f), gWorld);
 	vOut.normalW = mul(float4(vIn.normalL, 0.0f), gWorld);
 		
@@ -60,24 +60,9 @@ float4 PS(VS_OUT pIn) : SV_Target
     pIn.normalW = normalize(pIn.normalW);  
    
     SurfaceInfo v = {pIn.posW, pIn.normalW, pIn.diffuse, pIn.spec};
-    
-    float3 litColor;
-    if( gLightType == 0 ) // Parallel
-    {
-		litColor = ParallelLight(v, gLight, gEyePosW);
-    }
-    else if( gLightType == 1 ) // Point
-    {
-		litColor = PointLight(v, gLight, gEyePosW);
-	}
-	else if (gLightType == 2)// Spot
-	{
-		litColor = Spotlight(v, gLight, gEyePosW);
-	}
-	else
-	{
-		litColor = PointLight(v, gLight, gEyePosW);
-	}
+  
+	float3 litColor  =	ParallelLight(v, gLight, gEyePosW);
+
 	   
     return float4(litColor, pIn.diffuse.a);
 }
