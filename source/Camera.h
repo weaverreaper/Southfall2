@@ -4,22 +4,16 @@
 #include "d3dUtil.h"
 #include "Terrain.h"
 #include "input.h"
+#include <math.h>
 
 class Camera
 {
 public:
-	Camera():	mTheta(PI/2), mPhi(PI/2), sensitivity(.5), 
-				target(Vector3(0.f,0.f,0.f)), 
-				position(Vector3(-10.f, 0.f, 0.f)),
-				up(Vector3(0.0f, 1.0f, 0.0f))
-			{
-				Vector3 temp(target - position);
-				lookRadius = D3DXVec3Length(&temp);
-			}
+	Camera(){};
 
 	~Camera(){};
 
-	void init(Input* i, D3DXMATRIX* view, Terrain* t){input = i; mView = view; terr = t;}
+	void init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, float sens = .5);
 
 	void update(float dt);
 	

@@ -35,7 +35,7 @@ public:
 
 	void update(float dt);
 	void draw(float dt);
-	void init(ID3D10EffectVariable* l);
+	void init(ID3D10EffectVariable* l, Color amb, Color dif, Color spec, Vector3 d);
 
 	Light ambientDiffuse;
 	Light points[3];

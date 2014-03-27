@@ -10,8 +10,7 @@ cbuffer cbPerFrame
 {
 	Light gLight;
 	int gLightType; 
-	float3 gEyePosW;
-	
+	float3 gEyePosW;	
 };
 
 cbuffer cbPerObject
