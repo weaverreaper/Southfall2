@@ -56,15 +56,17 @@ void Southfall::initApp()
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
 	lights.init(mfxLightVar);
-	camera.init(&input, &mView);
+	
 	//action.init() <- haha
 
 	buildFX();
 	buildVertexLayouts();
 	
 	origin.init(md3dDevice, 10);
-	terrain.init(md3dDevice,3);
-	
+	terrain.init(md3dDevice);
+
+	camera.init(&input, &mView, &terrain);
+
 	D3DXMATRIX temp;
 
 	terrainObj.init(mTech, mfxWVPVar, mfxWorldVar, &terrain);

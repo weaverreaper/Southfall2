@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include <math.h>
 
+float findHeight(float z3, float z1, float z2, float a, float b);
+
 void Camera::update(float dt)
 {
 
@@ -48,6 +50,31 @@ void Camera::update(float dt)
 	if (mTheta < 0)  mTheta += 2*PI;	
 	else if (mTheta > 2*PI)  mTheta -= 2*PI;	
 	
+	if(position.x > 0 && position.x < (terr->x-1)*terr->scale && position.z > 0 && position.z < (terr->z-1)*terr->scale)
+	{
+		
+		int tx = int(position.x/terr->scale);
+		int tz = int(position.z/terr->scale);
+		float rx = position.x/terr->scale - tx;
+		float rz = position.z/terr->scale - tz;
+		if(rx + rz <= 1 && rx > rz)
+			position.y = max(findHeight(terr->grid[tx][tz+1],terr->grid[tx][tz],terr->grid[tx+1][tz],rx,rz), 
+				findHeight(terr->grid[tx][tz],terr->grid[tx+1][tz],terr->grid[tx+1][tz+1],rz,1-rx));
+		else if(rx + rz > 1 && rx > rz)
+			position.y = max(findHeight(terr->grid[tx][tz],terr->grid[tx+1][tz],terr->grid[tx+1][tz+1],rz,1-rx), 
+				findHeight(terr->grid[tx+1][tz],terr->grid[tx+1][tz+1],terr->grid[tx][tz+1],1-rx,1-rz));
+		else if(rx + rz > 1 && rx <= rz)
+			position.y = max(findHeight(terr->grid[tx+1][tz],terr->grid[tx+1][tz+1],terr->grid[tx][tz+1],1-rx,1-rz), 
+				findHeight(terr->grid[tx+1][tz+1],terr->grid[tx][tz+1],terr->grid[tx][tz],1-rz,rx));
+		else if(rx + rz <= 1 && rx <= rz)
+			position.y = max(findHeight(terr->grid[tx+1][tz+1],terr->grid[tx][tz+1],terr->grid[tx][tz],1-rz,rx), 
+				findHeight(terr->grid[tx][tz+1],terr->grid[tx][tz],terr->grid[tx+1][tz],rx,rz));
+
+		position.y = position.y*terr->scale + 12;
+
+
+	}
+
  	float x =  lookRadius * sinf(mPhi)*sinf(mTheta) + position.x;
 	float y =  lookRadius * cosf(mPhi) + position.y;
 	float z = -lookRadius * sinf(mPhi)*cosf(mTheta) + position.z;
@@ -55,4 +82,10 @@ void Camera::update(float dt)
 	target = Vector3(x,y,z);
 
 	D3DXMatrixLookAtLH(mView, &position, &target, &up);
+}
+
+float findHeight(float z3, float z1, float z2, float a, float b)
+{
+	float t = z1*(1-a/(1-b))+z2*a/(1-b);
+	return t*(1-b)+z3*b;
 }

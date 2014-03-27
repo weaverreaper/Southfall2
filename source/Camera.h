@@ -2,6 +2,7 @@
 #define _CAMERA_H
 
 #include "d3dUtil.h"
+#include "Terrain.h"
 #include "input.h"
 
 class Camera
@@ -18,7 +19,7 @@ public:
 
 	~Camera(){};
 
-	void init(Input* i, D3DXMATRIX* view){input = i; mView = view;}
+	void init(Input* i, D3DXMATRIX* view, Terrain* t){input = i; mView = view; terr = t;}
 
 	void update(float dt);
 	
@@ -35,6 +36,7 @@ private:
 	Vector3 target;
 	Vector3 up;
 
+	Terrain* terr;
 	D3DXMATRIX* mView;
 };
 

@@ -43,7 +43,7 @@ Terrain::~Terrain()
 	ReleaseCOM(mIB);
 }
 
-void Terrain::init(ID3D10Device* device, float scale)
+void Terrain::init(ID3D10Device* device, float fakeScale)
 {
 	md3dDevice = device;
  
