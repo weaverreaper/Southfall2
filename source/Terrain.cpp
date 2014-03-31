@@ -1,25 +1,46 @@
 //=======================================================================================
 // Terrain.cpp
 //=======================================================================================
-
+#include <D3DX10math.h>
 #include "Terrain.h"
 
 Terrain::Terrain()
 :md3dDevice(0), mVB(0), mIB(0)
 {
 	ifs.open("Worlds/World1.txt");
+	ifs >> x >> z;
+	mNumVertices = (x-1)*(z-1);
+	mNumFaces = 4*(x-2)*(z-2);
+
+	grid = new int*[x];
+	for(int i = 0; i < x; ++i)
+		grid[i] = new int[z];
+	
+	vertices = new Vertex[mNumVertices];
+
+	for(int i = 0; i < x; ++i)
+		for(int j = 0; j < z; ++j)
+			ifs >> grid[i][j];
+	ifs.close();
+
 	for(int i = 0; i < x; ++i)
 	{
 		for(int j = 0; j < z; ++j)
 		{
-			ifs >> grid[i][j];
 			if(i < x-1 && j < z-1)
-				vertices[i*(x-1)+j] = Vertex(D3DXVECTOR3(i,grid[i][j],j),D3DXCOLOR(4*float(i%2)/x,.4,4*float(j%2)/z,1));
+			{
+				Vector3 norm;
+				D3DXVec3Cross(&norm,
+					&(Vector3(i+1,grid[i+1][j],j) - Vector3(i,grid[i][j],j)),
+					&(Vector3(i,grid[i][j+1],j+1) - Vector3(i,grid[i][j],j)));
+				
+				vertices[i*(x-1)+j] = Vertex(i,grid[i][j],j,norm.x,norm.y,norm.z,i%2,j%2);
+				//vertices[i*(x-1)+j] = Vertex(D3DXVECTOR3(i,grid[i][j],j),D3DXCOLOR(4*float(i%2)/x,.4,4*float(j%2)/z,1));
+			}
 		}
 	}
-	ifs.close();        
 }
-
+/*
 Terrain::Terrain(D3DXCOLOR col)
 :md3dDevice(0), mVB(0), mIB(0)
 {
@@ -36,9 +57,14 @@ Terrain::Terrain(D3DXCOLOR col)
 	}
 	ifs.close();
 }
- 
+ */
 Terrain::~Terrain()
 {
+	for(int i = 0; i < x; ++i)
+		delete[] grid[i];
+	delete[] grid;
+	delete[] vertices;
+
 	ReleaseCOM(mVB);
 	ReleaseCOM(mIB);
 }
@@ -64,7 +90,7 @@ void Terrain::init(ID3D10Device* device, float fakeScale)
 
 	// Create the index buffer
 
-	DWORD indices[(x-2)*(z-2)*3*4];//4 triangles per square
+	DWORD *indices = new DWORD[(x-2)*(z-2)*3*4];//4 triangles per square
 	
 	for(int i = 0; i < x-2; ++i)
 	{
@@ -104,6 +130,7 @@ void Terrain::init(ID3D10Device* device, float fakeScale)
     D3D10_SUBRESOURCE_DATA iinitData;
     iinitData.pSysMem = indices;
     HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mIB));
+	delete[] indices;
 }
 
 void Terrain::draw()
