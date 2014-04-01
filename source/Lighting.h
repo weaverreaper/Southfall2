@@ -8,6 +8,16 @@
 #include "d3dUtil.h"
 #include "constants.h"
 
+//Defines indices and count of light array
+enum
+{
+	AMBIENT_DIFFUSE=0,
+	POINT1,
+
+	//Accurate if last
+	LIGHT_COUNT
+};
+
 struct Light
 {
 	Light()
@@ -15,16 +25,13 @@ struct Light
 		ZeroMemory(this, sizeof(Light));
 	}
 
-	D3DXVECTOR3 pos;
-	float pad1;      // not used
-	D3DXVECTOR3 dir;
-	float pad2;      // not used
+	D3DXVECTOR3 pos; float pad1;
+	D3DXVECTOR3 dir; float pad2;
 	D3DXCOLOR ambient;
 	D3DXCOLOR diffuse;
 	D3DXCOLOR specular;
 	D3DXVECTOR3 att;
-	float spotPow;
-	float range;
+	float range;	
 };
 
 class LightingManager
@@ -33,15 +40,9 @@ public:
 	LightingManager(){}
 	~LightingManager(){}
 
-	void update(float dt);
-	void draw(float dt);
-	void init(ID3D10EffectVariable* l, Color amb, Color dif, Color spec, Vector3 d);
-
-	Light ambientDiffuse;
-	Light points[3];
-
-	ID3D10EffectVariable* lightVar;
-
+	void init();
+	
+	Light lights[LIGHT_COUNT];
 };
 
 #endif // LIGHT_H

@@ -8,7 +8,6 @@
 //
 //=============================================================================
 
-
 #include "Southfall.h"
 
 const static float delta = .000001f;
@@ -55,29 +54,32 @@ void Southfall::initApp()
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
-	lights.init(mfxLightVar, Color(.5,.5,.5,1), BLACK, WHITE, Vector3(.45,-1,-.45));
-	
-	camera.init(Vector3(-40,20,0), Vector3(0,0,0), &input, &mView, &terrain);
+	lights.init();	
+	camera.init(Vector3(-40,50,0), Vector3(0,0,0), &input, &mView, &terrain);
 	//action.init() <- haha <- lol
 
 	buildFX();
 	buildVertexLayouts();
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Ground1.jpg", 0, 0, &mDiffuseMapRV, 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
+
 	
 	origin.init(md3dDevice, 10);
 	terrain.init(md3dDevice);
 
 	D3DXMATRIX temp;
 
-	terrainObj.init(mTech, mfxWVPVar, mfxWorldVar, &terrain);
+	terrainObj.init(mTech, mfxWVPVar, mfxWorldVar, &terrain, Vertex(), Vertex());
 	terrainObj.setPosition(Vector3(0,0,0));
-	//terrainObj.world = temp;
 	
-	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin);
+	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	
-	score = 0;
-	
+	score = 0;	
 }
-
 
 void Southfall::onResize()
 {
@@ -123,10 +125,8 @@ void Southfall::updateScene(float dt)
 
 }
 
-void Southfall::drawScene()
+void Southfall::setShaderVals()
 {
-	D3DApp::drawScene();
-
 	// Restore default states, input layout and primitive topology 
 	// because mFont->DrawText changes them.  Note that we can 
 	// restore the default states by passing null.
@@ -134,10 +134,23 @@ void Southfall::drawScene()
 	float blendFactors[] = {0.0f, 0.0f, 0.0f, 0.0f};
 	md3dDevice->OMSetBlendState(0, blendFactors, 0xffffffff);
 	md3dDevice->IASetInputLayout(mVertexLayout);
-
 	
 	mfxEyePosVar->SetRawValue(&camera.getPos(), 0, sizeof(D3DXVECTOR3));	
-	mfxLightVar->SetRawValue(&lights.ambientDiffuse, 0, sizeof(Light));	
+	mfxLightVar->SetRawValue(&lights.lights, 0, sizeof(Light)*LIGHT_COUNT);
+
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV);
+	mfxSpecMapVar->SetResource(mSpecMapRV);
+
+	// Don't transform texture coordinates, so just use identity transformation.
+	D3DXMATRIX texMtx;
+	D3DXMatrixIdentity(&texMtx);
+	mfxTexMtxVar->SetMatrix((float*)&texMtx);
+}
+
+void Southfall::drawScene()
+{
+	D3DApp::drawScene();
+	setShaderVals();	
        
 	mWVP = mView*mProj;
 	originObj.draw(&mWVP);
@@ -181,7 +194,10 @@ void Southfall::buildFX()
 	mfxWVPVar = mFX->GetVariableByName("gWVP")->AsMatrix();
 	mfxWorldVar  = mFX->GetVariableByName("gWorld")->AsMatrix();
 	mfxEyePosVar = mFX->GetVariableByName("gEyePosW");
-	mfxLightVar  = mFX->GetVariableByName("gLight");
+	mfxLightVar  = mFX->GetVariableByName("gLights");
+	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
+	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
+	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
 }
 
 void Southfall::buildVertexLayouts()
@@ -191,14 +207,12 @@ void Southfall::buildVertexLayouts()
 	{
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0},
 		{"NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D10_INPUT_PER_VERTEX_DATA, 0},
-		{"DIFFUSE",  0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D10_INPUT_PER_VERTEX_DATA, 0},
-		{"SPECULAR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 40, D3D10_INPUT_PER_VERTEX_DATA, 0}
+		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, 24, D3D10_INPUT_PER_VERTEX_DATA, 0}
 	};
 
 	// Create the input layout
     D3D10_PASS_DESC PassDesc;
     mTech->GetPassByIndex(0)->GetDesc(&PassDesc);
-    HR(md3dDevice->CreateInputLayout(vertexDesc, 4, PassDesc.pIAInputSignature,
+    HR(md3dDevice->CreateInputLayout(vertexDesc, 3, PassDesc.pIAInputSignature,
 		PassDesc.IAInputSignatureSize, &mVertexLayout));
 }
-

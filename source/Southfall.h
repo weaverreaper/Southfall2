@@ -18,6 +18,17 @@
 #include "Terrain.h"
 #include "Lighting.h"
 
+//Global light and shader variables
+	ID3D10EffectMatrixVariable* mfxWorldVar;
+	ID3D10EffectVariable* mfxEyePosVar;
+	ID3D10EffectVariable* mfxLightVar;
+	ID3D10ShaderResourceView* mDiffuseMapRV;
+	ID3D10ShaderResourceView* mSpecMapRV;
+	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
+	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
+	ID3D10EffectMatrixVariable* mfxTexMtxVar;
+	
+
 class Southfall : public D3DApp
 {
 public:
@@ -32,6 +43,7 @@ public:
 private:
 	void buildFX();
 	void buildVertexLayouts();
+	void setShaderVals(); //called in draw, for modularity
 	
 	//This tells whether the game is at menu(state 0), playing(state 1), playing and paused(state 3)
 	int gameState;
@@ -46,7 +58,7 @@ private:
 	ID3D10Effect* mFX;
 	ID3D10EffectTechnique* mTech;
 	ID3D10InputLayout* mVertexLayout;
-	ID3D10EffectMatrixVariable* mfxWVPVar;	
+	ID3D10EffectMatrixVariable* mfxWVPVar;
 
 	D3DXMATRIX mView;
 	D3DXMATRIX mProj;
@@ -63,11 +75,5 @@ private:
 	GeoObject terrainObj,t1,t2,t3;
 
 };
-
-//Added for lighting
-//Global seemed easiest -- thoughts?
-	ID3D10EffectMatrixVariable* mfxWorldVar;
-	ID3D10EffectVariable* mfxEyePosVar;
-	ID3D10EffectVariable* mfxLightVar;
 
 #endif

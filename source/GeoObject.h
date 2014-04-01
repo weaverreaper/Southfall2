@@ -16,7 +16,7 @@ public:
 	virtual void init(	ID3D10EffectTechnique* t, 
 						ID3D10EffectMatrixVariable* f,
 						ID3D10EffectMatrixVariable* w,
-						Geometry* g, Vertex v1=0, Vertex v2=0);
+						Geometry* g, Vertex v1, Vertex v2);
 
 	virtual void draw(D3DXMATRIX* vp);
 	

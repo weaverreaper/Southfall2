@@ -64,7 +64,6 @@
   <ItemGroup>
     <None Include="source\color.fx" />
     <None Include="source\lighthelper.fx" />
-    <None Include="source\lighting.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\audio.h">

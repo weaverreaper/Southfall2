@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+const int HEAD_HEIGHT = 70;
+
 float findHeight(float z3, float z1, float z2, float a, float b);
 
 void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, float sens)
@@ -80,9 +82,7 @@ void Camera::update(float dt)
 			position.y = max(findHeight(terr->grid[tx+1][tz+1],terr->grid[tx][tz+1],terr->grid[tx][tz],1-rz,rx), 
 				findHeight(terr->grid[tx][tz+1],terr->grid[tx][tz],terr->grid[tx+1][tz],rx,rz));
 
-		position.y = position.y*terr->scale + 12;
-
-
+		position.y = position.y*terr->scale + HEAD_HEIGHT;
 	}
 
  	float x =  lookRadius * sinf(mPhi)*sinf(mTheta) + position.x;
