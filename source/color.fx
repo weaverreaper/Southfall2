@@ -6,9 +6,11 @@
 
 #include "lighthelper.fx"
 
+#define NUM_POINT_LIGHTS 2
+
 cbuffer cbPerFrame
 {
-	Light gLights[2];
+	Light gLights[NUM_POINT_LIGHTS + 1];
 	float3 gEyePosW;	
 };
 
@@ -76,8 +78,11 @@ float4 PS(VS_OUT pIn) : SV_Target
 
 	SurfaceInfo v = {pIn.posW, pIn.normalW, diffuse, spec};
 
-	float3 litColor =	ParallelLight(v, gLights[0], gEyePosW) +
-						PointLight(v, gLights[1], gEyePosW);
+	float3 litColor =	ParallelLight(v, gLights[0], gEyePosW);
+
+	[loop]
+	for (uint i = 1; i < NUM_POINT_LIGHTS+1; i++) 
+		litColor += PointLight(v, gLights[i], gEyePosW);
 
 	return float4(litColor, diffuse.a);
 }

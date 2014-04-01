@@ -13,6 +13,7 @@ enum
 {
 	AMBIENT_DIFFUSE=0,
 	POINT1,
+	POINT2,
 
 	//Accurate if last
 	LIGHT_COUNT
@@ -20,10 +21,7 @@ enum
 
 struct Light
 {
-	Light()
-	{
-		ZeroMemory(this, sizeof(Light));
-	}
+	Light(){ ZeroMemory(this, sizeof(Light)); }
 
 	D3DXVECTOR3 pos; float pad1;
 	D3DXVECTOR3 dir; float pad2;
@@ -37,10 +35,24 @@ struct Light
 class LightingManager
 {
 public:
-	LightingManager(){}
-	~LightingManager(){}
+	LightingManager()
+	{
+		lights[AMBIENT_DIFFUSE].ambient	 = Color(.5,.5,.5,1);
+		lights[AMBIENT_DIFFUSE].diffuse	 = Color(.6f, .75f, .6f, 1.f);
+		lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,0);	
+		
+		lights[POINT1].diffuse	= Color(1.f,0.f,0.f,1.f);		
+		lights[POINT1].pos		= Vector3(25.f,25.f,0.f);	
+		lights[POINT1].att		= Vector3(0.f,.25f,0.f);
+		lights[POINT1].range	= 100.f;
 
-	void init();
+		lights[POINT2].diffuse	= Color(1.f,0.f,0.f,1.f);		
+		lights[POINT2].pos		= Vector3(0.f,25.f,25.f);	
+		lights[POINT2].att		= Vector3(0.f,.25f,0.f);
+		lights[POINT2].range	= 100.f;
+	}
+
+	~LightingManager(){}
 	
 	Light lights[LIGHT_COUNT];
 };

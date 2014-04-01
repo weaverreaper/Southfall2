@@ -14,7 +14,6 @@
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
-    <ClCompile Include="source\Lighting.cpp" />
     <ClCompile Include="source\Southfall.cpp" />
     <ClCompile Include="source\d3dApp.cpp" />
     <ClCompile Include="source\GameTimer.cpp" />
