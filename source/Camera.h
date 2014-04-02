@@ -21,11 +21,15 @@ public:
 	D3DXVECTOR3 getPos(){return position;}
 
 private:
+	float getTerrHeight();
+
 	Input* input;
 	float mPhi, mTheta;
 	float sensitivity;
 	float lookRadius;
+	bool onGround;
 	
+	Vector3 velocity;
 	Vector3 position;
 	Vector3 target;
 	Vector3 up;
