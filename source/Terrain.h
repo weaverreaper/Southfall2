@@ -26,7 +26,7 @@ public:
 	
 	int x, z;
 	static const int scale = 20;
-	int** grid;//[x][z];
+	float** grid;//[x][z];
 
 private:
 	DWORD mNumVertices;// = (x-1)*(z-1);

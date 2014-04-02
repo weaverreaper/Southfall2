@@ -30,8 +30,11 @@ void Camera::update(float dt)
 		dir.y = 0;
 		D3DXVec3Normalize(&dir, &dir);		
 		
-		if (input->isKeyDown('W')){ position += 50*dt*dir; target += 10*dt*dir; }	
-		if (input->isKeyDown('S')){ position -= 50*dt*dir; target -= 10*dt*dir; }
+		//if (input->isKeyDown('W')){ position += 50*dt*dir; target += 10*dt*dir; }	
+		//if (input->isKeyDown('S')){ position -= 50*dt*dir; target -= 10*dt*dir; }
+		if (input->isKeyDown('W')){ position += 300*dt*dir; target += 300*dt*dir; }	
+		if (input->isKeyDown('S')){ position -= 300*dt*dir; target -= 300*dt*dir; }
+		
 		if (input->isKeyDown('A'))
 		{
 			Matrix rot;

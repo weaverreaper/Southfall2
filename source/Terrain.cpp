@@ -7,14 +7,14 @@
 Terrain::Terrain()
 :md3dDevice(0), mVB(0), mIB(0)
 {
-	ifs.open("Worlds/World1.txt");
+	ifs.open("Worlds/Beach.txt");
 	ifs >> x >> z;
 	mNumVertices = (x-1)*(z-1);
 	mNumFaces = 4*(x-2)*(z-2);
 
-	grid = new int*[x];
+	grid = new float*[x];
 	for(int i = 0; i < x; ++i)
-		grid[i] = new int[z];
+		grid[i] = new float[z];
 	
 	vertices = new Vertex[mNumVertices];
 
@@ -38,7 +38,7 @@ Terrain::Terrain()
 				norm.y *= -1; 
 				norm.z *= -1;
 				
-				vertices[i*(x-1)+j] = Vertex(i,grid[i][j],j,norm.x,norm.y,norm.z,i%2,j%2);
+				vertices[i*(z-1)+j] = Vertex(i,grid[i][j],j,norm.x,norm.y,norm.z,i%2,j%2);
 				//vertices[i*(x-1)+j] = Vertex(D3DXVECTOR3(i,grid[i][j],j),D3DXCOLOR(4*float(i%2)/x,.4,4*float(j%2)/z,1));
 			}
 		}
@@ -100,11 +100,11 @@ void Terrain::init(ID3D10Device* device, float fakeScale)
 	{
 		for(int j = 0; j < z-2; ++j)
 		{
-			int loc = (i*(x-2)+j)*3*4;
-			int a = i*(x-1)+j;
-			int b = i*(x-1)+j+1;
-			int d = i*(x-1)+j+(x-1);
-			int c = i*(x-1)+j+(x-1)+1;
+			int loc = (i*(z-2)+j)*3*4;
+			int a = i*(z-1)+j;
+			int b = i*(z-1)+j+1;
+			int d = i*(z-1)+j+(z-1);
+			int c = i*(z-1)+j+(z-1)+1;
 
 			indices[loc++] = a;
 			indices[loc++] = b;
