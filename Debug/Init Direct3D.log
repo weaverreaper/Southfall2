@@ -1,0 +1,348 @@
+﻿Build started 4/3/2014 1:04:25 PM.
+     1>Project "C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Init Direct3D.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Southfall3D.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt source\audio.cpp source\Box.cpp source\Camera.cpp source\Fireball.cpp source\Goblin.cpp source\Southfall.cpp source\d3dApp.cpp source\GameTimer.cpp source\GeoObject.cpp source\input.cpp source\Line.cpp source\Origin.cpp source\Pyramid.cpp source\Square.cpp source\Terrain.cpp source\textDX.cpp
+         textDX.cpp
+         Terrain.cpp
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(34): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(37): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(37): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(37): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\terrain.cpp(37): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Square.cpp
+         Pyramid.cpp
+         Origin.cpp
+         Line.cpp
+         input.cpp
+         GeoObject.cpp
+         GameTimer.cpp
+         d3dApp.cpp
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\d3dapp.cpp(131): warning C4996: 'wcscpy': This function or variable may be unsafe. Consider using wcscpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(283) : see declaration of 'wcscpy'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\d3dapp.cpp(228): warning C4244: 'argument' : conversion from 'float' to 'DWORD', possible loss of data
+         Southfall.cpp
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(9): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(9): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(9): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\enemy.h(48): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(107): error C2059: syntax error : '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(110): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(111): error C2059: syntax error : '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(112): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(47): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(47): error C2228: left of '.ambient' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(48): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(48): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(49): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(49): error C2228: left of '.dir' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(51): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(51): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(52): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(52): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(53): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(53): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(54): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(54): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(56): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(56): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(57): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(57): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(58): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(58): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(59): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(59): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(61): error C2143: syntax error : missing ';' before '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(66): error C2143: syntax error : missing ';' before '=='
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(69): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(69): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(70): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(70): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(72): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(72): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(74): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(74): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(75): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(75): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(77): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(77): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(79): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(79): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(80): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(80): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(81): error C2143: syntax error : missing ';' before '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(88): error C2143: syntax error : missing ';' before '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2143: syntax error : missing ';' before ')'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2143: syntax error : missing ';' before ')'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(92): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'FIREBALL_SPEED' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2228: left of '.dir' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(95): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(95): error C2065: 'FIREBALL_SPEED' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(96): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(96): error C2065: 'MAX_DIST' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(99): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(103): error C2143: syntax error : missing ';' before '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.h(80): error C2059: syntax error : '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.h(81): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.h(83): error C2059: syntax error : '=='
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.h(84): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.h(87): error C2059: syntax error : '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.h(88): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.h(88): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(46): error C2065: 'fireShader' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(46): error C2228: left of '.Shutdown' must have class/struct/union
+                 type is ''unknown-type''
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(63): error C2065: 'fireball' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(63): error C2228: left of '.init' must have class/struct/union
+                 type is ''unknown-type''
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(64): error C2065: 'fireball' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(70): error C2039: 'lights' : is not a member of 'LightingManager'
+                 c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(41) : see declaration of 'LightingManager'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\southfall.cpp(70): fatal error C1003: error count exceeds 100; stopping compilation
+         Goblin.cpp
+         Fireball.cpp
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(107): error C2059: syntax error : '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(110): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(111): error C2059: syntax error : '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(112): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(47): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(47): error C2228: left of '.ambient' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(48): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(48): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(49): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(49): error C2228: left of '.dir' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(51): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(51): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(52): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(52): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(53): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(53): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(54): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(54): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(56): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(56): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(57): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(57): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(58): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(58): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(59): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(59): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(61): error C2143: syntax error : missing ';' before '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(66): error C2143: syntax error : missing ';' before '=='
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(69): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(69): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(70): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(70): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(72): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(72): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(74): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(74): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(75): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(75): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(77): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(77): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(79): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(79): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(80): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(80): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(81): error C2143: syntax error : missing ';' before '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(88): error C2143: syntax error : missing ';' before '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2143: syntax error : missing ';' before ')'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2143: syntax error : missing ';' before ')'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(92): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'FIREBALL_SPEED' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2228: left of '.dir' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(95): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(95): error C2065: 'FIREBALL_SPEED' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(96): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(96): error C2065: 'MAX_DIST' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(99): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(103): error C2143: syntax error : missing ';' before '>>'
+         Camera.cpp
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(107): error C2059: syntax error : '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(110): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(111): error C2059: syntax error : '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(112): error C2238: unexpected token(s) preceding ';'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(45): error C2109: subscript requires array or pointer type
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(47): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(47): error C2228: left of '.ambient' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(48): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(48): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(49): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(49): error C2228: left of '.dir' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(51): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(51): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(52): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(52): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(53): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(53): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(54): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(54): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(56): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(56): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(57): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(57): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(58): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(58): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(59): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(59): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(61): error C2143: syntax error : missing ';' before '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(63): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(64): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2065: 'FIREBALL' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(65): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(66): error C2143: syntax error : missing ';' before '=='
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(68): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(69): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(69): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(70): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(70): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(72): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(72): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(73): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(74): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(74): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(75): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(75): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(77): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(77): error C2228: left of '.diffuse' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): error C2228: left of '.att' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(78): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(79): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(79): error C2228: left of '.range' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(80): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(80): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(81): error C2143: syntax error : missing ';' before '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(88): error C2143: syntax error : missing ';' before '<<'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2143: syntax error : missing ';' before ')'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(91): error C2143: syntax error : missing ';' before ')'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(92): error C2143: syntax error : missing ';' before '{'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(93): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2228: left of '.pos' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'FIREBALL_SPEED' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(94): error C2228: left of '.dir' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(95): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(95): error C2065: 'FIREBALL_SPEED' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(96): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(96): error C2065: 'MAX_DIST' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2065: 'lights' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(98): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(99): error C2065: 'i' : undeclared identifier
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(103): error C2143: syntax error : missing ';' before '>>'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\camera.cpp(52): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\camera.cpp(60): warning C4305: 'argument' : truncation from 'double' to 'FLOAT'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\camera.cpp(83): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\camera.cpp(84): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\camera.cpp(147): error C2039: 'lights' : is not a member of 'LightingManager'
+                 c:\users\prossercj1\desktop\gcc\_git\southfall2\source\lighting.h(41) : see declaration of 'LightingManager'
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\camera.cpp(147): error C2228: left of '.on' must have class/struct/union
+     1>c:\users\prossercj1\desktop\gcc\_git\southfall2\source\camera.cpp(147): fatal error C1903: unable to recover from previous error(s); stopping compilation
+         Box.cpp
+         audio.cpp
+         Generating Code...
+     1>Done Building Project "C:\Users\ProsserCJ1\Desktop\GCC\_Git\Southfall2\Init Direct3D.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:08.75
