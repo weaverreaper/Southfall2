@@ -6,6 +6,7 @@
 #include "input.h"
 #include <math.h>
 #include "Lighting.h"
+#include "Fireball.h"
 
 class Camera
 {
@@ -20,6 +21,7 @@ public:
 	
 	D3DXVECTOR3 getTarget(){return target;}
 	D3DXVECTOR3 getPos(){return position;}
+	void setFireball(Fireball* f){fireball = f;}
 
 	void shootFireBall();
 
@@ -32,6 +34,7 @@ private:
 	float lookRadius;
 	bool onGround;
 	
+	
 	Vector3 velocity;
 	Vector3 position;
 	Vector3 target;
@@ -39,7 +42,8 @@ private:
 
 	Terrain* terr;
 	D3DXMATRIX* mView;
-	LightingManager* lights;
+	Fireball* fireball;
+	LightingManager* lights;	
 };
 
 #endif

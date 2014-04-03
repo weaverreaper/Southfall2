@@ -72,8 +72,10 @@ private:
 	float mPhi;
 
 	Terrain terrain;
-	GeoObject terrainObj,t1,t2,t3;
+	GeoObject terrainObj;
 
+	Box fireball;
+	Fireball fireballObj;
 };
 
 #endif

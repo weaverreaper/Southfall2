@@ -35,9 +35,6 @@ struct Light
 	float pad[3];
 };
 
-const float MAX_DIST =  1000.f;
-const float FIREBALL_SPEED = 1000.f;
-
 class LightingManager
 {
 public:
@@ -60,25 +57,19 @@ public:
 		lights[POINT2].range	= 1000.f;
 
 		lights[FIREBALL].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
-		lights[FIREBALL].att		= Vector3(0,.1,0);
+		lights[FIREBALL].att		= Vector3(0,.05,0);
 		lights[FIREBALL].range		= 1000.f;
 		lights[FIREBALL].on			= 0;		
 	}
+	
+	float dist;	
 
 	void update(float dt) 
 	{ 
-		if (lights[FIREBALL].on){
-			lights[FIREBALL].pos += FIREBALL_SPEED * dt * lights[FIREBALL].dir;
-			dist += FIREBALL_SPEED * dt;
-			if (dist > MAX_DIST)
-			{
-				lights[FIREBALL].on = 0;
-				dist = 0;
-			}
-		}
+		
 	}
 
-	float dist;	
+	
 	Light lights[LIGHT_COUNT];
 };
 

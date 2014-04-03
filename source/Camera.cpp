@@ -107,6 +107,8 @@ void Camera::update(float dt)
 	target = Vector3(x,y,z);
 
 	D3DXMatrixLookAtLH(mView, &position, &target, &up);
+
+	fireball->update(dt);
 }
 
 float findHeight(float z3, float z1, float z2, float a, float b)
@@ -143,7 +145,5 @@ void Camera::shootFireBall()
 	if (lights->lights[FIREBALL].on) return;
 	Vector3 dir = target - position;
 	D3DXVec3Normalize(&dir, &dir);
-	lights->lights[FIREBALL].dir = dir;
-	lights->lights[FIREBALL].pos = position;
-	lights->lights[FIREBALL].on = 1;	
+	fireball->shoot(position, dir);
 }

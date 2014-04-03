@@ -51,14 +51,21 @@ void Southfall::initApp()
 {
 	D3DApp::initApp();	
 
+	buildFX();
+	buildVertexLayouts();
+
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
-		
+	
+	fireball.init(md3dDevice, 5);
+	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball, Vertex(), Vertex());
+	fireballObj.setInActive();
+	
 	camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &mView, &terrain, &lights);
 	//action.init() <- haha <- lol
 
-	buildFX();
-	buildVertexLayouts();
+	fireballObj.setLight(&lights.lights[FIREBALL]);
+	camera.setFireball(&fireballObj);	
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Ground1.jpg", 0, 0, &mDiffuseMapRV, 0 ));
@@ -102,6 +109,7 @@ void Southfall::updateScene(float dt)
 	bool done = false;
 	camera.update(dt);
 	lights.update(dt);
+	fireballObj.update(dt);
 
 	if(input.wasKeyPressed(VK_ESCAPE))
 		PostQuitMessage(0);
@@ -155,6 +163,7 @@ void Southfall::drawScene()
 	mWVP = mView*mProj;
 	originObj.draw(&mWVP);
 	terrainObj.draw(&mWVP);
+	fireballObj.draw(&mWVP);
 
 	// We specify DT_NOCLIP, so we do not care about width/height of the rect.
 	RECT R = {5, 5, 0, 0};
