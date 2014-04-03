@@ -14,6 +14,7 @@ struct Light
 	float4 spec;
 	float3 att;
 	float range;
+	int on;
 };
 
 struct SurfaceInfo
@@ -58,6 +59,8 @@ float3 PointLight(SurfaceInfo v, Light L, float3 eyePos)
 {
 	float3 litColor = float3(0.0f, 0.0f, 0.0f);
 	
+	if (!L.on) return litColor;
+
 	// The vector from the surface to the light.
 	float3 lightVec = L.pos - v.pos;
 		

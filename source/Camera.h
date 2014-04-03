@@ -5,6 +5,7 @@
 #include "Terrain.h"
 #include "input.h"
 #include <math.h>
+#include "Lighting.h"
 
 class Camera
 {
@@ -13,12 +14,14 @@ public:
 
 	~Camera(){};
 
-	void init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, float sens = .5);
+	void init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens = .5);
 
 	void update(float dt);
 	
 	D3DXVECTOR3 getTarget(){return target;}
 	D3DXVECTOR3 getPos(){return position;}
+
+	void shootFireBall();
 
 private:
 	float getTerrHeight();
@@ -36,6 +39,7 @@ private:
 
 	Terrain* terr;
 	D3DXMATRIX* mView;
+	LightingManager* lights;
 };
 
 #endif

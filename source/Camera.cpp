@@ -7,7 +7,7 @@ const float termYVel = -1000;
 
 float findHeight(float z3, float z1, float z2, float a, float b);
 
-void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, float sens)
+void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens)
 {
 	position = pos;
 	target = tar;
@@ -18,6 +18,7 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain*
 	terr = t;
 	onGround = true;
 	velocity = Vector3(0,0,0);
+	lights = l;
 
 	Vector3 temp(target - position);
 	lookRadius = D3DXVec3Length(&temp);
@@ -65,7 +66,9 @@ void Camera::update(float dt)
 		velocity.x = 0;
 		velocity.z = 0;
 		velocity += speed*dpos;
-	}	
+	}
+
+	if (input->getMouseLButton()) shootFireBall();
 
 	position += velocity*dt;
 	velocity.y += yAcc*dt;
@@ -133,4 +136,14 @@ float Camera::getTerrHeight()
 			findHeight(terr->grid[tx][tz+1],terr->grid[tx][tz],terr->grid[tx+1][tz],rx,rz));
 	return y;
 
+}
+
+void Camera::shootFireBall()
+{
+	if (lights->lights[FIREBALL].on) return;
+	Vector3 dir = target - position;
+	D3DXVec3Normalize(&dir, &dir);
+	lights->lights[FIREBALL].dir = dir;
+	lights->lights[FIREBALL].pos = position;
+	lights->lights[FIREBALL].on = 1;	
 }

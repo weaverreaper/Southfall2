@@ -33,10 +33,6 @@ Terrain::Terrain()
 				D3DXVec3Cross(&norm,
 					&(Vector3(i+1,grid[i+1][j],j) - Vector3(i,grid[i][j],j)),
 					&(Vector3(i,grid[i][j+1],j+1) - Vector3(i,grid[i][j],j)));
-
-				norm.x *= -1; 
-				norm.y *= -1; 
-				norm.z *= -1;
 				
 				vertices[i*(z-1)+j] = Vertex(i,grid[i][j],j,norm.x,norm.y,norm.z,i%2,j%2);
 				//vertices[i*(x-1)+j] = Vertex(D3DXVECTOR3(i,grid[i][j],j),D3DXCOLOR(4*float(i%2)/x,.4,4*float(j%2)/z,1));
