@@ -62,7 +62,7 @@ void Southfall::initApp()
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball, Vertex(), Vertex());
 	fireballObj.setInActive();
 	
-	camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &mView, &terrain, &lights);
+	camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &audio, &mView, &terrain, &lights);
 	//action.init() <- haha <- lol
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
