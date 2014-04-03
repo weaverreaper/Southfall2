@@ -14,9 +14,8 @@ enum
 	AMBIENT_DIFFUSE=0,
 	POINT1,
 	POINT2,
-	FIREBALL1,
-	FIREBALL2,
-	FIREBALL3,
+	FIREBALL,
+
 	//Accurate if last
 	LIGHT_COUNT
 };
@@ -42,8 +41,6 @@ class LightingManager
 public:
 	LightingManager()
 	{
-		dist[0] = dist[1] = dist[2] = 0;
-
 		lights[AMBIENT_DIFFUSE].ambient	 = Color(.5,.5,.5,1);
 		lights[AMBIENT_DIFFUSE].diffuse	 = Color(.6f, .75f, .6f, 1.f);
 		lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,1,0);	
@@ -58,57 +55,14 @@ public:
 		lights[POINT2].att		= Vector3(0.f,.25f,0.f);
 		lights[POINT2].range	= 1000.f;
 
-<<<<<<< HEAD
 		lights[FIREBALL].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
-		lights[FIREBALL].att		= Vector3(0,.05,0);
+		lights[FIREBALL].att		= Vector3(0,.03,0);
 		lights[FIREBALL].range		= 1000.f;
 		lights[FIREBALL].on			= 0;		
-=======
-		lights[FIREBALL1].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
-		lights[FIREBALL1].att		= Vector3(0,.1,0);
-		lights[FIREBALL1].range		= 1000.f;
-		lights[FIREBALL1].on		= 0;		
 
-		lights[FIREBALL2].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
-		lights[FIREBALL2].att		= Vector3(0,.1,0);
-		lights[FIREBALL2].range		= 1000.f;
-		lights[FIREBALL2].on		= 0;
+	}	
 
-		lights[FIREBALL3].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
-		lights[FIREBALL3].att		= Vector3(0,.1,0);
-		lights[FIREBALL3].range		= 1000.f;
-		lights[FIREBALL3].on		= 0;
->>>>>>> d809fe3047a7c1cb1be07f50bc1a7aacf03e9e95
-	}
-	
-	float dist;	
 
-	void update(float dt) 
-	{ 
-<<<<<<< HEAD
-		
-=======
-		for (int i=FIREBALL1; i<= FIREBALL3; i++)
-		{
-			if (lights[i].on){
-				lights[i].pos += FIREBALL_SPEED * dt * lights[i].dir;
-				dist[i-FIREBALL1] += FIREBALL_SPEED * dt;
-				if (dist[i-FIREBALL1] > MAX_DIST)
-				{
-					lights[i].on = 0;
-					dist[i-FIREBALL1] = 0;
-				}
-			}
-		}
->>>>>>> d809fe3047a7c1cb1be07f50bc1a7aacf03e9e95
-	}
-	
-
-<<<<<<< HEAD
-	
-=======
-	float dist[3];	
->>>>>>> d809fe3047a7c1cb1be07f50bc1a7aacf03e9e95
 	Light lights[LIGHT_COUNT];
 };
 

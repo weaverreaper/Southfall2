@@ -77,14 +77,9 @@ private:
 	Terrain terrain;
 	GeoObject terrainObj;
 
-<<<<<<< HEAD
+
 	Box fireball;
 	Fireball fireballObj;
-=======
-	FireShaderClass fireShader;
-	ModelClass m_Model;
-
->>>>>>> d809fe3047a7c1cb1be07f50bc1a7aacf03e9e95
 };
 
 #endif
