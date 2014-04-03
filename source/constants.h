@@ -26,16 +26,9 @@ const char WAVE_BANK[]  = "audio\\Win\\WavesExample1.xwb";
 const char SOUND_BANK[] = "audio\\Win\\SoundsExample1.xsb";
 
 // audio cues
-const char BEEP1[] = "beep1";
-const char BEEP2[] = "beep2";
-const char BEEP3[] = "beep3";
-const char BEEP4[] = "beep4";
-const char HIT[]   = "hit";
-const char LAZER[] = "lazer";
-const char DISCO[] = "disco";
-const char WILHELM[] = "wilhelm";
+const char FIREBALL_CUE[] = "Fireball";
+const char SAND_CUE[] = "SandStep";
 
-const static int MAXENEMIES = 20;
 
 //const double PI = 3.14159265;
 const int GAME_WIDTH =  800;               // width of game in pixels

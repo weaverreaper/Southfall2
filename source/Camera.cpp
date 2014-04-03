@@ -4,10 +4,11 @@ const float HEAD_HEIGHT = 70;
 const float speed = 300;
 const float yAcc = -500;
 const float termYVel = -1000;
+const float STEP_LENGTH = .5;
 
 float findHeight(float z3, float z1, float z2, float a, float b);
 
-void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens)
+void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens)
 {
 	position = pos;
 	target = tar;
@@ -15,11 +16,13 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain*
 	up = Vector3(0.0f, 1.0f, 0.0f);
 	sensitivity = sens;
 	input = i; 
+	audio = a;
 	mView = view;
 	terr = t;
 	onGround = true;
 	velocity = Vector3(0,0,0);
 	lights = l;
+	stepTime = STEP_LENGTH;
 
 	Vector3 temp(target - position);
 	lookRadius = D3DXVec3Length(&temp);
@@ -108,8 +111,7 @@ void Camera::update(float dt)
 	target = Vector3(x,y,z);
 
 	D3DXMatrixLookAtLH(mView, &position, &target, &up);
-
-	fireball->update(dt);
+	fireball->update(dt);	
 }
 
 float findHeight(float z3, float z1, float z2, float a, float b)
@@ -148,5 +150,5 @@ void Camera::shootFireBall()
 	Vector3 dir = target - position;
 	D3DXVec3Normalize(&dir, &dir);
 	fireball->shoot(position, dir);
-
+	audio->playCue(FIREBALL_CUE);
 }

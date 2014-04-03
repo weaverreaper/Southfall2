@@ -62,7 +62,6 @@ public:
 
 	}	
 
-
 	Light lights[LIGHT_COUNT];
 };
 

@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Programming 2D Games\Object Version\Chapter 7 Sound\SoundExample1\audio\SoundExample1.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3870619343;
-    Last Modified High = 30356322;
+    Last Modified Low = 30363514;
+    Last Modified High = 3201381331;
 
     Category
     {
@@ -227,194 +227,56 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 835945161;
-    PC Bank Last Modified High = 30356321;
+    PC Bank Last Modified Low = 3076008383;
+    PC Bank Last Modified High = 30363515;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
-    Bank Last Revised Low = 32454335;
-    Bank Last Revised High = 30356320;
+    Bank Last Revised Low = 2123880383;
+    Bank Last Revised High = 30363515;
 
     Wave
     {
-        Name = beep1;
-        File = beep1.wav;
-        Build Settings Last Modified Low = 2740335722;
-        Build Settings Last Modified High = 30138568;
+        Name = Fireball;
+        File = Fireball.wav;
+        Build Settings Last Modified Low = 3085631557;
+        Build Settings Last Modified High = 30363514;
 
         Cache
         {
             Format Tag = 0;
             Channels = 1;
-            Sampling Rate = 8000;
-            Bits Per Sample = 0;
-            Play Region Offset = 44;
-            Play Region Length = 1786;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 1286564352;
-            Last Modified High = 30138563;
-        }
-    }
-
-    Wave
-    {
-        Name = beep2;
-        File = beep2.wav;
-        Build Settings Last Modified Low = 2740491722;
-        Build Settings Last Modified High = 30138568;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 11025;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 11424;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 3256498944;
-            Last Modified High = 30138561;
-        }
-    }
-
-    Wave
-    {
-        Name = beep3;
-        File = beep3.wav;
-        Build Settings Last Modified Low = 2740491722;
-        Build Settings Last Modified High = 30138568;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 11025;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 20736;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 4032443648;
-            Last Modified High = 30138437;
-        }
-    }
-
-    Wave
-    {
-        Name = beep4;
-        File = beep4.wav;
-        Build Settings Last Modified Low = 2740491722;
-        Build Settings Last Modified High = 30138568;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 11025;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 18432;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 317476352;
-            Last Modified High = 30138438;
-        }
-    }
-
-    Wave
-    {
-        Name = hit;
-        File = hit.wav;
-        Build Settings Last Modified Low = 2740491722;
-        Build Settings Last Modified High = 30138568;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 11025;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 13824;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 657476352;
-            Last Modified High = 30138438;
-        }
-    }
-
-    Wave
-    {
-        Name = disco;
-        File = disco.wav;
-        Build Settings Last Modified Low = 241302021;
-        Build Settings Last Modified High = 30356319;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 5210576;
+            Play Region Length = 26230;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 14777559;
-            Last Modified High = 30356317;
+            Last Modified Low = 2698900200;
+            Last Modified High = 30339361;
         }
     }
 
     Wave
     {
-        Name = wilhelm;
-        File = wilhelm.wav;
-        Build Settings Last Modified Low = 792868694;
-        Build Settings Last Modified High = 30356319;
+        Name = SandStep;
+        File = SandStep.wav;
+        Build Settings Last Modified Low = 2088780383;
+        Build Settings Last Modified High = 30363515;
 
         Cache
         {
             Format Tag = 0;
-            Channels = 2;
+            Channels = 1;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 197012;
+            Play Region Length = 20480;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 1767660895;
-            Last Modified High = 30356316;
-        }
-    }
-
-    Wave
-    {
-        Name = lazer;
-        File = lazer.wav;
-        Build Settings Last Modified Low = 3946971276;
-        Build Settings Last Modified High = 30356319;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 57068;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 3764195397;
-            Last Modified High = 30356319;
+            Last Modified Low = 1922360383;
+            Last Modified High = 30363515;
         }
     }
 }
@@ -426,14 +288,12 @@ Sound Bank
     Windows File = Win\SoundsExample1.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 3870659367;
-    Bank Last Modified High = 30356322;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
     Sound
     {
-        Name = beep1;
+        Name = Fireball;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -469,7 +329,7 @@ Sound Bank
                 {
                     Bank Name = WavesExample1;
                     Bank Index = 0;
-                    Entry Name = beep1;
+                    Entry Name = Fireball;
                     Entry Index = 0;
                     Weight = 255;
                     Weight Min = 0;
@@ -480,195 +340,7 @@ Sound Bank
 
     Sound
     {
-        Name = beep2;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = WavesExample1;
-                    Bank Index = 0;
-                    Entry Name = beep2;
-                    Entry Index = 1;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = beep3;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = WavesExample1;
-                    Bank Index = 0;
-                    Entry Name = beep3;
-                    Entry Index = 2;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = beep4;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = WavesExample1;
-                    Bank Index = 0;
-                    Entry Name = beep4;
-                    Entry Index = 3;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = hit;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = WavesExample1;
-                    Bank Index = 0;
-                    Entry Name = hit;
-                    Entry Index = 4;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = disco;
+        Name = SandStep;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -705,102 +377,8 @@ Sound Bank
                 {
                     Bank Name = WavesExample1;
                     Bank Index = 0;
-                    Entry Name = disco;
-                    Entry Index = 5;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = wilhelm;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = WavesExample1;
-                    Bank Index = 0;
-                    Entry Name = wilhelm;
-                    Entry Index = 6;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = lazer;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = WavesExample1;
-                    Bank Index = 0;
-                    Entry Name = lazer;
-                    Entry Index = 7;
+                    Entry Name = SandStep;
+                    Entry Index = 1;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -810,7 +388,7 @@ Sound Bank
 
     Cue
     {
-        Name = beep1;
+        Name = Fireball;
 
         Variation
         {
@@ -821,7 +399,7 @@ Sound Bank
 
         Sound Entry
         {
-            Name = beep1;
+            Name = Fireball;
             Index = 0;
             Weight Min = 0;
             Weight Max = 255;
@@ -830,7 +408,7 @@ Sound Bank
 
     Cue
     {
-        Name = beep2;
+        Name = SandStep;
 
         Variation
         {
@@ -841,128 +419,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = beep2;
+            Name = SandStep;
             Index = 1;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = beep3;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = beep3;
-            Index = 2;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = beep4;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = beep4;
-            Index = 3;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = hit;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = hit;
-            Index = 4;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = disco;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = disco;
-            Index = 5;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = wilhelm;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = wilhelm;
-            Index = 6;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = lazer;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = lazer;
-            Index = 7;
             Weight Min = 0;
             Weight Max = 255;
         }

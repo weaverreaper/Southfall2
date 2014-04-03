@@ -2,8 +2,10 @@
 #define _CAMERA_H
 
 #include "d3dUtil.h"
+#include "constants.h"
 #include "Terrain.h"
 #include "input.h"
+#include "audio.h"
 #include <math.h>
 #include "Lighting.h"
 #include "Fireball.h"
@@ -15,7 +17,7 @@ public:
 
 	~Camera(){};
 
-	void init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens = .5);
+	void init(Vector3 pos, Vector3 tar, Input* i, Audio* a, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens = .5);
 
 	void update(float dt);
 	
@@ -29,6 +31,7 @@ private:
 	float getTerrHeight();
 
 	Input* input;
+	Audio* audio;
 	float mPhi, mTheta;
 	float sensitivity;
 	float lookRadius;
@@ -43,7 +46,10 @@ private:
 	Terrain* terr;
 	D3DXMATRIX* mView;
 	Fireball* fireball;
-	LightingManager* lights;	
+	LightingManager* lights;
+
+	float stepTime;
+
 };
 
 #endif
