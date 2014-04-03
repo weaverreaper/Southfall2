@@ -14,6 +14,7 @@
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
+    <ClCompile Include="source\Goblin.cpp" />
     <ClCompile Include="source\Southfall.cpp" />
     <ClCompile Include="source\d3dApp.cpp" />
     <ClCompile Include="source\GameTimer.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="source\GameTimer.h" />
     <ClInclude Include="source\Geometry.h" />
     <ClInclude Include="source\GeoObject.h" />
+    <ClInclude Include="source\Goblin.h" />
     <ClInclude Include="source\input.h" />
     <ClInclude Include="source\Lighting.h" />
     <ClInclude Include="source\Line.h" />
