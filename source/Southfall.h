@@ -17,6 +17,8 @@
 #include "Camera.h"
 #include "Terrain.h"
 #include "Lighting.h"
+#include "fireshaderclass.h"
+#include "modelclass.h"
 
 //Global light and shader variables
 	ID3D10EffectMatrixVariable* mfxWorldVar;
@@ -44,6 +46,7 @@ private:
 	void buildFX();
 	void buildVertexLayouts();
 	void setShaderVals(); //called in draw, for modularity
+	void renderFire();
 	
 	//This tells whether the game is at menu(state 0), playing(state 1), playing and paused(state 3)
 	int gameState;
@@ -74,8 +77,14 @@ private:
 	Terrain terrain;
 	GeoObject terrainObj;
 
+<<<<<<< HEAD
 	Box fireball;
 	Fireball fireballObj;
+=======
+	FireShaderClass fireShader;
+	ModelClass m_Model;
+
+>>>>>>> d809fe3047a7c1cb1be07f50bc1a7aacf03e9e95
 };
 
 #endif

@@ -11,6 +11,7 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, D3DXMATRIX* view, Terrain*
 {
 	position = pos;
 	target = tar;
+
 	up = Vector3(0.0f, 1.0f, 0.0f);
 	sensitivity = sens;
 	input = i; 
@@ -142,8 +143,15 @@ float Camera::getTerrHeight()
 
 void Camera::shootFireBall()
 {
-	if (lights->lights[FIREBALL].on) return;
+	int index = FIREBALL1;
+	while (lights->lights[index].on){ ++index; if (index > FIREBALL3) return; }
 	Vector3 dir = target - position;
 	D3DXVec3Normalize(&dir, &dir);
+<<<<<<< HEAD
 	fireball->shoot(position, dir);
+=======
+	lights->lights[index].dir = dir;
+	lights->lights[index].pos = position;
+	lights->lights[index].on = 1;	
+>>>>>>> d809fe3047a7c1cb1be07f50bc1a7aacf03e9e95
 }
