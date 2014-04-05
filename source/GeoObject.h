@@ -33,7 +33,8 @@ public:
 	void setVert1(Vertex v)					{geom->setVert1(v);}
 	void setVert2(Vertex v)					{geom->setVert2(v);}
 	void setMTech(ID3D10EffectTechnique* m)	{ tech = m;}
-
+	void setWorldMatrix(Matrix w)			{world = w;}	
+	
 	//Getters
 	Vertex getPoint()						{return geom->getPoint();}
 	Vector3 getVelocity()					{return velocity;}	

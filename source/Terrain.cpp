@@ -29,11 +29,11 @@ Terrain::Terrain()
 		{
 			if(i < x-1 && j < z-1)
 			{
-				Vector3 norm(0,1,0);
+				Vector3 norm(0,1,0), norm2(0,1,0);
 				D3DXVec3Cross(&norm,
 					&(Vector3(i+1,grid[i+1][j],j) - Vector3(i,grid[i][j],j)),
 					&(Vector3(i,grid[i][j+1],j+1) - Vector3(i,grid[i][j],j)));
-				
+				norm = -norm;
 				vertices[i*(z-1)+j] = Vertex(i,grid[i][j],j,norm.x,norm.y,norm.z,i%2,j%2);
 				//vertices[i*(x-1)+j] = Vertex(D3DXVECTOR3(i,grid[i][j],j),D3DXCOLOR(4*float(i%2)/x,.4,4*float(j%2)/z,1));
 			}
@@ -69,10 +69,10 @@ Terrain::~Terrain()
 	ReleaseCOM(mIB);
 }
 
-void Terrain::init(ID3D10Device* device, float fakeScale)
+void Terrain::init(ID3D10Device* device, float sscale)
 {
 	md3dDevice = device;
- 
+	scale = sscale;
 	// Scale
 	for(DWORD i = 0; i < mNumVertices; ++i)
 		vertices[i].pos *= scale;

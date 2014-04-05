@@ -19,6 +19,7 @@
 #include "Lighting.h"
 #include "fireshaderclass.h"
 #include "modelclass.h"
+#include "Surroundings.h"
 
 //Global light and shader variables
 	ID3D10EffectMatrixVariable* mfxWorldVar;
@@ -76,7 +77,8 @@ private:
 
 	Terrain terrain;
 	GeoObject terrainObj;
-
+	
+	Surroundings surr;
 
 	Box fireball;
 	Fireball fireballObj;
