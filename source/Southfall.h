@@ -27,10 +27,17 @@
 	ID3D10EffectVariable* mfxLightVar;
 	ID3D10ShaderResourceView* mDiffuseMapRV;
 	ID3D10ShaderResourceView* mSpecMapRV;
+	ID3D10ShaderResourceView* mSplashTextureRV;
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
 	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
 	ID3D10EffectMatrixVariable* mfxTexMtxVar;
 	
+	enum 
+	{
+		SPLASH,
+		GAME,
+		END
+	};
 
 class Southfall : public D3DApp
 {
@@ -49,10 +56,11 @@ private:
 	void setShaderVals(); //called in draw, for modularity
 	void renderFire();
 	
-	//This tells whether the game is at menu(state 0), playing(state 1), playing and paused(state 3)
 	int gameState;
 	float lastFrameTime;
-	float dtime;
+
+	Square splash;
+	GeoObject splashObj;
 
 	int score;
 	Origin origin;

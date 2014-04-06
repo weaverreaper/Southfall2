@@ -145,8 +145,7 @@ void D3DApp::initApp()
     rasterizerState.DepthClipEnable = true;
     rasterizerState.ScissorEnable = false;
     rasterizerState.MultisampleEnable = false;
-    rasterizerState.AntialiasedLineEnable = true;
-	
+    rasterizerState.AntialiasedLineEnable = true;	
 	
 	md3dDevice->CreateRasterizerState( &rasterizerState, &pRS);
 	md3dDevice->RSSetState(pRS);

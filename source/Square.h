@@ -5,14 +5,13 @@
 #ifndef Square_H
 #define Square_H
 
-//#include "C:\Users\weaverem1\Dropbox\S14\Games2\PartII\Common\d3dUtil.h"
 #include "d3dUtil.h"
 #include "Geometry.h"
 
 class Square : public Geometry
 {
 public:
-	Square();
+	Square(int imgNum = 2);
 	~Square();
 	void init(ID3D10Device* device, float scale = 1);
 	void draw();

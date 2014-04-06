@@ -56,6 +56,18 @@ void Southfall::initApp()
 
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
+
+	splash = Square(1);
+	splash.init(md3dDevice,5);
+	splashObj.init(mTech, mfxWVPVar, mfxWorldVar, &splash, Vertex(), Vertex());
+	//splashObj.setPosition(Vector3(10,10,10));
+	Matrix tm1,tm2,tm3;
+	Identity(&tm1);
+
+
+	D3DXMatrixRotationYawPitchRoll(&tm1, PI/2, 0, PI/2); 
+	splashObj.setWorldMatrix(tm1);
+	//splashObj.update(1);
 	
 	fireball.init(md3dDevice, 5);
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
@@ -74,6 +86,9 @@ void Southfall::initApp()
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
+	
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Title.png", 0, 0, &mSplashTextureRV, 0 ));
 
 	
 	origin.init(md3dDevice, 10);
@@ -89,7 +104,8 @@ void Southfall::initApp()
 
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	
-	score = 0;	
+	score = 0;
+	gameState = SPLASH;
 }
 
 void Southfall::onResize()
@@ -103,35 +119,55 @@ void Southfall::onResize()
 void Southfall::updateScene(float dt)
 {
 	D3DApp::updateScene(dt);
-	dtime = dt;
-	D3DXVECTOR3 pos;
-	D3DXVECTOR3 target;
-	D3DXVECTOR3 up;
-	float xf, yf, zf;
-	int x,y,z;
-	Matrix temp;
-	int w1,w2;
-	bool done = false;
-	camera.update(dt);
-	fireballObj.update(dt);
 
 	if(input.wasKeyPressed(VK_ESCAPE))
 		PostQuitMessage(0);
 
 	switch (gameState)
 	{
-	case 0:
-		if(input.wasKeyPressed(' '))
+	case SPLASH:
+		if(input.anyKeyPressed()) 
+			gameState = GAME;	
+		else
 		{
-			//audio.playCue(DISCO);
-			gameState = 2;
+			Vector3 up(0,1,0);
+			Vector3 position(2.5,2.5,-7);
+			Vector3 target(2.5,2.5,0);
+			D3DXMatrixLookAtLH(&mView, &position, &target, &up);
+
+			float time = mTimer.getGameTime();
+			
+			lights.lights[1].pos.x =  -2.97 * cosf(time)
+				+ .23 * sinf(time)*sinf(time);
+			
+			lights.lights[1].pos.y = -1.09*sinf(time)
+				+ .01 * cosf(time)*cosf(time);
+
+			lights.lights[2].pos.x =  3.48 * cosf(time)
+				- .23 * sinf(time)*sinf(time);
+			
+			lights.lights[2].pos.y = 6.09*sinf(time)
+				+ .01 * cosf(time)*cosf(time);	
+
+			lights.lights[3].pos.x =  2.045 + 4.09*sinf(time);
+			
+			lights.lights[3].pos.y = 4+ .6* cosf(time);
+
+			lights.lights[4].pos.x =  sinf(time)
+				- .23 * sinf(time)*sinf(time);
+			
+			lights.lights[4].pos.y = 2*cosf(time);
+
+
+
 		}
 		break;
-	case 1:
+	case GAME:
+		camera.update(dt);
+		fireballObj.update(dt);
 		break;
-	case 2:		
-		if(done)
-			gameState = 2;
+	case END:		
+
 		break;
 	}
 
@@ -162,23 +198,37 @@ void Southfall::setShaderVals()
 void Southfall::drawScene()
 {
 	D3DApp::drawScene();
-	setShaderVals(); 	
-
+	setShaderVals();
 	mWVP = mView*mProj;
-	originObj.draw(&mWVP);
-	terrainObj.draw(&mWVP);
-	surr.draw(&mWVP);
-	fireballObj.draw(&mWVP);
-
-
-	// We specify DT_NOCLIP, so we do not care about width/height of the rect.
-	RECT R = {5, 5, 0, 0};
-	mFont->DrawText(0, mFrameStats.c_str(), -1, &R, DT_NOCLIP, BLACK);	
-
 	std::stringstream q;
-	q << "Score: " << score;
-	theText.print(q.str(),0, 0);	
-       
+	RECT R = {5, 5, 0, 0};
+	Vector3 temp;
+	Matrix tempM;
+	
+	switch (gameState)
+	{
+	case SPLASH:
+		temp = Vector3(0,0,0);
+		mfxEyePosVar->SetRawValue(&temp, 0, sizeof(D3DXVECTOR3));
+		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
+		splashObj.draw(&mWVP);
+		break;
+
+	case GAME:
+		originObj.draw(&mWVP);
+		terrainObj.draw(&mWVP);
+		surr.draw(&mWVP);
+		fireballObj.draw(&mWVP);
+
+		mFont->DrawText(0, mFrameStats.c_str(), -1, &R, DT_NOCLIP, BLACK);	
+
+		q << "Score: " << score;
+		theText.print(q.str(),0, 0);	
+		break;
+	case END:
+		break;
+	}
+
 	mSwapChain->Present(0, 0);
 }
 

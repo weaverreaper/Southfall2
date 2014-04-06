@@ -7,13 +7,13 @@
 //BREAK------------------------------
 //
 //-----------------------------------
-Square::Square()
+Square::Square(int imgNum)
 : md3dDevice(0), mVB(0), mIB(0)
 {
 	vertices[0] = Vertex(0, 0, 0, 0, -1, 0, 0, 0);
-	vertices[1] = Vertex(1, 0, 0, 0, -1, 0, 2, 0);
-	vertices[2] = Vertex(1, 0, 1, 0, -1, 0, 2, 2);
-	vertices[3] = Vertex(0, 0, 1, 0, -1, 0, 0, 2);
+	vertices[1] = Vertex(1, 0, 0, 0, -1, 0, imgNum, 0);
+	vertices[2] = Vertex(1, 0, 1, 0, -1, 0, imgNum, imgNum);
+	vertices[3] = Vertex(0, 0, 1, 0, -1, 0, 0, imgNum);
 }
  
 Square::~Square()

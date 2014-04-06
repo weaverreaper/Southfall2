@@ -55,8 +55,7 @@ void Surroundings::init(	ID3D10EffectTechnique* t,
 	 Scale(&m2,(terrain->x-2)*terrain->scale, 1, (terrain->z-2)*terrain->scale*2);
 	 Translate(&m3,0,1000,-(terrain->z-2)*terrain->scale);
 	 w5.init(t,f,w,&wall,Vertex(),Vertex());
-	 w5.setWorldMatrix(m2*m3);
-	 
+	 w5.setWorldMatrix(m2*m3);	 
 }
 
 void Surroundings::draw(Matrix* vp)
