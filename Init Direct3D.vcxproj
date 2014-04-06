@@ -25,6 +25,7 @@
     <ClCompile Include="source\Origin.cpp" />
     <ClCompile Include="source\Pyramid.cpp" />
     <ClCompile Include="source\Square.cpp" />
+    <ClCompile Include="source\Surroundings.cpp" />
     <ClCompile Include="source\Terrain.cpp" />
     <ClCompile Include="source\textDX.cpp" />
   </ItemGroup>
@@ -52,6 +53,7 @@
     <ClInclude Include="source\Pyramid.h" />
     <ClInclude Include="source\Southfall.h" />
     <ClInclude Include="source\Square.h" />
+    <ClInclude Include="source\Surroundings.h" />
     <ClInclude Include="source\Terrain.h" />
     <ClInclude Include="source\textDX.h" />
     <ClInclude Include="source\Vertex.h" />

@@ -11,13 +11,14 @@
 
 class Terrain : public Geometry
 {
+	friend class Surroundings;
 public:
 
 	Terrain();
 	//Terrain(D3DXCOLOR col);
 	~Terrain();
 
-	void init(ID3D10Device* device, float fakeScale = 1);
+	void init(ID3D10Device* device, float sscale = 20);
 	void draw();
 	Vertex getPoint(){return vertices[0];}
 	void setVert1(Vertex v){vertices[0]=v;}
@@ -25,7 +26,7 @@ public:
 	void setColor(D3DXCOLOR c) {return;}
 	
 	int x, z;
-	static const int scale = 20;
+	float scale;
 	float** grid;//[x][z];
 
 private:

@@ -84,6 +84,9 @@ void Southfall::initApp()
 	terrainObj.init(mTech, mfxWVPVar, mfxWorldVar, &terrain, Vertex(), Vertex());
 	terrainObj.setPosition(Vector3(0,0,0));
 	
+	surr.setDevice(md3dDevice); surr.setMFX(mFX);
+	surr.init(mTech, mfxWVPVar, mfxWorldVar, &terrain);
+
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	
 	score = 0;	
@@ -164,6 +167,7 @@ void Southfall::drawScene()
 	mWVP = mView*mProj;
 	originObj.draw(&mWVP);
 	terrainObj.draw(&mWVP);
+	surr.draw(&mWVP);
 	fireballObj.draw(&mWVP);
 
 
