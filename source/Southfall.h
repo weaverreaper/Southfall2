@@ -90,7 +90,10 @@ private:
 
 	float startCut1;
 	float startCut2;
+	float startEndCut;
 	int alpha;
+
+	bool pigKilled, bearKilled;
 
 	int level;
 	Terrain terrain[LEVELS];
