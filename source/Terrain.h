@@ -13,11 +13,11 @@ class Terrain : public Geometry
 {
 	friend class Surroundings;
 public:
-
 	Terrain();
 	//Terrain(D3DXCOLOR col);
 	~Terrain();
 
+	void initFile(char* file);
 	void init(ID3D10Device* device, float sscale = 20);
 	void draw();
 	Vertex getPoint(){return vertices[0];}

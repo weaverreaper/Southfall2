@@ -30,12 +30,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 
 Southfall::Southfall(HINSTANCE hInstance)
 : D3DApp(hInstance), mFX(0), mTech(0), mVertexLayout(0),
-  mfxWVPVar(0), mTheta(0.0f), mPhi(PI*0.25f), lastFrameTime(0), gameState(0)
+mfxWVPVar(0), mTheta(0.0f), mPhi(PI*0.25f), lastFrameTime(0), gameState(0)
 {
 	D3DXMatrixIdentity(&mView);
 	D3DXMatrixIdentity(&mProj);
 	D3DXMatrixIdentity(&mWVP); 
-	
 }
 
 Southfall::~Southfall()
@@ -74,7 +73,7 @@ void Southfall::initApp()
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball, Vertex(), Vertex());
 	fireballObj.setInActive();
 	
-	camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &audio, &mView, &terrain, &lights);
+	camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &audio, &mView, &terrain[0], &lights);
 	//action.init() <- haha <- lol
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
@@ -82,7 +81,10 @@ void Southfall::initApp()
 	camera.setFireball(&fireballObj);	
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\Ground1.jpg", 0, 0, &mDiffuseMapRV, 0 ));
+		L"Textures\\Ground1.jpg", 0, 0, &mDiffuseMapRV[0], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Leaves5.jpg", 0, 0, &mDiffuseMapRV[1], 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
@@ -90,22 +92,24 @@ void Southfall::initApp()
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Title.png", 0, 0, &mSplashTextureRV, 0 ));
 
-	
+	level = 0;
+
 	origin.init(md3dDevice, 10);
-	terrain.init(md3dDevice);
-
-	D3DXMATRIX temp;
-
-	terrainObj.init(mTech, mfxWVPVar, mfxWorldVar, &terrain, Vertex(), Vertex());
-	terrainObj.setPosition(Vector3(0,0,0));
+	terrain[0].initFile("Worlds/Beach.txt");
+	terrain[1].initFile("Worlds/Forest.txt");
+	for(int i = 0; i < LEVELS; ++i)
+	{
+		terrain[i].init(md3dDevice);
+		terrainObj[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i], Vertex(), Vertex());
+		terrainObj[i].setPosition(Vector3(0,0,0));
 	
-	surr.setDevice(md3dDevice); surr.setMFX(mFX);
-	surr.init(mTech, mfxWVPVar, mfxWorldVar, &terrain);
-
+		surr[i].setDevice(md3dDevice); surr[i].setMFX(mFX);
+		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
+	}
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	
 	score = 0;
-	gameState = SPLASH;
+	gameState = SPLASH1;
 }
 
 void Southfall::onResize()
@@ -125,15 +129,16 @@ void Southfall::updateScene(float dt)
 
 	switch (gameState)
 	{
-	case SPLASH:
+	case SPLASH1:
 		if(input.anyKeyPressed()) 
-			gameState = GAME;	
+			++gameState;	
 		else
 		{
 			Vector3 up(0,1,0);
 			Vector3 position(2.5,2.5,-7);
 			Vector3 target(2.5,2.5,0);
 			D3DXMatrixLookAtLH(&mView, &position, &target, &up);
+			camera.setVelocity(Vector3(0,0,0));
 
 			float time = mTimer.getGameTime();
 			
@@ -162,9 +167,18 @@ void Southfall::updateScene(float dt)
 
 		}
 		break;
-	case GAME:
+	case LEVEL1:
+	case LEVEL2:
 		camera.update(dt);
 		fireballObj.update(dt);
+		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
+		{
+			++gameState;
+			++level;
+			if(level >= LEVELS)
+				level = LEVELS-1;
+			camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &audio, &mView, &terrain[level], &lights);
+		}
 		break;
 	case END:		
 
@@ -186,7 +200,7 @@ void Southfall::setShaderVals()
 	mfxEyePosVar->SetRawValue(&camera.getPos(), 0, sizeof(D3DXVECTOR3));	
 	mfxLightVar->SetRawValue(&lights.lights, 0, sizeof(Light)*LIGHT_COUNT);
 
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV);
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[level]);
 	mfxSpecMapVar->SetResource(mSpecMapRV);
 
 	// Don't transform texture coordinates, so just use identity transformation.
@@ -207,17 +221,18 @@ void Southfall::drawScene()
 	
 	switch (gameState)
 	{
-	case SPLASH:
+	case SPLASH1:
 		temp = Vector3(0,0,0);
 		mfxEyePosVar->SetRawValue(&temp, 0, sizeof(D3DXVECTOR3));
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
 		splashObj.draw(&mWVP);
 		break;
 
-	case GAME:
+	case LEVEL1:
+	case LEVEL2:
 		originObj.draw(&mWVP);
-		terrainObj.draw(&mWVP);
-		surr.draw(&mWVP);
+		terrainObj[level].draw(&mWVP);
+		surr[level].draw(&mWVP);
 		fireballObj.draw(&mWVP);
 
 		mFont->DrawText(0, mFrameStats.c_str(), -1, &R, DT_NOCLIP, BLACK);	

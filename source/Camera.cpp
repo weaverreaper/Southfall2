@@ -89,7 +89,16 @@ void Camera::update(float dt)
 	if (mTheta < 0)  mTheta += 2*PI;	
 	else if (mTheta > 2*PI)  mTheta -= 2*PI;	
 	
-	
+	float d = 25;
+	if(position.x <= 0+d)
+		position.x = d;
+	else if(position.x >= (terr->x-1)*terr->scale-d)
+		position.x = (terr->x-1)*terr->scale - d;
+	if(position.z <= 0+d)
+		position.z = d;
+	else if(position.z >= (terr->z-1)*terr->scale-d)
+		position.z = (terr->z-1)*terr->scale - d;
+
 	if(position.x > 0 && position.x < (terr->x-1)*terr->scale && position.z > 0 && position.z < (terr->z-1)*terr->scale) 
 	{
 		onGround = false;
@@ -101,8 +110,6 @@ void Camera::update(float dt)
 			position.y = terrY*terr->scale + HEAD_HEIGHT;
 		}
 	}
-	else
-		onGround = true;
 
  	float x =  lookRadius * sinf(mPhi)*sinf(mTheta) + position.x;
 	float y =  lookRadius * cosf(mPhi) + position.y;

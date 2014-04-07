@@ -7,7 +7,21 @@
 Terrain::Terrain()
 :md3dDevice(0), mVB(0), mIB(0)
 {
-	ifs.open("Worlds/Beach.txt");
+}
+ 
+Terrain::~Terrain()
+{
+	for(int i = 0; i < x; ++i)
+		delete[] grid[i];
+	delete[] grid;
+	delete[] vertices;
+
+	ReleaseCOM(mVB);
+	ReleaseCOM(mIB);
+}
+void Terrain::initFile(char* file)
+{
+	ifs.open(file);
 	ifs >> x >> z;
 	mNumVertices = (x-1)*(z-1);
 	mNumFaces = 4*(x-2)*(z-2);
@@ -39,38 +53,12 @@ Terrain::Terrain()
 			}
 		}
 	}
-}
-/*
-Terrain::Terrain(D3DXCOLOR col)
-:md3dDevice(0), mVB(0), mIB(0)
-{
-	
-	ifs.open("World1.txt");
-	for(int i = 0; i < x; ++i)
-	{
-		for(int j = 0; j < z; ++j)
-		{
-			ifs >> grid[i][j];
-			if(i < x-1 && j < z-1)
-				vertices[i*(x-1)+j] = Vertex(D3DXVECTOR3(i,grid[i][j],j),D3DXCOLOR(min(1,4*float(i%2)/x+col.r),col.g,min(1,4*float(j%2)/z+col.b),1));
-		}
-	}
-	ifs.close();
-}
- */
-Terrain::~Terrain()
-{
-	for(int i = 0; i < x; ++i)
-		delete[] grid[i];
-	delete[] grid;
-	delete[] vertices;
 
-	ReleaseCOM(mVB);
-	ReleaseCOM(mIB);
 }
 
 void Terrain::init(ID3D10Device* device, float sscale)
 {
+
 	md3dDevice = device;
 	scale = sscale;
 	// Scale

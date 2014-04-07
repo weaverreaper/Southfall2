@@ -21,11 +21,13 @@
 #include "modelclass.h"
 #include "Surroundings.h"
 
+	const int LEVELS = 2;
+
 //Global light and shader variables
 	ID3D10EffectMatrixVariable* mfxWorldVar;
 	ID3D10EffectVariable* mfxEyePosVar;
 	ID3D10EffectVariable* mfxLightVar;
-	ID3D10ShaderResourceView* mDiffuseMapRV;
+	ID3D10ShaderResourceView* mDiffuseMapRV[LEVELS];
 	ID3D10ShaderResourceView* mSpecMapRV;
 	ID3D10ShaderResourceView* mSplashTextureRV;
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
@@ -34,8 +36,9 @@
 	
 	enum 
 	{
-		SPLASH,
-		GAME,
+		SPLASH1,
+		LEVEL1,
+		LEVEL2,
 		END
 	};
 
@@ -83,10 +86,11 @@ private:
 	float mTheta;
 	float mPhi;
 
-	Terrain terrain;
-	GeoObject terrainObj;
+	int level;
+	Terrain terrain[LEVELS];
+	GeoObject terrainObj[LEVELS];
 	
-	Surroundings surr;
+	Surroundings surr[LEVELS];
 
 	Box fireball;
 	Fireball fireballObj;

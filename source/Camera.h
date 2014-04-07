@@ -24,7 +24,7 @@ public:
 	D3DXVECTOR3 getTarget(){return target;}
 	D3DXVECTOR3 getPos(){return position;}
 	void setFireball(Fireball* f){fireball = f;}
-
+	void setVelocity(Vector3 v){velocity = v;}
 	void shootFireBall();
 
 private:
