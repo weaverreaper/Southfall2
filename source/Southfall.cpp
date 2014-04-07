@@ -132,7 +132,8 @@ void Southfall::updateScene(float dt)
 			gameState = CUT1;	
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
-			alpha = 0;			
+			alpha = 0;	
+			for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
 		}
 		else
 		{
@@ -168,6 +169,19 @@ void Southfall::updateScene(float dt)
 		break;
 	case CUT1:
 		if (mTimer.getGameTime() - startCut1 > 4)
+		{
+			gameState = CUT2;
+			camera.update(dt);
+			startCut2 = mTimer.getGameTime();
+			alpha = 0;
+			break;
+		}
+		alpha += 80*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
+		break;
+	case CUT2:
+		if (mTimer.getGameTime() - startCut2 > 4)
 		{
 			gameState = GAME;
 			camera.update(dt);
@@ -229,10 +243,13 @@ void Southfall::drawScene()
 		break;
 	case CUT1:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("Your finger will light the way...",GAME_WIDTH/2 - 100,GAME_HEIGHT/2);		
+		theText.print("You arrive in a darkened land.",GAME_WIDTH/2 - 100,GAME_HEIGHT/2);		
+		break;
+	case CUT2:
+		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
+		theText.print("Your finger will light the way...",GAME_WIDTH/2 + 100,GAME_HEIGHT/2+50);		
 		break;
 	case GAME:
-		originObj.draw(&mWVP);
 		terrainObj.draw(&mWVP);
 		surr.draw(&mWVP);
 		fireballObj.draw(&mWVP);	

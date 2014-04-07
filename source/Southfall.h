@@ -36,6 +36,7 @@
 	{
 		SPLASH,
 		CUT1,
+		CUT2,
 		GAME,
 		END
 	};
@@ -85,6 +86,7 @@ private:
 	float mPhi;
 
 	float startCut1;
+	float startCut2;
 	int alpha;
 
 	Terrain terrain;
