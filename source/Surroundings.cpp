@@ -1,17 +1,33 @@
 #include "Surroundings.h"
 
-void Surroundings::initTextures(wchar_t* t1, wchar_t* t2, wchar_t* t3, wchar_t* t4, wchar_t* t5)
+void Surroundings::initTextures(wchar_t* t0, wchar_t* t1, wchar_t* t2, wchar_t* t3, wchar_t* t4, wchar_t* t5)
 {
-	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		t1, 0, 0, &mDiffuseMapRV[0], 0 ));
-	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		t2, 0, 0, &mDiffuseMapRV[1], 0 ));
-	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		t3, 0, 0, &mDiffuseMapRV[2], 0 ));
-	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		t4, 0, 0, &mDiffuseMapRV[3], 0 ));
-	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		t5, 0, 0, &mDiffuseMapRV[4], 0 ));
+	for(int i = 0; i < 6; ++i)
+		valid[i] = true;
+	if(t0 != NULL){
+		HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, t0, 0, 0, &mDiffuseMapRV[0], 0 ));
+	}else
+		valid[0] = false;
+	if(t1 != NULL){
+		HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, t1, 0, 0, &mDiffuseMapRV[1], 0 ));
+	}else
+		valid[1] = false;
+	if(t2 != NULL){
+		HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, t2, 0, 0, &mDiffuseMapRV[2], 0 ));
+	}else
+		valid[2] = false;
+	if(t3 != NULL){
+		HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, t3, 0, 0, &mDiffuseMapRV[3], 0 ));
+	}else
+		valid[3] = false;
+	if(t4 != NULL){
+		HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, t4, 0, 0, &mDiffuseMapRV[4], 0 ));
+	}else
+		valid[4] = false;
+	if(t5 != NULL){
+		HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, t5, 0, 0, &mDiffuseMapRV[5], 0 ));
+	}else
+		valid[5] = false;
 
 }
 	
@@ -34,6 +50,12 @@ void Surroundings::init(	ID3D10EffectTechnique* t,
 	 terrain = terr;
 	 Matrix m1,m2,m3,m4;
 	 //set matrices of geoobjs
+
+	 RotateX(&m1,-PI/2);
+	 Scale(&m2,(terrain->x-2)*terrain->scale, 1000, 0);
+	 //RotateX(&m3, PI/2);
+	 w0.init(t,f,w,&wall,Vertex(),Vertex());
+	 w0.setWorldMatrix(m1*m2);
 
 	 RotateX(&m1,-PI/2);
 	 Scale(&m2,(terrain->x-2)*terrain->scale, 1000, 0);
@@ -72,16 +94,23 @@ void Surroundings::draw(Matrix* vp)
 	mfxTexMtxVar->SetMatrix((float*)&texMtx);
 
 	mfxSpecMapVar->SetResource(mSpecMapRV);
-
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[0]);
-	w1.draw(vp);
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[1]);
-	w2.draw(vp);
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[2]);
-	w3.draw(vp);
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[3]);
-	w4.draw(vp);
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[4]);
-	w5.draw(vp);
-
+	if(valid[0]){
+		mfxDiffuseMapVar->SetResource(mDiffuseMapRV[0]);
+		w0.draw(vp);
+	}if(valid[1]){
+		mfxDiffuseMapVar->SetResource(mDiffuseMapRV[1]);
+		w1.draw(vp);
+	}if(valid[2]){
+		mfxDiffuseMapVar->SetResource(mDiffuseMapRV[2]);
+		w2.draw(vp);
+	}if(valid[3]){
+		mfxDiffuseMapVar->SetResource(mDiffuseMapRV[3]);
+		w3.draw(vp);
+	}if(valid[4]){
+		mfxDiffuseMapVar->SetResource(mDiffuseMapRV[4]);
+		w4.draw(vp);
+	}if(valid[5]){
+		mfxDiffuseMapVar->SetResource(mDiffuseMapRV[5]);
+		w5.draw(vp);
+	}
 }

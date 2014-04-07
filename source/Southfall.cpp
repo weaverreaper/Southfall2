@@ -106,8 +106,8 @@ void Southfall::initApp()
 		surr[i].setDevice(md3dDevice); 
 		surr[i].setMFX(mFX);
 	}
-	surr[0].initTextures(L"Textures/water.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
-	surr[1].initTextures(L"Textures/sandBack.png",L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
+	surr[0].initTextures(NULL, L"Textures/water.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
+	surr[1].initTextures(L"Textures/Rock1.jpg",L"Textures/sandBack.png",L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
 	for(int i = 0; i < LEVELS; ++i)
 	{
 		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
