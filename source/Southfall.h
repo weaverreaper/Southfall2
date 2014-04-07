@@ -37,6 +37,8 @@
 	enum 
 	{
 		SPLASH1,
+		CUT1,
+		CUT2,
 		LEVEL1,
 		LEVEL2,
 		END
@@ -85,6 +87,10 @@ private:
 
 	float mTheta;
 	float mPhi;
+
+	float startCut1;
+	float startCut2;
+	int alpha;
 
 	int level;
 	Terrain terrain[LEVELS];

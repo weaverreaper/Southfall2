@@ -72,8 +72,10 @@ void Southfall::initApp()
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball, Vertex(), Vertex());
 	fireballObj.setInActive();
-	
-	camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &audio, &mView, &terrain[0], &lights);
+
+	level = 0;
+
+	camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
 	//action.init() <- haha <- lol
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
@@ -92,8 +94,6 @@ void Southfall::initApp()
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Title.png", 0, 0, &mSplashTextureRV, 0 ));
 
-	level = 0;
-
 	origin.init(md3dDevice, 10);
 	terrain[0].initFile("Worlds/Beach.txt");
 	terrain[1].initFile("Worlds/Forest.txt");
@@ -110,6 +110,7 @@ void Southfall::initApp()
 	
 	score = 0;
 	gameState = SPLASH1;
+	audio.playCue(BAR_BACKGROUND_CUE);
 }
 
 void Southfall::onResize()
@@ -122,7 +123,7 @@ void Southfall::onResize()
 
 void Southfall::updateScene(float dt)
 {
-	D3DApp::updateScene(dt);
+	D3DApp::updateScene(dt);	
 
 	if(input.wasKeyPressed(VK_ESCAPE))
 		PostQuitMessage(0);
@@ -130,8 +131,14 @@ void Southfall::updateScene(float dt)
 	switch (gameState)
 	{
 	case SPLASH1:
-		if(input.anyKeyPressed()) 
-			++gameState;	
+		if(input.anyKeyPressed())
+		{
+			gameState = CUT1;	
+			audio.stopCue(BAR_BACKGROUND_CUE);
+			startCut1 = mTimer.getGameTime();
+			alpha = 0;	
+			for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
+		}
 		else
 		{
 			Vector3 up(0,1,0);
@@ -163,9 +170,31 @@ void Southfall::updateScene(float dt)
 			
 			lights.lights[4].pos.y = 2*cosf(time);
 
-
-
 		}
+		break;
+	case CUT1:
+		if (mTimer.getGameTime() - startCut1 > 4)
+		{
+			gameState = CUT2;
+			camera.update(dt);
+			startCut2 = mTimer.getGameTime();
+			alpha = 0;
+			break;
+		}
+		alpha += 80*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
+		break;
+	case CUT2:
+		if (mTimer.getGameTime() - startCut2 > 4)
+		{
+			gameState = LEVEL1;
+			camera.update(dt);
+			break;
+		}
+		alpha += 80*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
 		break;
 	case LEVEL1:
 	case LEVEL2:
@@ -177,7 +206,8 @@ void Southfall::updateScene(float dt)
 			++level;
 			if(level >= LEVELS)
 				level = LEVELS-1;
-			camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &audio, &mView, &terrain[level], &lights);
+			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
+	
 		}
 		break;
 	case END:		
@@ -217,7 +247,6 @@ void Southfall::drawScene()
 	std::stringstream q;
 	RECT R = {5, 5, 0, 0};
 	Vector3 temp;
-	Matrix tempM;
 	
 	switch (gameState)
 	{
@@ -227,15 +256,19 @@ void Southfall::drawScene()
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
 		splashObj.draw(&mWVP);
 		break;
-
+	case CUT1:
+		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
+		theText.print("You arrive in a darkened land.",GAME_WIDTH/2 - 100,GAME_HEIGHT/2);		
+		break;
+	case CUT2:
+		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
+		theText.print("Your finger will light the way...",GAME_WIDTH/2 + 100,GAME_HEIGHT/2+50);		
+		break;
 	case LEVEL1:
 	case LEVEL2:
-		originObj.draw(&mWVP);
 		terrainObj[level].draw(&mWVP);
 		surr[level].draw(&mWVP);
-		fireballObj.draw(&mWVP);
-
-		mFont->DrawText(0, mFrameStats.c_str(), -1, &R, DT_NOCLIP, BLACK);	
+		fireballObj.draw(&mWVP);	
 
 		q << "Score: " << score;
 		theText.print(q.str(),0, 0);	
