@@ -218,7 +218,7 @@ void D3DApp::updateScene(float dt)
 
 	static int frameCnt = 0;
 	static float t_base = 0.0f;
-
+	input.checkCapture(mhMainWnd);
 	frameCnt++;
 
 	float mspf_0 = mTimer.getGameTime() - t_base;

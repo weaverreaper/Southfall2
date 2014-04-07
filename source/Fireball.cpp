@@ -3,7 +3,7 @@
 void Fireball::init(	ID3D10EffectTechnique* t, 
 						ID3D10EffectMatrixVariable* f,
 						ID3D10EffectMatrixVariable* w,
-						Geometry* g, Vertex v1, Vertex v2)
+						Geometry* g)
 {
 	 dist = 0;	
 
@@ -17,7 +17,7 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
 
-	 GeoObject::init(t,f,w,g,v1,v2);
+	 GeoObject::init(t,f,w,g);
 }
 
 		

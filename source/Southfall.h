@@ -7,12 +7,12 @@
 #include "Origin.h"
 #include "Pyramid.h"
 #include "Geometry.h"
-#include "GeoObject.h"
 #include "textDX.h"
 #include "audio.h"
 #include "input.h"
 #include "Square.h"
 #include "enemy.h"
+#include "Goblin.h"
 #include <sstream>
 #include "Camera.h"
 #include "Terrain.h"
@@ -20,6 +20,8 @@
 #include "fireshaderclass.h"
 #include "modelclass.h"
 #include "Surroundings.h"
+#include "Goblinbody.h"
+#include "Goblinhead.h"
 
 	const int LEVELS = 2;
 
@@ -30,6 +32,7 @@
 	ID3D10ShaderResourceView* mDiffuseMapRV[LEVELS];
 	ID3D10ShaderResourceView* mSpecMapRV;
 	ID3D10ShaderResourceView* mSplashTextureRV;
+	ID3D10ShaderResourceView* mGoblinSkinTextureRV;
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
 	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
 	ID3D10EffectMatrixVariable* mfxTexMtxVar;
@@ -98,6 +101,9 @@ private:
 	
 	Surroundings surr[LEVELS];
 
+	GoblinHead head;
+	GoblinBody body;
+	Goblin goblin;
 	Box fireball;
 	Fireball fireballObj;
 };
