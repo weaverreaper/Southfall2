@@ -74,7 +74,7 @@ void Southfall::initApp()
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball, Vertex(), Vertex());
 	fireballObj.setInActive();
 	
-	camera.init(Vector3(10,100,10), Vector3(200,0,0), &input, &audio, &mView, &terrain, &lights);
+	camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain, &lights);
 	//action.init() <- haha <- lol
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
@@ -119,7 +119,7 @@ void Southfall::onResize()
 
 void Southfall::updateScene(float dt)
 {
-	D3DApp::updateScene(dt);
+	D3DApp::updateScene(dt);	
 
 	if(input.wasKeyPressed(VK_ESCAPE))
 		PostQuitMessage(0);
@@ -129,8 +129,10 @@ void Southfall::updateScene(float dt)
 	case SPLASH:
 		if(input.anyKeyPressed())
 		{
-			gameState = GAME;	
+			gameState = CUT1;	
 			audio.stopCue(BAR_BACKGROUND_CUE);
+			startCut1 = mTimer.getGameTime();
+			alpha = 0;			
 		}
 		else
 		{
@@ -163,6 +165,17 @@ void Southfall::updateScene(float dt)
 			lights.lights[4].pos.y = 2*cosf(time);
 
 		}
+		break;
+	case CUT1:
+		if (mTimer.getGameTime() - startCut1 > 4)
+		{
+			gameState = GAME;
+			camera.update(dt);
+			break;
+		}
+		alpha += 80*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
 		break;
 	case GAME:
 		camera.update(dt);
@@ -205,7 +218,6 @@ void Southfall::drawScene()
 	std::stringstream q;
 	RECT R = {5, 5, 0, 0};
 	Vector3 temp;
-	Matrix tempM;
 	
 	switch (gameState)
 	{
@@ -215,14 +227,15 @@ void Southfall::drawScene()
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
 		splashObj.draw(&mWVP);
 		break;
-
+	case CUT1:
+		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
+		theText.print("Your finger will light the way...",GAME_WIDTH/2 - 100,GAME_HEIGHT/2);		
+		break;
 	case GAME:
 		originObj.draw(&mWVP);
 		terrainObj.draw(&mWVP);
 		surr.draw(&mWVP);
-		fireballObj.draw(&mWVP);
-
-		mFont->DrawText(0, mFrameStats.c_str(), -1, &R, DT_NOCLIP, BLACK);	
+		fireballObj.draw(&mWVP);	
 
 		q << "Score: " << score;
 		theText.print(q.str(),0, 0);	

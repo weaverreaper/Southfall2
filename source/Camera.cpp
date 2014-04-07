@@ -29,7 +29,7 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, D3DXMATRIX* view
 
 	//initialize angles based on target position (convert Cartesian to Spherical)
 	mPhi = acos(temp.y / lookRadius);
-	mTheta = asin(temp.x/(lookRadius*sin(mPhi)));			
+	mTheta = PI + asin(temp.x/(lookRadius*sin(mPhi)));			
 }
 
 void Camera::update(float dt)

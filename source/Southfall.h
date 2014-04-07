@@ -35,6 +35,7 @@
 	enum 
 	{
 		SPLASH,
+		CUT1,
 		GAME,
 		END
 	};
@@ -82,6 +83,9 @@ private:
 
 	float mTheta;
 	float mPhi;
+
+	float startCut1;
+	int alpha;
 
 	Terrain terrain;
 	GeoObject terrainObj;
