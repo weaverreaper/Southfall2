@@ -1,5 +1,21 @@
 #include "Surroundings.h"
 
+void Surroundings::initTextures(wchar_t* t1, wchar_t* t2, wchar_t* t3, wchar_t* t4, wchar_t* t5)
+{
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		t1, 0, 0, &mDiffuseMapRV[0], 0 ));
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		t2, 0, 0, &mDiffuseMapRV[1], 0 ));
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		t3, 0, 0, &mDiffuseMapRV[2], 0 ));
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		t4, 0, 0, &mDiffuseMapRV[3], 0 ));
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		t5, 0, 0, &mDiffuseMapRV[4], 0 ));
+
+}
+	
+
 void Surroundings::init(	ID3D10EffectTechnique* t, 
 							ID3D10EffectMatrixVariable* f,
 							ID3D10EffectMatrixVariable* w,
@@ -11,15 +27,6 @@ void Surroundings::init(	ID3D10EffectTechnique* t,
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
 
 	wall.init(md3dDevice);
-
-	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures/water.png", 0, 0, &mDiffuseMapRV1, 0 ));
-	 
-	  HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures/Rock1.jpg", 0, 0, &mDiffuseMapRV2, 0 ));
-
-	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures/Sky2.jpg", 0, 0, &mDiffuseMapRV3, 0 ));
 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
@@ -63,20 +70,18 @@ void Surroundings::draw(Matrix* vp)
 	D3DXMATRIX texMtx;
 	D3DXMatrixIdentity(&texMtx);
 	mfxTexMtxVar->SetMatrix((float*)&texMtx);
-	
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV1);
+
 	mfxSpecMapVar->SetResource(mSpecMapRV);
-	//draw water
+
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[0]);
 	w1.draw(vp);
-
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV2);
-	//draw rock
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[1]);
 	w2.draw(vp);
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[2]);
 	w3.draw(vp);
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[3]);
 	w4.draw(vp);
-
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV3);
-	//draw sky
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[4]);
 	w5.draw(vp);
 
 }

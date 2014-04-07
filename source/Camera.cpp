@@ -92,8 +92,8 @@ void Camera::update(float dt)
 	float d = 25;
 	if(position.x <= 0+d)
 		position.x = d;
-	else if(position.x >= (terr->x-1)*terr->scale-d)
-		position.x = (terr->x-1)*terr->scale - d;
+	else if(position.x >= (terr->x-2)*terr->scale-d)
+		position.x = (terr->x-2)*terr->scale - d;
 	if(position.z <= 0+d)
 		position.z = d;
 	else if(position.z >= (terr->z-1)*terr->scale-d)
