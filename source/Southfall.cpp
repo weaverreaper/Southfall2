@@ -70,9 +70,11 @@ void Southfall::initApp()
 	
 	fireball.init(md3dDevice, 5);
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
-	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball, Vertex(), Vertex());
+	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball);
 	fireballObj.setInActive();
-
+	head.init(md3dDevice, 5);
+	body.init(md3dDevice, 5);
+	goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body);
 	level = 0;
 	pigKilled = false;
 
@@ -94,6 +96,9 @@ void Southfall::initApp()
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Title.png", 0, 0, &mSplashTextureRV, 0 ));
 
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\goblinskin.jpg", 0, 0, &mGoblinSkinTextureRV, 0 ));
+
 	origin.init(md3dDevice, 10);
 	terrain[0].initFile("Worlds/Beach.txt");
 	terrain[1].initFile("Worlds/Forest.txt");
@@ -113,7 +118,8 @@ void Southfall::initApp()
 		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
 	}
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
-	
+	goblin.setPosition(D3DXVECTOR3(300,150,300));
+	goblin.setScale(2.0f);
 	score = 0;
 	gameState = SPLASH1;
 	audio.playCue(BAR_BACKGROUND_CUE);
@@ -140,7 +146,7 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			gameState = CUT1;	
+			gameState = LEVEL1;	
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
@@ -216,6 +222,8 @@ void Southfall::updateScene(float dt)
 	case LEVEL1:
 		camera.update(dt);
 		fireballObj.update(dt);
+		goblin.update(dt);
+
 		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
 			
@@ -327,7 +335,8 @@ void Southfall::drawScene()
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
 		surr[level].draw(&mWVP);
-		fireballObj.draw(&mWVP);	
+		fireballObj.draw(&mWVP);
+		goblin.draw(&mWVP);
 
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);	

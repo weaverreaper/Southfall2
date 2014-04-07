@@ -12,6 +12,7 @@ public:
 
 	GeoObject();
 	~GeoObject();
+	virtual void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* g);
 
 	virtual void init(	ID3D10EffectTechnique* t, 
 						ID3D10EffectMatrixVariable* f,

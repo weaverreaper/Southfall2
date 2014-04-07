@@ -25,6 +25,17 @@ GeoObject::~GeoObject()
 	
 }
 
+void GeoObject::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D10EffectMatrixVariable* w, Geometry* g)
+{
+	//md3dDevice = device;
+	geom = g;
+	fxMatrix = f;
+	fxWorld = w;
+	tech = t;
+	D3DXMatrixIdentity(&world);
+	D3DXMatrixIdentity(&wvp);
+}
+
 void GeoObject::init(ID3D10EffectTechnique* t,
 					ID3D10EffectMatrixVariable* f, 
 					ID3D10EffectMatrixVariable* w, 

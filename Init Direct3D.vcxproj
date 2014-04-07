@@ -16,6 +16,8 @@
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\Fireball.cpp" />
     <ClCompile Include="source\Goblin.cpp" />
+    <ClCompile Include="source\Goblinbody.cpp" />
+    <ClCompile Include="source\Goblinhead.cpp" />
     <ClCompile Include="source\Southfall.cpp" />
     <ClCompile Include="source\d3dApp.cpp" />
     <ClCompile Include="source\GameTimer.cpp" />
@@ -46,6 +48,8 @@
     <ClInclude Include="source\Geometry.h" />
     <ClInclude Include="source\GeoObject.h" />
     <ClInclude Include="source\Goblin.h" />
+    <ClInclude Include="source\Goblinbody.h" />
+    <ClInclude Include="source\Goblinhead.h" />
     <ClInclude Include="source\input.h" />
     <ClInclude Include="source\Lighting.h" />
     <ClInclude Include="source\Line.h" />
