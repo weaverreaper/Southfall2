@@ -185,7 +185,7 @@ void Southfall::updateScene(float dt)
 		}
 		break;
 	case CUT1:
-		if (mTimer.getGameTime() - startCut1 > 4)
+		if (mTimer.getGameTime() - startCut1 > 3)
 		{
 			gameState = CUT2;
 			camera.update(dt);
@@ -198,10 +198,11 @@ void Southfall::updateScene(float dt)
 		if (alpha < 0) alpha = 0;
 		break;
 	case CUT2:
-		if (mTimer.getGameTime() - startCut2 > 4)
+		if (mTimer.getGameTime() - startCut2 > 3)
 		{
 			gameState = LEVEL1;
 			camera.update(dt);
+			audio.playCue(BEACH_CUE);
 			break;
 		}
 		alpha += 80*dt;
@@ -217,6 +218,8 @@ void Southfall::updateScene(float dt)
 		{
 			++gameState;
 			++level;
+			audio.stopCue(BEACH_CUE);
+			audio.playCue(FOREST_CUE);
 			if(level >= LEVELS)
 				level = LEVELS-1;
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);

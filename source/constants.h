@@ -30,6 +30,8 @@ const char FIREBALL_CUE[] = "Fireball";
 const char SAND_CUE[] = "SandStep";
 const char BACKGROUND_CUE[] = "Background";
 const char BAR_BACKGROUND_CUE[] = "Bar2_Background";
+const char BEACH_CUE[] = "Beach";
+const char FOREST_CUE[] = "Forest";
 
 
 //const double PI = 3.14159265;
