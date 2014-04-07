@@ -77,7 +77,7 @@ void Southfall::initApp()
 	goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body);
 	level = 0;
 
-	camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
+	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
 	//action.init() <- haha <- lol
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
@@ -118,7 +118,7 @@ void Southfall::initApp()
 		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
 	}
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
-	goblin.setPosition(D3DXVECTOR3(300,150,300));
+	goblin.setPosition(D3DXVECTOR3(300,120,300));
 	goblin.setScale(2.0f);
 	score = 0;
 	gameState = SPLASH1;

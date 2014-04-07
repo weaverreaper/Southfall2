@@ -20,7 +20,7 @@ public:
 	void setPosition(D3DXVECTOR3 pos){head.setPosition(pos); body.setPosition(pos);}
 	void setScale(float scale){head.setScale(scale);body.setScale(scale);}
 	void update(float dt){head.update(dt);body.update(dt);}
-	void setMFX(ID3D10Effect* fx) { head.setMFX(fx); }
+	void setMFX(ID3D10Effect* fx) { head.setMFX(fx); body.setMFX(fx);}
 
 private:
 

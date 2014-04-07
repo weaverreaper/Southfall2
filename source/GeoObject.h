@@ -46,7 +46,7 @@ public:
 	float getRadius()						{return radius;}
 	float getScale()						{return scale;}
 	bool getActiveState()					{return active;}
-
+	virtual void setMFX(ID3D10Effect* fx) { mFX = fx; }
 	bool collided(GeoObject *gameObject);		
 
 protected:
@@ -55,6 +55,7 @@ protected:
 	D3DXMATRIX world, wvp;
 
 	//ID3D10Device* md3dDevice;
+	ID3D10Effect* mFX;
 	ID3D10EffectTechnique* tech;
 	ID3D10EffectMatrixVariable* fxMatrix;
 	ID3D10EffectMatrixVariable* fxWorld;
