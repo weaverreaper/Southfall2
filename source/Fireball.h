@@ -4,7 +4,7 @@
 #include "GeoObject.h"
 #include "Lighting.h"
 
-const float MAX_DIST =  1000.f;
+const float MAX_DIST =  900.f;
 const float FIREBALL_SPEED = 1000.f;
 
 class Fireball : public GeoObject
