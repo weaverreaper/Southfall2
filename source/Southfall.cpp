@@ -59,14 +59,14 @@ void Southfall::initApp()
 	splash = Square(1);
 	splash.init(md3dDevice,5);
 	splashObj.init(mTech, mfxWVPVar, mfxWorldVar, &splash, Vertex(), Vertex());
-	//splashObj.setPosition(Vector3(10,10,10));
+	
 	Matrix tm1,tm2,tm3;
 	Identity(&tm1);
 
 
 	D3DXMatrixRotationYawPitchRoll(&tm1, PI/2, 0, PI/2); 
 	splashObj.setWorldMatrix(tm1);
-	//splashObj.update(1);
+	
 	
 	fireball.init(md3dDevice, 5);
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
@@ -76,10 +76,10 @@ void Southfall::initApp()
 	body.init(md3dDevice, 5);
 	goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body);
 	level = 0;
+	pigKilled = false;
 
 	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-	//action.init() <- haha <- lol
-
+	
 	fireballObj.setLight(&lights.lights[FIREBALL]);
 
 	camera.setFireball(&fireballObj);	
@@ -123,6 +123,7 @@ void Southfall::initApp()
 	score = 0;
 	gameState = SPLASH1;
 	audio.playCue(BAR_BACKGROUND_CUE);
+	input.clearAll();
 }
 
 void Southfall::onResize()
@@ -150,6 +151,13 @@ void Southfall::updateScene(float dt)
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
 			for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
+			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,1);
+
+			lights.lights[POINT1].pos		= Vector3(380, 600, (terrain[level].z-3)*terrain[level].scale);
+			lights.lights[POINT1].diffuse	= Color(.05f,.05f,.05f,.5f);
+			lights.lights[POINT1].att		= Vector3(0,.0008f,0);
+			lights.lights[POINT1].range		= 65.f;
+
 		}
 		else
 		{
@@ -191,6 +199,7 @@ void Southfall::updateScene(float dt)
 			camera.update(dt);
 			startCut2 = mTimer.getGameTime();
 			alpha = 0;
+			Sleep(400);
 			break;
 		}
 		alpha += 80*dt;
@@ -209,13 +218,15 @@ void Southfall::updateScene(float dt)
 		if (alpha > 255) alpha = 255;
 		if (alpha < 0) alpha = 0;
 		break;
+
 	case LEVEL1:
-	case LEVEL2:
 		camera.update(dt);
 		fireballObj.update(dt);
 		goblin.update(dt);
-		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
+
+		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
+			
 			++gameState;
 			++level;
 			audio.stopCue(BEACH_CUE);
@@ -223,10 +234,50 @@ void Southfall::updateScene(float dt)
 			if(level >= LEVELS)
 				level = LEVELS-1;
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-	
+			lights.lights[POINT1].pos		= Vector3(380, 400, (terrain[level].z-3)*terrain[level].scale);
+
+			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.4,.4,.4,1);
+			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.6f, .75f, .6f, 1.f);
+			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,0);	
+
+			lights.lights[POINT1].on = 0;
 		}
+		if (input.isKeyDown('O'))
+		{
+			lights.lights[POINT1].on = 1;
+			audio.playCue(ZELDA_CUE);
+			pigKilled = true;
+		}
+
+
+		break;
+
+	case LEVEL2:
+		camera.update(dt);
+		fireballObj.update(dt);
+
+		if (input.isKeyDown('O'))
+		{
+			lights.lights[POINT1].on = 1;
+			audio.playCue(ZELDA_CUE);
+			bearKilled = true;			
+			alpha = 0;
+			audio.stopCue(FOREST_CUE);
+		}
+
+		if(bearKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
+		{
+				gameState = END;
+				startEndCut = mTimer.getGameTime();
+		}
+
 		break;
 	case END:		
+		if (mTimer.getGameTime() - startEndCut > 3) PostQuitMessage(0);
+		
+		alpha += 80*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
 
 		break;
 	}
@@ -261,7 +312,6 @@ void Southfall::drawScene()
 	setShaderVals();
 	mWVP = mView*mProj;
 	std::stringstream q;
-	RECT R = {5, 5, 0, 0};
 	Vector3 temp;
 	
 	switch (gameState)
@@ -274,23 +324,26 @@ void Southfall::drawScene()
 		break;
 	case CUT1:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("You arrive in a darkened land.",GAME_WIDTH/2 - 100,GAME_HEIGHT/2);		
+		theText.print("You arrive in a darkened land.",GAME_WIDTH/2 - 400,GAME_HEIGHT/2-200);		
 		break;
 	case CUT2:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("Your finger will light the way...",GAME_WIDTH/2 + 100,GAME_HEIGHT/2+50);		
+		theText.print("Your finger will light the way...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
 	case LEVEL1:
+
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
 		surr[level].draw(&mWVP);
 		fireballObj.draw(&mWVP);
 		goblin.draw(&mWVP);
 
-		q << "Score: " << score;
+		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);	
 		break;
 	case END:
+		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
+		theText.print("To be continued...",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);		
 		break;
 	}
 

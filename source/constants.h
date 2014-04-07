@@ -32,11 +32,12 @@ const char BACKGROUND_CUE[] = "Background";
 const char BAR_BACKGROUND_CUE[] = "Bar2_Background";
 const char BEACH_CUE[] = "Beach";
 const char FOREST_CUE[] = "Forest";
+const char ZELDA_CUE[] = "Zelda_Success";
 
 
 //const double PI = 3.14159265;
-const int GAME_WIDTH =  800;               // width of game in pixels
-const int GAME_HEIGHT = 600;               // height of game in pixels
+const int GAME_WIDTH =  1280;               // width of game in pixels
+const int GAME_HEIGHT = 800;               // height of game in pixels
 template <typename T>
 inline void safeRelease(T& ptr)
 {

@@ -44,7 +44,7 @@ public:
 	LightingManager()
 	{
 		lights[AMBIENT_DIFFUSE].ambient	 = Color(.5,.5,.5,1);
-		lights[AMBIENT_DIFFUSE].diffuse	 = Color(.6f, .75f, .6f, 1.f);
+		lights[AMBIENT_DIFFUSE].diffuse	 = Color(.7f, .9f, .7f, 1.f);
 		lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,0);	
 		
 		lights[POINT1].diffuse	= Color(1.f,.2f,.2f,1.f);		
