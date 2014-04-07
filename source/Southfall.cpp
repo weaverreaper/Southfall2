@@ -106,6 +106,7 @@ void Southfall::initApp()
 	
 	score = 0;
 	gameState = SPLASH;
+	audio.playCue(BAR_BACKGROUND_CUE);
 }
 
 void Southfall::onResize()
@@ -126,8 +127,11 @@ void Southfall::updateScene(float dt)
 	switch (gameState)
 	{
 	case SPLASH:
-		if(input.anyKeyPressed()) 
+		if(input.anyKeyPressed())
+		{
 			gameState = GAME;	
+			audio.stopCue(BAR_BACKGROUND_CUE);
+		}
 		else
 		{
 			Vector3 up(0,1,0);
@@ -157,8 +161,6 @@ void Southfall::updateScene(float dt)
 				- .23 * sinf(time)*sinf(time);
 			
 			lights.lights[4].pos.y = 2*cosf(time);
-
-
 
 		}
 		break;
