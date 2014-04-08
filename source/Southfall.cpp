@@ -60,9 +60,8 @@ void Southfall::initApp()
 	splash.init(md3dDevice,5);
 	splashObj.init(mTech, mfxWVPVar, mfxWorldVar, &splash, Vertex(), Vertex());
 	
-	Matrix tm1,tm2,tm3;
+	Matrix tm1;
 	Identity(&tm1);
-
 
 	D3DXMatrixRotationYawPitchRoll(&tm1, PI/2, 0, PI/2); 
 	splashObj.setWorldMatrix(tm1);
@@ -137,6 +136,7 @@ void Southfall::onResize()
 void Southfall::updateScene(float dt)
 {
 	D3DApp::updateScene(dt);	
+	Matrix tm1;
 
 	if(input.wasKeyPressed(VK_ESCAPE))
 		PostQuitMessage(0);
@@ -146,7 +146,7 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			gameState = LEVEL1;	
+			gameState = CUT1;	
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
@@ -161,10 +161,7 @@ void Southfall::updateScene(float dt)
 		}
 		else
 		{
-			Vector3 up(0,1,0);
-			Vector3 position(2.5,2.5,-7);
-			Vector3 target(2.5,2.5,0);
-			D3DXMatrixLookAtLH(&mView, &position, &target, &up);
+
 			camera.setVelocity(Vector3(0,0,0));
 
 			float time = mTimer.getGameTime();
@@ -189,6 +186,15 @@ void Southfall::updateScene(float dt)
 				- .23 * sinf(time)*sinf(time);
 			
 			lights.lights[4].pos.y = 2*cosf(time);
+			
+			Vector3 up(0,1,0);
+			Vector3 position(2.5,2.5,-7);
+			Vector3 target(2.5,2.5,0);
+
+			position.x += 2.5*cosf(time);
+			position.y -= 2.5*sinf(time);
+
+			D3DXMatrixLookAtLH(&mView, &position, &target, &up);
 
 		}
 		break;
@@ -249,7 +255,6 @@ void Southfall::updateScene(float dt)
 			pigKilled = true;
 		}
 
-
 		break;
 
 	case LEVEL2:
@@ -262,13 +267,13 @@ void Southfall::updateScene(float dt)
 			audio.playCue(ZELDA_CUE);
 			bearKilled = true;			
 			alpha = 0;
-			audio.stopCue(FOREST_CUE);
 		}
 
 		if(bearKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
 		{
 				gameState = END;
 				startEndCut = mTimer.getGameTime();
+				audio.stopCue(FOREST_CUE);
 		}
 
 		break;

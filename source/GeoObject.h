@@ -33,9 +33,14 @@ public:
 	void setInActive()						{active = false;}
 	void setVert1(Vertex v)					{geom->setVert1(v);}
 	void setVert2(Vertex v)					{geom->setVert2(v);}
+<<<<<<< HEAD
 	void setMTech(ID3D10EffectTechnique* m)	{ tech = m;}
 	void setWorldMatrix(Matrix w)			{world = w;}
 	void setroty(float rot)					{roty = rot;}
+=======
+	void setMTech(ID3D10EffectTechnique* m)	{tech = m;}
+	void setWorldMatrix(Matrix w)			{world = w;}	
+>>>>>>> 286652f1e742cc71786a251054c3daf28e268fff
 	
 	//Getters
 	Vertex getPoint()						{return geom->getPoint();}
