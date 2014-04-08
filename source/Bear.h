@@ -24,6 +24,8 @@ public:
 	void setColor(D3DXCOLOR c) {return;}
 private:
 
+	void redoBuffers(DWORD ind[300]);
+
 	static const DWORD mNumVertices = 60;
 	static const DWORD mNumFaces = 100;
 	Vertex vertices[mNumVertices];
