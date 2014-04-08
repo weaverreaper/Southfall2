@@ -1,5 +1,5 @@
 //=======================================================================================
-// Box.h by Frank Luna (C) 2008 All Rights Reserved.
+// Goblin.h by Nate Higgins
 //=======================================================================================
 
 #ifndef GOBLIN_H
@@ -19,7 +19,8 @@ public:
 	void draw(D3DXMATRIX* vp);
 	void setPosition(D3DXVECTOR3 pos){head.setPosition(pos); body.setPosition(pos);}
 	void setScale(float scale){head.setScale(scale);body.setScale(scale);}
-	void update(float dt){head.update(dt);body.update(dt);}
+	void update(float dt);
+	void update(float dt, Vector3 cam);
 	void setMFX(ID3D10Effect* fx) { head.setMFX(fx); body.setMFX(fx);}
 
 private:

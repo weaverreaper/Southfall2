@@ -14,6 +14,18 @@ Goblin::~Goblin()
 {
 	;
 }
+void Goblin::update(float dt)
+{
+
+	head.update(dt);
+	body.update(dt);
+}
+void Goblin::update(float dt, Vector3 cam)
+{
+	
+	head.update(dt);
+	body.update(dt);
+}
 
 void Goblin::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* h, Geometry* b)
 {
