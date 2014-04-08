@@ -24,9 +24,6 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 		
 void Fireball::update(float dt)
 {
-	if (!active) return;
-
-	light->pos += velocity * dt;
 	dist += FIREBALL_SPEED * dt;
 	if (dist > MAX_DIST)
 	{
@@ -35,6 +32,8 @@ void Fireball::update(float dt)
 		setInActive();
 	}
 	
+	if (!active) return;
+	light->pos += velocity * dt;
 	GeoObject::update(dt);
 }
 
