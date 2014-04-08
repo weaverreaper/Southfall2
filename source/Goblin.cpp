@@ -25,7 +25,7 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	if (!head.getActiveState())
 		return;
 	if((head.collided(fo) || body.collided(fo)) && fo->getActiveState())
-	{		health -= 1;
+	{		health -= 5;
 		fo->setInActive();
 		fo->light->on = 0;
 		fo->dist = 0;

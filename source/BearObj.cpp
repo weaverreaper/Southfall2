@@ -61,7 +61,7 @@ void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	if (!getActiveState())
 		return;
 	if(this->collided(fo) && fo->getActiveState())
-	{		health -= 1;
+	{		health -= 5;
 		fo->setInActive();
 		fo->light->on = 0;
 		fo->dist = 0;
@@ -75,6 +75,7 @@ void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	{
 		setInActive();
 	}
+	update(dt,cam);
 }
 void BearObj::update(float dt, Vector3 cam)
 {

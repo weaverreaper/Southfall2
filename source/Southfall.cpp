@@ -85,6 +85,7 @@ void Southfall::initApp()
 
 	level = 0;
 	pigKilled = false;
+	bearKilled = false;
 
 	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
 	bear.setMFX(mFX);
@@ -137,11 +138,11 @@ void Southfall::initApp()
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	goblin1.setPosition(D3DXVECTOR3(450,120,800));
 	goblin1.setScale(5.0f);
-	goblin2.setPosition(D3DXVECTOR3(300,120,1200));
+	goblin2.setPosition(D3DXVECTOR3(300,120,1400));
 	goblin2.setScale(5.0f);
-	goblin3.setPosition(D3DXVECTOR3(300,120,1200));
+	goblin3.setPosition(D3DXVECTOR3(600,120,1400));
 	goblin3.setScale(5.0f);
-	bear.setPosition(D3DXVECTOR3(450,120,1800));
+	bear.setPosition(D3DXVECTOR3(450,120,1200));
 	bear.setScale(5.0f);
 	bear.setInActive();
 	goblin1.body.setActive();
@@ -296,11 +297,12 @@ void Southfall::updateScene(float dt)
 			if(level >= LEVELS)
 				level = LEVELS-1;
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-			bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
+			bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 			goblin1.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin2.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin3.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin1.setPosition(D3DXVECTOR3(450,120,1000));
+			bear.setPosition(D3DXVECTOR3(450,120,1200));
 			goblin1.health = 200;
 			goblin1.head.setActive();
 			goblin1.body.setActive();
@@ -316,6 +318,7 @@ void Southfall::updateScene(float dt)
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,0);	
 
 			lights.lights[POINT1].on = 0;
+			pigKilled = false;
 		}
 		if (input.isKeyDown('O'))
 		{
@@ -343,6 +346,10 @@ void Southfall::updateScene(float dt)
 		{
 			exit(0);
 		}
+		if(bear.getActiveState() && (tempO.collided(&bear)))
+		{
+			exit(0);
+		}
 		if(goblin1.head.getActiveState())
 			goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);
 		if(goblin2.head.getActiveState())
@@ -350,7 +357,7 @@ void Southfall::updateScene(float dt)
 		if(goblin3.head.getActiveState())
 			goblin3.update(dt,camera.getPos(), &fireballObj, &swordObj);
 		if(bear.getActiveState())
-			bear.update(dt,camera.getPos());
+			bear.update(dt,camera.getPos(), &fireballObj, &swordObj);
 
 		camera.update(dt);
 		fireballObj.update(dt);
@@ -359,14 +366,14 @@ void Southfall::updateScene(float dt)
 		swordObj.update(dt);
 		if(input.getMouseRButton())
 			swordObj.swing();
-		if (input.isKeyDown('O'))
+		if (input.isKeyDown('O') || bear.health <= 0)
 		{
+			bear.health = 1;
 			lights.lights[POINT1].on = 1;
 			audio.playCue(ZELDA_CUE);
 			bearKilled = true;			
 			alpha = 0;
 		}
-
 		if(bearKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
 		{
 				gameState = END;
