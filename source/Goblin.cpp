@@ -26,6 +26,7 @@ void Goblin::update(float dt, Vector3 cam)
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
 	D3DXVec3Normalize(&direction,&direction);
 	Vector3 v = -direction*200;
+	v.y = 0;
 	head.setVelocity(v);
 	body.setVelocity(v);
 	

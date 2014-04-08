@@ -5,6 +5,7 @@
 #include "d3dUtil.h"
 #include "Geometry.h"
 #include "constants.h"
+#include "Terrain.h"
 
 class GeoObject
 {
@@ -22,7 +23,8 @@ public:
 	virtual void draw(D3DXMATRIX* vp);
 	
 	virtual void update(float dt);
-
+	virtual void update2(float dt);
+	virtual float getTerrHeight();
 	//Setters
 	void setPosition (Vector3 pos)			{position = pos;}
 	void setVelocity (Vector3 vel)			{velocity = vel;}
@@ -63,6 +65,7 @@ protected:
 
 	Vector3 position;
 	Vector3 velocity;
+	Terrain* terr;
 	float speed;
 	float radius;
 	float radiusSquared;

@@ -3,7 +3,6 @@
 
 #include "d3dUtil.h"
 #include "constants.h"
-
 struct Vertex
 {
 	Vertex(Vector3 pos = ZERO, Color col = BLACK):
