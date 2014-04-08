@@ -87,9 +87,7 @@ void Southfall::initApp()
 	pigKilled = false;
 
 	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-
 	bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
-
 	goblin.setMFX(mFX);
 	goblin.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 
@@ -276,11 +274,8 @@ void Southfall::updateScene(float dt)
 			if(level >= LEVELS)
 				level = LEVELS-1;
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-
 			bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
-
 			goblin.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
-
 			lights.lights[POINT1].pos		= Vector3(380, 400, (terrain[level].z-3)*terrain[level].scale);
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.4,.4,.4,1);
