@@ -20,18 +20,37 @@ void Goblin::update(float dt)
 	head.update(dt);
 	body.update(dt);
 }
-void Goblin::update(float dt, Vector3 cam)
+void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
+	if (!head.getActiveState())
+		return;
+	if((head.collided(fo) || body.collided(fo)) && fo->getActiveState())
+	{		health -= 1;
+		fo->setInActive();
+		fo->light->on = 0;
+		fo->dist = 0;
+	}
+
+	if((head.collided(so) || body.collided(so)) && !so->hit && so->theta > 0)
+	{
+		health -= 25;
+		so->hit = true;
+	}
+	if(health <= 0)
+	{
+		body.setInActive();
+		head.setInActive();
+	}
 	Vector3 direction = body.getPosition() - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
 	D3DXVec3Normalize(&direction,&direction);
 	Vector3 v = -direction*100;
 	v.y = 0;
-	//head.setVelocity(v);
-	//body.setVelocity(v);
+	head.setVelocity(v);
+	body.setVelocity(v);
 	
-	//head.setroty(rot);
-	//body.setroty(rot);
+	head.setroty(rot);
+	body.setroty(rot);
 	head.update2(dt);
 	body.update2(dt);
 }
@@ -39,6 +58,9 @@ void Goblin::update(float dt, Vector3 cam)
 void Goblin::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, ID3D10Device* device, Geometry* h, Geometry* b, Terrain* ter)
 {
 	md3dDevice = device;
+	health = 200;
+	head.setRadius(20);
+	body.setRadius(20);
 
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();

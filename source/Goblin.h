@@ -8,6 +8,8 @@
 //#include "C:\Users\weaverem1\Dropbox\S14\Games2\PartII\Common\d3dUtil.h"
 #include "d3dUtil.h"
 #include "GeoObject.h"
+#include "Fireball.h"
+#include "SwordObj.h"
 
 class Goblin
 {
@@ -20,13 +22,13 @@ public:
 	void setPosition(D3DXVECTOR3 pos){head.setPosition(pos); body.setPosition(pos);}
 	void setScale(float scale){head.setScale(scale);body.setScale(scale);}
 	void update(float dt);
-	void update(float dt, Vector3 cam);
+	void update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
 	void setMFX(ID3D10Effect* fx) {mFX = fx; head.setMFX(fx); body.setMFX(fx);}
 
-private:
-
+	int health;
 	GeoObject head, body;
-
+private:
+	
 	ID3D10Effect* mFX;
 	ID3D10Device* md3dDevice;	
 	ID3D10ShaderResourceView* mDiffuseMapRV1, *mDiffuseMapRV2;

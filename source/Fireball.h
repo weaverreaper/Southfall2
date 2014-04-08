@@ -24,10 +24,11 @@ public:
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
 
 	void shoot(Vector3 pos, Vector3 dir);
-
-private:
 	Light* light;
 	float dist;
+
+private:
+	
 
 	ID3D10Effect* mFX;
 	ID3D10Device* md3dDevice;	

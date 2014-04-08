@@ -6,6 +6,8 @@ void SwordObj::init(	ID3D10EffectTechnique* t,
 						Geometry* g, Vertex v1, Vertex v2)
 {
 	theta = -1;	
+	hit = false;
+	setRadius(125);
 
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
@@ -63,5 +65,6 @@ void SwordObj::swing()
 	if(theta >= 0)
 		return;
 	theta = 0;
+	hit = false;
 }
 
