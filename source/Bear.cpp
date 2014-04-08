@@ -2,9 +2,9 @@
 // Goblin.cpp by Nate Higgins
 //=======================================================================================
 
-#include "Goblinhead.h"
+#include "Bear.h"
 
-GoblinHead::GoblinHead()
+Bear::Bear()
 :md3dDevice(0), mVB(0), mIB(0)
 {
 	
@@ -38,23 +38,54 @@ GoblinHead::GoblinHead()
 	vertices[25] = Vertex(D3DXVECTOR3(1.4f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
 	vertices[26] = Vertex(D3DXVECTOR3(0.6f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);
 	vertices[27] = Vertex(D3DXVECTOR3(1.0f, 3.2f, -0.8f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
-	vertices[28] = Vertex(D3DXVECTOR3(0.8f, 1.6f, -1.1f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);
-	vertices[29] = Vertex(D3DXVECTOR3(1.2f, 2.0f, -0.9f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
-	vertices[30] = Vertex(D3DXVECTOR3(1.0f, 1.8f, -0.7f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);
+	vertices[28] = Vertex(D3DXVECTOR3(0.8f, 1.6f, -1.1f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//31
+	vertices[29] = Vertex(D3DXVECTOR3(1.2f, 2.0f, -0.9f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);//33
+	vertices[30] = Vertex(D3DXVECTOR3(1.0f, 1.8f, -0.7f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//32
 	vertices[31] = Vertex(D3DXVECTOR3(2.0f, 1.7f, -1.1f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
 	vertices[32] = Vertex(D3DXVECTOR3(2.0f, 1.7f, -0.7f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.0f);
 	vertices[33] = Vertex(D3DXVECTOR3(2.1f, 1.9f, -0.9f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
+		//start shoulders
+	vertices[34] = Vertex(D3DXVECTOR3(1.2f, 3.6f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.0f);
+	vertices[35] = Vertex(D3DXVECTOR3(0.8f, 3.6f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.3f);
+	vertices[36] = Vertex(D3DXVECTOR3(1.4f, 3.4f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.0f);
+	vertices[37] = Vertex(D3DXVECTOR3(0.6f, 3.4f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.3f);
+	vertices[38] = Vertex(D3DXVECTOR3(1.2f, 3.6f, -0.2f),D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 1.0f);
+	vertices[39] = Vertex(D3DXVECTOR3(0.8f, 3.6f, -0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.6f);
+	vertices[40] = Vertex(D3DXVECTOR3(1.4f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 1.0f);
+	vertices[41] = Vertex(D3DXVECTOR3(0.8f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.6f);
+	//end shoulders
+	//begin waist
+	vertices[42] = Vertex(D3DXVECTOR3(1.2f, 2.0f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.0f);
+	vertices[43] = Vertex(D3DXVECTOR3(1.2f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.4f);
+	vertices[44] = Vertex(D3DXVECTOR3(1.2f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.2f);
+	vertices[45] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 1.0f);
+	vertices[46] = Vertex(D3DXVECTOR3(0.6f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.6f);
+	vertices[47] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.8f);
+	//begin legs
+    vertices[48] = Vertex(D3DXVECTOR3(1.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[49] = Vertex(D3DXVECTOR3(0.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, -0.0f), 0.6f, 0.5f);
+	vertices[50] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.0f);
+	vertices[51] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.0f);
+	vertices[52] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.3f);
+	vertices[53] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.3f);
+	vertices[54] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.5f);
+	vertices[55] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.5f);
+	vertices[56] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.7f);
+	vertices[57] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.7f);
+	// feet
+	vertices[58] = Vertex(D3DXVECTOR3(1.8f, -0.2f, 0.5f), D3DXVECTOR3(0.8f, -1.2f, 0.5f), 1.0f, 1.0f);
+	vertices[59] = Vertex(D3DXVECTOR3(1.4f, -0.2f, -0.5f), D3DXVECTOR3(0.8f, -1.2f, -0.5f), 1.0f, 1.0f);
 }
 
 
  
-GoblinHead::~GoblinHead()
+Bear::~Bear()
 {
 	ReleaseCOM(mVB);
 	ReleaseCOM(mIB);
 }
 
-void GoblinHead::init(ID3D10Device* device, float scale)
+void Bear::init(ID3D10Device* device, float scale)
 {
 	md3dDevice = device;
  
@@ -131,6 +162,8 @@ void GoblinHead::init(ID3D10Device* device, float scale)
 		23, 22, 19,
 		22, 23, 24,
 		//39
+		//left
+		//upper
 		26, 25, 28,
 		29, 28, 25,
 		27, 28, 30,
@@ -144,9 +177,57 @@ void GoblinHead::init(ID3D10Device* device, float scale)
 		33, 30, 32,
 		32, 30, 28,
 		31, 32, 28,
-		32, 31, 33
+		32, 31, 33,
 		//52
-		
+		//end of head beginning body 25 triangles
+		34, 37, 36,
+		35, 37, 34,
+		38, 40, 41,
+		41, 39, 38,
+		//end of shoulders
+		34, 36, 42,
+		40, 38, 43,
+		34, 42, 44,
+		43, 38, 44,
+		38, 34, 44,
+		//end front
+		37, 35, 45,
+		39, 41, 46,
+		45, 35, 47,
+		39, 46, 47,
+		35, 39, 47,
+		//end back
+		//sides
+		45, 42, 37,
+		37, 42, 36,
+		43, 46, 41,
+		43, 41, 40,
+		45, 46, 49,// begin legs
+		42, 48, 43,
+		42, 50, 48,
+		52, 45 ,49,
+		51, 43, 48,
+		53, 49 ,46,//57
+		48, 49, 53,
+		48, 53, 51,
+		48, 52, 49,
+		48, 50, 52,
+		50, 42, 54,
+		43, 51, 55,
+		45, 52, 56,
+		46, 57, 53,
+		42, 45, 54,
+		56, 54, 45,
+		57, 46, 55,
+		46, 43, 55, //36
+		53, 57, 59,
+		55, 51, 59,
+		51, 53, 59,
+		57, 55, 59,
+		56, 52, 58,
+		50, 54, 58,
+		52, 50, 58,
+		54, 56, 58
 	};
 
 	D3D10_BUFFER_DESC ibd;
@@ -160,7 +241,7 @@ void GoblinHead::init(ID3D10Device* device, float scale)
     HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mIB));
 }
 
-void GoblinHead::draw()
+void Bear::draw()
 {
 	/*
 	for(DWORD i = 0; i < mNumVertices; ++i)

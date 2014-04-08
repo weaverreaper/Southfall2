@@ -17,6 +17,8 @@ struct Vertex
 		pos = position;
 		normal = position - center;
 		D3DXVec3Normalize(&normal,&normal);
+		texC.x = u;
+		texC.y = v;
 	}
 		
 	Vector3 pos;

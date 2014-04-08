@@ -24,6 +24,8 @@
 #include "SwordObj.h"
 #include "Goblinbody.h"
 #include "Goblinhead.h"
+#include "Bear.h"
+#include "BearObj.h"
 
 	const int LEVELS = 2;
 
@@ -113,6 +115,8 @@ private:
 	Goblin goblin;
 	Box fireball;
 	Fireball fireballObj;
+	Bear bearmodel;
+	BearObj bear;
 };
 
 #endif

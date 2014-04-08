@@ -27,11 +27,11 @@ void Goblin::update(float dt, Vector3 cam)
 	D3DXVec3Normalize(&direction,&direction);
 	Vector3 v = -direction*100;
 	v.y = 0;
-	head.setVelocity(v);
-	body.setVelocity(v);
+	//head.setVelocity(v);
+	//body.setVelocity(v);
 	
-	head.setroty(rot);
-	body.setroty(rot);
+	//head.setroty(rot);
+	//body.setroty(rot);
 	head.update2(dt);
 	body.update2(dt);
 }

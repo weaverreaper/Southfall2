@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\audio.cpp" />
+    <ClCompile Include="source\Bear.cpp" />
+    <ClCompile Include="source\BearObj.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\Fireball.cpp" />
@@ -39,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\audio.h" />
+    <ClInclude Include="source\Bear.h" />
+    <ClInclude Include="source\BearObj.h" />
     <ClInclude Include="source\Box.h" />
     <ClInclude Include="source\Camera.h" />
     <ClInclude Include="source\constants.h" />

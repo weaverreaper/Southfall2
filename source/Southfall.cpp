@@ -73,6 +73,7 @@ void Southfall::initApp()
 	fireballObj.setInActive();
 	head.init(md3dDevice, 5);
 	body.init(md3dDevice, 5);
+	bearmodel.init(md3dDevice, 5);
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
@@ -87,6 +88,7 @@ void Southfall::initApp()
 
 	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
 	goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body, &terrain[level]);
+	bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
 
@@ -128,6 +130,8 @@ void Southfall::initApp()
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	goblin.setPosition(D3DXVECTOR3(300,120,300));
 	goblin.setScale(5.0f);
+	bear.setPosition(D3DXVECTOR3(600,120,300));
+	bear.setScale(5.0f);
 	score = 0;
 	gameState = SPLASH1;
 	audio.playCue(BAR_BACKGROUND_CUE);
@@ -150,6 +154,7 @@ void Southfall::updateScene(float dt)
 	if(input.wasKeyPressed(VK_ESCAPE))
 		PostQuitMessage(0);
 	goblin.update(dt,camera.getPos());
+	bear.update(dt,camera.getPos());
 	switch (gameState)
 	{
 	case SPLASH1:
@@ -255,6 +260,7 @@ void Southfall::updateScene(float dt)
 				level = LEVELS-1;
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
 			goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body, &terrain[level]);
+			bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
 			lights.lights[POINT1].pos		= Vector3(380, 400, (terrain[level].z-3)*terrain[level].scale);
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.4,.4,.4,1);
@@ -361,6 +367,7 @@ void Southfall::drawScene()
 		surr[level].draw(&mWVP);
 		fireballObj.draw(&mWVP);
 		goblin.draw(&mWVP);
+		bear.draw(&mWVP);
 		swordObj.draw(&mWVP);
 
 		q << "Bacon: " << score;
