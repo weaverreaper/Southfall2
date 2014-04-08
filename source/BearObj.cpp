@@ -6,8 +6,8 @@
 
 BearObj::BearObj()
 {
-	;
-        
+	health = 400;
+	radius = 25;
 }
  
 BearObj::~BearObj()
@@ -56,7 +56,26 @@ void BearObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&wvp);
 }
-
+void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
+{
+	if (!getActiveState())
+		return;
+	if(this->collided(fo) && fo->getActiveState())
+	{		health -= 1;
+		fo->setInActive();
+		fo->light->on = 0;
+		fo->dist = 0;
+	}
+	if(this->collided(so) && !so->hit && so->theta > 0)
+	{
+		health -= 25;
+		so->hit = true;
+	}
+	if(health <= 0)
+	{
+		setInActive();
+	}
+}
 void BearObj::update(float dt, Vector3 cam)
 {
 	Vector3 direction = position - cam;
