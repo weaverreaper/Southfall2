@@ -20,6 +20,8 @@
 #include "fireshaderclass.h"
 #include "modelclass.h"
 #include "Surroundings.h"
+#include "Sword.h"
+#include "SwordObj.h"
 
 	const int LEVELS = 2;
 
@@ -98,6 +100,8 @@ private:
 	
 	Surroundings surr[LEVELS];
 
+	Sword sword;
+	SwordObj swordObj;
 	Box fireball;
 	Fireball fireballObj;
 };

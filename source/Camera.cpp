@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-const float HEAD_HEIGHT = 70;
+
 const float speed = 300;
 const float yAcc = -500;
 const float termYVel = -1000;
@@ -83,8 +83,8 @@ void Camera::update(float dt)
 	mTheta -= input->getMouseRawX()*dt*sensitivity;	
 
 	//Restrict angles	
-	if(mPhi > PI-.001) mPhi = PI-.001; 
-	if(mPhi < 0.001) mPhi = .001;
+	if(mPhi > PI-.4) mPhi = PI-.4; 
+	if(mPhi < 0.4) mPhi = .4;
 
 	if (mTheta < 0)  mTheta += 2*PI;	
 	else if (mTheta > 2*PI)  mTheta -= 2*PI;	

@@ -1,16 +1,16 @@
-#ifndef __FIREBALL_H
-#define __FIREBALL_H
+#ifndef __SWORDOBJ_H
+#define __SWORDOBJ_H
 
 #include "GeoObject.h"
 #include "Lighting.h"
 
-const float MAX_DIST =  1000.f;
-const float FIREBALL_SPEED = 1000.f;
+const float MAX_THETA =  PI/4;
+const float SWING_SPEED = PI/2;
 
-class Fireball : public GeoObject
+class SwordObj : public GeoObject
 {
 public:
-	Fireball(){}
+	SwordObj(){}
 	virtual void update(float dt);
 	virtual void draw(Matrix* vp);
 
@@ -19,15 +19,14 @@ public:
 						ID3D10EffectMatrixVariable* w,
 						Geometry* g, Vertex v1, Vertex v2);
 
-	void setLight(Light* l){ light = l; }
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
-
-	void shoot(Vector3 pos, Vector3 dir);
+	void setAngle(float ang) {angle = ang;}
+	void swing();
 
 private:
-	Light* light;
-	float dist;
+	float theta;
+	float angle;
 
 	ID3D10Effect* mFX;
 	ID3D10Device* md3dDevice;	

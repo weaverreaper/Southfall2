@@ -73,6 +73,15 @@ void Southfall::initApp()
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball, Vertex(), Vertex());
 	fireballObj.setInActive();
 
+	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
+	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
+	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
+
+	sword.init(md3dDevice,.55);
+	swordObj.setDevice(md3dDevice); swordObj.setMFX(mFX);
+	swordObj.init(mTech, mfxWVPVar, mfxWorldVar, &sword, Vertex(), Vertex());
+	swordObj.setActive();
+
 	level = 0;
 
 	camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
@@ -107,7 +116,7 @@ void Southfall::initApp()
 		surr[i].setMFX(mFX);
 	}
 	surr[0].initTextures(NULL, L"Textures/water.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
-	surr[1].initTextures(L"Textures/Rock1.jpg",L"Textures/sandBack.png",L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
+	surr[1].initTextures(L"Textures/Rock1.jpg",NULL,L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
 	for(int i = 0; i < LEVELS; ++i)
 	{
 		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
@@ -206,6 +215,11 @@ void Southfall::updateScene(float dt)
 	case LEVEL2:
 		camera.update(dt);
 		fireballObj.update(dt);
+		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
+		swordObj.setAngle(camera.getTheta());
+		swordObj.update(dt);
+		if(input.getMouseRButton())
+			swordObj.swing();
 		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
 		{
 			++gameState;
@@ -275,6 +289,7 @@ void Southfall::drawScene()
 		terrainObj[level].draw(&mWVP);
 		surr[level].draw(&mWVP);
 		fireballObj.draw(&mWVP);	
+		swordObj.draw(&mWVP);
 
 		q << "Score: " << score;
 		theText.print(q.str(),0, 0);	
