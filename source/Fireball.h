@@ -4,7 +4,7 @@
 #include "GeoObject.h"
 #include "Lighting.h"
 
-const float MAX_DIST =  1000.f;
+const float MAX_DIST =  900.f;
 const float FIREBALL_SPEED = 1000.f;
 
 class Fireball : public GeoObject
@@ -17,7 +17,7 @@ public:
 	virtual void init(	ID3D10EffectTechnique* t, 
 						ID3D10EffectMatrixVariable* f,
 						ID3D10EffectMatrixVariable* w,
-						Geometry* g, Vertex v1, Vertex v2);
+						Geometry* g);
 
 	void setLight(Light* l){ light = l; }
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }

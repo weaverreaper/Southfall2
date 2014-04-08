@@ -50,7 +50,7 @@ D3DApp::D3DApp(HINSTANCE hInstance)
 	mFont               = 0;
 	pRS					= 0;
 
-	mMainWndCaption = L"D3D10 Application";
+	mMainWndCaption = L"Southfall 3D";
 	md3dDriverType  = D3D10_DRIVER_TYPE_HARDWARE;
 	mClearColor     = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f); //backcolor
 	mClientWidth    = GAME_WIDTH;
@@ -218,7 +218,7 @@ void D3DApp::updateScene(float dt)
 
 	static int frameCnt = 0;
 	static float t_base = 0.0f;
-
+	input.checkCapture(mhMainWnd);
 	frameCnt++;
 
 	float mspf_0 = mTimer.getGameTime() - t_base;
@@ -476,7 +476,7 @@ void D3DApp::initDirect3D()
 	sd.BufferUsage  = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.BufferCount  = 1;
 	sd.OutputWindow = mhMainWnd;
-	sd.Windowed     = true;
+	sd.Windowed     = false;
 	sd.SwapEffect   = DXGI_SWAP_EFFECT_DISCARD;
 	sd.Flags        = 0;
 

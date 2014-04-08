@@ -102,6 +102,9 @@ public:
     // Throws GameError
     // Pre: hwnd = window handle
     //      capture = true to capture mouse.
+	void checkCapture(HWND hwnd){if(mouseCaptured)
+		SetCapture(hwnd);}
+
     void initialize(HWND hwnd, bool capture);
 
     // Save key down state

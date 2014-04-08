@@ -3,10 +3,8 @@
 
 #include "d3dUtil.h"
 #include "constants.h"
-#include "Terrain.h"
 #include "input.h"
 #include "audio.h"
-#include <math.h>
 #include "Lighting.h"
 #include "Fireball.h"
 

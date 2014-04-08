@@ -6,7 +6,11 @@ const float yAcc = -500;
 const float termYVel = -1000;
 const float STEP_LENGTH = .5;
 
-float findHeight(float z3, float z1, float z2, float a, float b);
+float findHeight(float z3, float z1, float z2, float a, float b)
+{
+	float t = z1*(1-a/(1-b))+z2*a/(1-b);
+	return t*(1-b)+z3*b;
+}
 
 void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens)
 {
@@ -119,12 +123,6 @@ void Camera::update(float dt)
 
 	D3DXMatrixLookAtLH(mView, &position, &target, &up);
 	fireball->update(dt);	
-}
-
-float findHeight(float z3, float z1, float z2, float a, float b)
-{
-	float t = z1*(1-a/(1-b))+z2*a/(1-b);
-	return t*(1-b)+z3*b;
 }
 
 float Camera::getTerrHeight()

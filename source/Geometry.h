@@ -5,6 +5,7 @@
 //#include "C:\Users\weaverem1\Dropbox\S14\Games2\PartII\Common\d3dUtil.h"
 #include "d3dUtil.h"
 #include "Vertex.h"
+#include <math.h>
 class Geometry
 {
 public:

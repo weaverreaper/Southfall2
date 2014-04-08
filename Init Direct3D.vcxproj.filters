@@ -66,10 +66,10 @@
     <ClCompile Include="source\Surroundings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Sword.cpp">
+    <ClCompile Include="source\Goblinbody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\SwordObj.cpp">
+    <ClCompile Include="source\Goblinhead.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,10 +147,10 @@
     <ClInclude Include="source\Surroundings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Sword.h">
+    <ClInclude Include="source\Goblinbody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\SwordObj.h">
+    <ClInclude Include="source\Goblinhead.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,6 +5,7 @@
 #include "d3dUtil.h"
 #include "Geometry.h"
 #include "constants.h"
+#include "Terrain.h"
 
 class GeoObject
 {
@@ -12,6 +13,8 @@ public:
 
 	GeoObject();
 	~GeoObject();
+	virtual void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* g);
+	virtual void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* g, Terrain* ter);
 
 	virtual void init(	ID3D10EffectTechnique* t, 
 						ID3D10EffectMatrixVariable* f,
@@ -21,7 +24,8 @@ public:
 	virtual void draw(D3DXMATRIX* vp);
 	
 	virtual void update(float dt);
-
+	virtual void update2(float dt);
+	virtual float getTerrHeight();
 	//Setters
 	void setPosition (Vector3 pos)			{position = pos;}
 	void setVelocity (Vector3 vel)			{velocity = vel;}
@@ -33,7 +37,9 @@ public:
 	void setVert1(Vertex v)					{geom->setVert1(v);}
 	void setVert2(Vertex v)					{geom->setVert2(v);}
 	void setMTech(ID3D10EffectTechnique* m)	{ tech = m;}
-	void setWorldMatrix(Matrix w)			{world = w;}	
+	void setWorldMatrix(Matrix w)			{world = w;}
+	void setroty(float rot)					{roty = rot;}
+	void setterr(Terrain* ter)				{terr = ter;}
 	
 	//Getters
 	Vertex getPoint()						{return geom->getPoint();}
@@ -45,7 +51,7 @@ public:
 	float getRadius()						{return radius;}
 	float getScale()						{return scale;}
 	bool getActiveState()					{return active;}
-
+	virtual void setMFX(ID3D10Effect* fx) { mFX = fx; }
 	bool collided(GeoObject *gameObject);		
 
 protected:
@@ -54,12 +60,14 @@ protected:
 	D3DXMATRIX world, wvp;
 
 	//ID3D10Device* md3dDevice;
+	ID3D10Effect* mFX;
 	ID3D10EffectTechnique* tech;
 	ID3D10EffectMatrixVariable* fxMatrix;
 	ID3D10EffectMatrixVariable* fxWorld;
 
 	Vector3 position;
 	Vector3 velocity;
+	Terrain* terr;
 	float speed;
 	float radius;
 	float radiusSquared;
