@@ -153,11 +153,12 @@ void Southfall::updateScene(float dt)
 {
 	D3DApp::updateScene(dt);	
 	Matrix tm1;
+	Box tembB;
+	GeoObject tempO;
 
 	if(input.wasKeyPressed(VK_ESCAPE))
-		PostQuitMessage(0);
-	goblin.update(dt,camera.getPos());
-	bear.update(dt,camera.getPos());
+		exit(0);//PostQuitMessage(0);
+	
 	switch (gameState)
 	{
 	case SPLASH1:
@@ -243,6 +244,18 @@ void Southfall::updateScene(float dt)
 		break;
 
 	case LEVEL1:
+
+		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
+		tempO.setPosition(camera.getPos());
+		tempO.setRadius(10);
+		if(goblin.head.getActiveState() && (tempO.collided(&goblin.head) || tempO.collided(&goblin.body)))
+		{
+			exit(0);
+		}
+
+		goblin.update(dt,camera.getPos(), &fireballObj, &swordObj);
+		bear.update(dt,camera.getPos());
+
 		camera.update(dt);
 		fireballObj.update(dt);
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
@@ -282,6 +295,18 @@ void Southfall::updateScene(float dt)
 		break;
 
 	case LEVEL2:
+		
+		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
+		tempO.setPosition(camera.getPos());
+		tempO.setRadius(10);
+		if(goblin.head.getActiveState() && (tempO.collided(&goblin.head) || tempO.collided(&goblin.body)))
+		{
+			exit(0);
+		}
+		
+		goblin.update(dt,camera.getPos(), &fireballObj, &swordObj);
+		bear.update(dt,camera.getPos());
+
 		camera.update(dt);
 		fireballObj.update(dt);
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));

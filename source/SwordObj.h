@@ -23,9 +23,9 @@ public:
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
 	void setAngle(float ang) {angle = ang;}
 	void swing();
-
-private:
+	bool hit;
 	float theta;
+private:
 	float angle;
 
 	ID3D10Effect* mFX;

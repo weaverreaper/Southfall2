@@ -6,6 +6,7 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 						Geometry* g)
 {
 	 dist = 0;	
+	 setRadius(1);
 
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
