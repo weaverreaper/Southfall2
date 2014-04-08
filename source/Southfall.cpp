@@ -160,8 +160,16 @@ void Southfall::updateScene(float dt)
 
 		}
 		else
+<<<<<<< HEAD
 		{	
 
+=======
+		{
+			Vector3 up(0,1,0);
+			Vector3 position(3.5,2.5,-7);
+			Vector3 target(2.5,2.5,0);
+			D3DXMatrixLookAtLH(&mView, &position, &target, &up);
+>>>>>>> de3720d8e86ef3a367392b757a57d1cd84c36476
 			camera.setVelocity(Vector3(0,0,0));
 
 			float time = mTimer.getGameTime();
@@ -186,6 +194,7 @@ void Southfall::updateScene(float dt)
 				- .23 * sinf(time)*sinf(time);
 			
 			lights.lights[4].pos.y = 2*cosf(time);
+<<<<<<< HEAD
 
 			
 			Vector3 up(0,1,0);
@@ -196,6 +205,8 @@ void Southfall::updateScene(float dt)
 			position.y += 2.5*cosf(time);
 
 			D3DXMatrixLookAtLH(&mView, &position, &target, &up);
+=======
+>>>>>>> de3720d8e86ef3a367392b757a57d1cd84c36476
 		}
 		break;
 	case CUT1:
