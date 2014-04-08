@@ -25,7 +25,7 @@ public:
 private:
 
 	static const DWORD mNumVertices = 60;
-	static const DWORD mNumFaces = 96;
+	static const DWORD mNumFaces = 100;
 	Vertex vertices[mNumVertices];
 
 	ID3D10Device* md3dDevice;

@@ -87,13 +87,9 @@ void Southfall::initApp()
 	pigKilled = false;
 
 	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-<<<<<<< HEAD
-	goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body, &terrain[level]);
 	bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
-=======
 	goblin.setMFX(mFX);
 	goblin.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
->>>>>>> 68c83144eaacbaa9e173995ab738b513b33c7c53
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
 
@@ -265,12 +261,8 @@ void Southfall::updateScene(float dt)
 			if(level >= LEVELS)
 				level = LEVELS-1;
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-<<<<<<< HEAD
-			goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body, &terrain[level]);
 			bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
-=======
 			goblin.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
->>>>>>> 68c83144eaacbaa9e173995ab738b513b33c7c53
 			lights.lights[POINT1].pos		= Vector3(380, 400, (terrain[level].z-3)*terrain[level].scale);
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.4,.4,.4,1);
