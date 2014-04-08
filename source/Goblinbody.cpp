@@ -26,13 +26,19 @@ GoblinBody::GoblinBody()
 	vertices[13] = Vertex(D3DXVECTOR3(0.6f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.6f);
 	vertices[14] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.8f);
 	//begin legs
-    vertices[15] = Vertex(D3DXVECTOR3(1.2f, 1.8f, 0.0f), D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f);
-	vertices[16] = Vertex(D3DXVECTOR3(0.6f, 1.8f, 0.0f), D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f);
-	vertices[17] = Vertex(D3DXVECTOR3(1.2f, 2.0f, 0.0f), D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f);
-	vertices[18] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.6f), D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f);
-	vertices[19] = Vertex(D3DXVECTOR3(0.6f, 2.0f, -0.6f), D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f);
-	vertices[20] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.0f), D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f);
+    vertices[15] = Vertex(D3DXVECTOR3(1.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.8f, 0.5f);
+	vertices[16] = Vertex(D3DXVECTOR3(0.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.8f, 0.5f);
+	vertices[17] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[18] = Vertex(D3DXVECTOR3(1.4f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[19] = Vertex(D3DXVECTOR3(0.8f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[20] = Vertex(D3DXVECTOR3(0.8f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[21] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[22] = Vertex(D3DXVECTOR3(1.4f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[23] = Vertex(D3DXVECTOR3(0.8f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[24] = Vertex(D3DXVECTOR3(0.8f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
 }
+
+//Left side is positive
  
 GoblinBody::~GoblinBody()
 {
@@ -84,7 +90,25 @@ void GoblinBody::init(ID3D10Device* device, float scale)
 		12, 9, 4,
 		4, 9, 3,
 		10, 13, 8,
-		10, 8, 7
+		10, 8, 7,
+		12, 13, 16,// begin legs
+		9, 15, 10,
+		9, 17, 15,
+		19, 12 ,16,
+		18, 10, 15,
+		20, 16 ,13,//24
+		15, 16, 20,
+		15, 20, 18,
+		15, 19, 16,
+		15, 17, 19,
+		17, 9, 21,
+		10, 18, 22,
+		12, 19, 23,
+		13, 24, 20,
+		9,12, 21,
+		23, 21, 12,
+		24, 13, 22,
+		13, 10, 22, //36
 	};
 
 	D3D10_BUFFER_DESC ibd;

@@ -146,7 +146,7 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			gameState = CUT1;	
+			gameState = LEVEL1;	
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
