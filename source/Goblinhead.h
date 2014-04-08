@@ -24,8 +24,8 @@ public:
 	void setColor(D3DXCOLOR c) {return;}
 private:
 
-	static const DWORD mNumVertices = 16;
-	static const DWORD mNumFaces = 25;
+	static const DWORD mNumVertices = 34;
+	static const DWORD mNumFaces = 52;
 	Vertex vertices[mNumVertices];
 
 	ID3D10Device* md3dDevice;

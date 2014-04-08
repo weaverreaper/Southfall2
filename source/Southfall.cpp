@@ -73,6 +73,15 @@ void Southfall::initApp()
 	fireballObj.setInActive();
 	head.init(md3dDevice, 5);
 	body.init(md3dDevice, 5);
+	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
+	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
+	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
+
+	sword.init(md3dDevice,.55);
+	swordObj.setDevice(md3dDevice); swordObj.setMFX(mFX);
+	swordObj.init(mTech, mfxWVPVar, mfxWorldVar, &sword, Vertex(), Vertex());
+	swordObj.setActive();
+
 	level = 0;
 	pigKilled = false;
 
@@ -111,14 +120,14 @@ void Southfall::initApp()
 		surr[i].setMFX(mFX);
 	}
 	surr[0].initTextures(NULL, L"Textures/water.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
-	surr[1].initTextures(L"Textures/Rock1.jpg",L"Textures/sandBack.png",L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
+	surr[1].initTextures(L"Textures/Rock1.jpg",NULL,L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
 	for(int i = 0; i < LEVELS; ++i)
 	{
 		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
 	}
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	goblin.setPosition(D3DXVECTOR3(300,120,300));
-	goblin.setScale(2.0f);
+	goblin.setScale(5.0f);
 	score = 0;
 	gameState = SPLASH1;
 	audio.playCue(BAR_BACKGROUND_CUE);
@@ -228,6 +237,12 @@ void Southfall::updateScene(float dt)
 	case LEVEL1:
 		camera.update(dt);
 		fireballObj.update(dt);
+		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
+		swordObj.setAngle(camera.getTheta());
+		swordObj.update(dt);
+		if(input.getMouseRButton())
+			swordObj.swing();
+		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
 
 		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
@@ -260,7 +275,11 @@ void Southfall::updateScene(float dt)
 	case LEVEL2:
 		camera.update(dt);
 		fireballObj.update(dt);
-
+		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
+		swordObj.setAngle(camera.getTheta());
+		swordObj.update(dt);
+		if(input.getMouseRButton())
+			swordObj.swing();
 		if (input.isKeyDown('O'))
 		{
 			lights.lights[POINT1].on = 1;
@@ -342,6 +361,7 @@ void Southfall::drawScene()
 		surr[level].draw(&mWVP);
 		fireballObj.draw(&mWVP);
 		goblin.draw(&mWVP);
+		swordObj.draw(&mWVP);
 
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);	

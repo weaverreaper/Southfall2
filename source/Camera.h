@@ -8,6 +8,8 @@
 #include "Lighting.h"
 #include "Fireball.h"
 
+const float HEAD_HEIGHT = 70;
+
 class Camera
 {
 public:
@@ -21,6 +23,7 @@ public:
 	
 	D3DXVECTOR3 getTarget(){return target;}
 	D3DXVECTOR3 getPos(){return position;}
+	float getTheta(){return mTheta;}
 	void setFireball(Fireball* f){fireball = f;}
 	void setVelocity(Vector3 v){velocity = v;}
 	void shootFireBall();

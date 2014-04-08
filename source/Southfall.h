@@ -20,6 +20,8 @@
 #include "fireshaderclass.h"
 #include "modelclass.h"
 #include "Surroundings.h"
+#include "Sword.h"
+#include "SwordObj.h"
 #include "Goblinbody.h"
 #include "Goblinhead.h"
 
@@ -104,6 +106,8 @@ private:
 	
 	Surroundings surr[LEVELS];
 
+	Sword sword;
+	SwordObj swordObj;
 	GoblinHead head;
 	GoblinBody body;
 	Goblin goblin;

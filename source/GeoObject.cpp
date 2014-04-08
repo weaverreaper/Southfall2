@@ -103,7 +103,7 @@ void GeoObject::update2(float dt)
 	Matrix temp;
 	Identity(&temp);
 	Identity(&world);
-	position.y = getTerrHeight();
+	position.y = getTerrHeight()+15;
 	D3DXMatrixRotationYawPitchRoll(&temp, roty, rotz, rotx);
 	world *= temp;
 	Scale(&temp,scale,scale,scale);

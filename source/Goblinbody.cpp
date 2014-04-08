@@ -26,16 +26,19 @@ GoblinBody::GoblinBody()
 	vertices[13] = Vertex(D3DXVECTOR3(0.6f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.6f);
 	vertices[14] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.8f);
 	//begin legs
-    vertices[15] = Vertex(D3DXVECTOR3(1.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.8f, 0.5f);
-	vertices[16] = Vertex(D3DXVECTOR3(0.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.8f, 0.5f);
-	vertices[17] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[18] = Vertex(D3DXVECTOR3(1.4f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[19] = Vertex(D3DXVECTOR3(0.8f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[20] = Vertex(D3DXVECTOR3(0.8f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[21] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[22] = Vertex(D3DXVECTOR3(1.4f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[23] = Vertex(D3DXVECTOR3(0.8f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[24] = Vertex(D3DXVECTOR3(0.8f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+    vertices[15] = Vertex(D3DXVECTOR3(1.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[16] = Vertex(D3DXVECTOR3(0.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, -0.0f), 0.6f, 0.5f);
+	vertices[17] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.0f);
+	vertices[18] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.0f);
+	vertices[19] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.3f);
+	vertices[20] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.3f);
+	vertices[21] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.5f);
+	vertices[22] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.5f);
+	vertices[23] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.7f);
+	vertices[24] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.7f);
+	// feet
+	vertices[25] = Vertex(D3DXVECTOR3(1.8f, -0.2f, 0.5f), D3DXVECTOR3(0.8f, -1.2f, 0.5f), 1.0f, 1.0f);
+	vertices[26] = Vertex(D3DXVECTOR3(1.4f, -0.2f, -0.5f), D3DXVECTOR3(0.8f, -1.2f, -0.5f), 1.0f, 1.0f);
 }
 
 //Left side is positive
@@ -109,6 +112,15 @@ void GoblinBody::init(ID3D10Device* device, float scale)
 		23, 21, 12,
 		24, 13, 22,
 		13, 10, 22, //36
+		20, 24, 26,
+		22, 18, 26,
+		18, 20, 26,
+		24, 22, 26,
+		23, 19, 25,
+		17, 21, 25,
+		19, 17, 25,
+		21, 23, 25
+
 	};
 
 	D3D10_BUFFER_DESC ibd;
