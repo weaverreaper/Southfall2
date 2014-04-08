@@ -36,15 +36,35 @@ void Goblin::update(float dt, Vector3 cam)
 	body.update2(dt);
 }
 
-void Goblin::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* h, Geometry* b, Terrain* ter)
+void Goblin::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, ID3D10Device* device, Geometry* h, Geometry* b, Terrain* ter)
 {
+	md3dDevice = device;
+
+	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
+	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
+	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
+
+	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures/hide.jpg", 0, 0, &mDiffuseMapRV1, 0 ));
+
+	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures/goblinskin.jpg", 0, 0, &mDiffuseMapRV2, 0 ));
+	 
+	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
+
 	head.init(t,f,w,h,ter);
 	body.init(t,f,w,b,ter);
 }
 
 void Goblin::draw(D3DXMATRIX* vp)
 {
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV2);
+	mfxSpecMapVar->SetResource(mSpecMapRV);
 	head.draw(vp);
+
+	mfxDiffuseMapVar->SetResource(mDiffuseMapRV1);
+	mfxSpecMapVar->SetResource(mSpecMapRV);
 	body.draw(vp);
 }
 //BREAK------------------------------
