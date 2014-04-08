@@ -140,7 +140,7 @@ void Southfall::updateScene(float dt)
 
 	if(input.wasKeyPressed(VK_ESCAPE))
 		PostQuitMessage(0);
-
+	goblin.update(dt,camera.getPos());
 	switch (gameState)
 	{
 	case SPLASH1:
@@ -228,7 +228,6 @@ void Southfall::updateScene(float dt)
 	case LEVEL1:
 		camera.update(dt);
 		fireballObj.update(dt);
-		goblin.update(dt);
 
 		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{

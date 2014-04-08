@@ -6,7 +6,6 @@
 #include "Terrain.h"
 #include "input.h"
 #include "audio.h"
-#include <math.h>
 #include "Lighting.h"
 #include "Fireball.h"
 
