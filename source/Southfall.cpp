@@ -247,7 +247,7 @@ void Southfall::updateScene(float dt)
 		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 		tempO.setPosition(camera.getPos());
 		tempO.setRadius(10);
-		if(goblin.head.getActiveState() && (tempO.collided(&goblin.head) || tempO.collided(&goblin.body)))
+		if((goblin.head.getActiveState() && (tempO.collided(&goblin.head) || tempO.collided(&goblin.body))))
 		{
 			exit(0);
 		}
@@ -298,7 +298,8 @@ void Southfall::updateScene(float dt)
 		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 		tempO.setPosition(camera.getPos());
 		tempO.setRadius(10);
-		if(goblin.head.getActiveState() && (tempO.collided(&goblin.head) || tempO.collided(&goblin.body)))
+		if((goblin.head.getActiveState() && (tempO.collided(&goblin.head) || tempO.collided(&goblin.body))) ||
+			(bear.getActiveState() && tempO.collided(&bear)))
 		{
 			exit(0);
 		}

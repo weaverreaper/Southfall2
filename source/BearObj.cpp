@@ -6,13 +6,33 @@
 
 BearObj::BearObj()
 {
-	;
-        
+	health = 400;
+	radius = 25;
 }
  
 BearObj::~BearObj()
 {
 	;
+}
+void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
+{
+	if (!getActiveState())
+		return;
+	if(this->collided(fo) && fo->getActiveState())
+	{		health -= 1;
+		fo->setInActive();
+		fo->light->on = 0;
+		fo->dist = 0;
+	}
+	if(this->collided(so) && !so->hit && so->theta > 0)
+	{
+		health -= 25;
+		so->hit = true;
+	}
+	if(health <= 0)
+	{
+		setInActive();
+	}
 }
 void BearObj::update(float dt, Vector3 cam)
 {
