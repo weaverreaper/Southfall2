@@ -112,7 +112,7 @@ private:
 	SwordObj swordObj;
 	GoblinHead head;
 	GoblinBody body;
-	Goblin goblin;
+	Goblin goblin1, goblin2, goblin3;
 	Box fireball;
 	Fireball fireballObj;
 	Bear bearmodel;
