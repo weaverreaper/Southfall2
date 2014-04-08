@@ -1,10 +1,11 @@
 
 #include "GeoObject.h"
 #include "Vertex.h"
-float findHeight2(float z3, float z1, float z2, float a, float b)
-{
-	float t = z1*(1-a/(1-b))+z2*a/(1-b);
-	return t*(1-b)+z3*b;
+
+
+float findHeight2(float z3, float z1, float z2, float a, float b){
+float t = z1*(1-a/(1-b))+z2*a/(1-b);
+return t*(1-b)+z3*b;
 }
 GeoObject::GeoObject()
 {
@@ -36,6 +37,17 @@ void GeoObject::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3
 	fxMatrix = f;
 	fxWorld = w;
 	tech = t;
+	D3DXMatrixIdentity(&world);
+	D3DXMatrixIdentity(&wvp);
+}
+void GeoObject::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D10EffectMatrixVariable* w, Geometry* g, Terrain* ter)
+{
+	//md3dDevice = device;
+	geom = g;
+	fxMatrix = f;
+	fxWorld = w;
+	tech = t;
+	terr = ter;
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&wvp);
 }
@@ -120,7 +132,7 @@ float GeoObject::getTerrHeight()
 	else if(rx + rz <= 1 && rx <= rz)
 		y = max(findHeight2(terr->grid[tx+1][tz+1],terr->grid[tx][tz+1],terr->grid[tx][tz],1-rz,rx), 
 			findHeight2(terr->grid[tx][tz+1],terr->grid[tx][tz],terr->grid[tx+1][tz],rx,rz));
-	return y;
+	return y*terr->scale;
 
 }
 

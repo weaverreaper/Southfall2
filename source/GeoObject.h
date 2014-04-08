@@ -14,6 +14,7 @@ public:
 	GeoObject();
 	~GeoObject();
 	virtual void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* g);
+	virtual void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* g, Terrain* ter);
 
 	virtual void init(	ID3D10EffectTechnique* t, 
 						ID3D10EffectMatrixVariable* f,
@@ -38,6 +39,7 @@ public:
 	void setMTech(ID3D10EffectTechnique* m)	{ tech = m;}
 	void setWorldMatrix(Matrix w)			{world = w;}
 	void setroty(float rot)					{roty = rot;}
+	void setterr(Terrain* ter)				{terr = ter;}
 	
 	//Getters
 	Vertex getPoint()						{return geom->getPoint();}

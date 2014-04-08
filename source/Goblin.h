@@ -15,7 +15,7 @@ public:
 
 	Goblin();
 	~Goblin();
-	void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* h, Geometry* b);
+	void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* h, Geometry* b, Terrain* ter);
 	void draw(D3DXMATRIX* vp);
 	void setPosition(D3DXVECTOR3 pos){head.setPosition(pos); body.setPosition(pos);}
 	void setScale(float scale){head.setScale(scale);body.setScale(scale);}
