@@ -15,18 +15,26 @@ public:
 
 	Goblin();
 	~Goblin();
-	void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, Geometry* h, Geometry* b, Terrain* ter);
+	void init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D10EffectMatrixVariable* w, ID3D10Device* device, Geometry* h, Geometry* b, Terrain* ter);
 	void draw(D3DXMATRIX* vp);
 	void setPosition(D3DXVECTOR3 pos){head.setPosition(pos); body.setPosition(pos);}
 	void setScale(float scale){head.setScale(scale);body.setScale(scale);}
 	void update(float dt);
 	void update(float dt, Vector3 cam);
-	void setMFX(ID3D10Effect* fx) { head.setMFX(fx); body.setMFX(fx);}
+	void setMFX(ID3D10Effect* fx) {mFX = fx; head.setMFX(fx); body.setMFX(fx);}
 
 private:
 
 	GeoObject head, body;
-	
+
+	ID3D10Effect* mFX;
+	ID3D10Device* md3dDevice;	
+	ID3D10ShaderResourceView* mDiffuseMapRV1, *mDiffuseMapRV2;
+	ID3D10ShaderResourceView* mSpecMapRV;
+
+	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
+	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
+	ID3D10EffectMatrixVariable* mfxTexMtxVar;
 };
 
 

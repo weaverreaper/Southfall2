@@ -28,6 +28,8 @@ private:
 	static const DWORD mNumFaces = 52;
 	Vertex vertices[mNumVertices];
 
+	void redoBuffers(DWORD indices[156]);
+
 	ID3D10Device* md3dDevice;
 	ID3D10Buffer* mVB;
 	ID3D10Buffer* mIB;

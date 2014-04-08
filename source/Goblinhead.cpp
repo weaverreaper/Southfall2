@@ -62,15 +62,6 @@ void GoblinHead::init(ID3D10Device* device, float scale)
 	for(DWORD i = 0; i < mNumVertices; ++i)
 		vertices[i].pos *= scale;
     
-	D3D10_BUFFER_DESC vbd;
-    vbd.Usage = D3D10_USAGE_IMMUTABLE;
-    vbd.ByteWidth = sizeof(Vertex) * mNumVertices;
-    vbd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
-    vbd.CPUAccessFlags = 0;
-    vbd.MiscFlags = 0;
-    D3D10_SUBRESOURCE_DATA vinitData;
-    vinitData.pSysMem = vertices;
-    HR(md3dDevice->CreateBuffer(&vbd, &vinitData, &mVB));
 	//md3dDevice->
 
 	// Create the index buffer
@@ -151,15 +142,8 @@ void GoblinHead::init(ID3D10Device* device, float scale)
 		
 	};
 
-	D3D10_BUFFER_DESC ibd;
-    ibd.Usage = D3D10_USAGE_IMMUTABLE;
-    ibd.ByteWidth = sizeof(DWORD) * mNumFaces*3;
-    ibd.BindFlags = D3D10_BIND_INDEX_BUFFER;
-    ibd.CPUAccessFlags = 0;
-    ibd.MiscFlags = 0;
-    D3D10_SUBRESOURCE_DATA iinitData;
-    iinitData.pSysMem = indices;
-    HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mIB));
+	redoBuffers(indices);
+
 }
 
 void GoblinHead::draw()
@@ -183,3 +167,52 @@ void GoblinHead::draw()
 //BREAK------------------------------
 //
 //-----------------------------------
+void GoblinHead::redoBuffers(DWORD ind[156])
+{
+	Vertex vertexBuffer2[156];
+	DWORD indexBuffer2[156];
+
+	for(int i = 0; i < 156/3; ++i)
+	{
+		for(int j = 0; j < 3; ++j)
+		{
+			vertexBuffer2[i*3+j] = vertices[ind[i*3+j]];
+			if(j == 0)
+			{
+				vertexBuffer2[i*3+j].texC.x = 0;
+				vertexBuffer2[i*3+j].texC.y = 0;
+			}
+			else if(j == 1)
+			{
+				vertexBuffer2[i*3+j].texC.x = 0;
+				vertexBuffer2[i*3+j].texC.y = 1;
+			}
+			else if(j == 2)
+			{
+				vertexBuffer2[i*3+j].texC.x = 1;
+				vertexBuffer2[i*3+j].texC.y = 0;
+			}
+			indexBuffer2[i*3+j] = i*3+j;
+		}
+	}
+
+	D3D10_BUFFER_DESC vbd;
+    vbd.Usage = D3D10_USAGE_IMMUTABLE;
+    vbd.ByteWidth = sizeof(Vertex) * 156;
+    vbd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
+    vbd.CPUAccessFlags = 0;
+    vbd.MiscFlags = 0;
+    D3D10_SUBRESOURCE_DATA vinitData;
+    vinitData.pSysMem = vertexBuffer2;
+    HR(md3dDevice->CreateBuffer(&vbd, &vinitData, &mVB));
+
+	D3D10_BUFFER_DESC ibd;
+    ibd.Usage = D3D10_USAGE_IMMUTABLE;
+    ibd.ByteWidth = sizeof(DWORD) * mNumFaces*3;
+    ibd.BindFlags = D3D10_BIND_INDEX_BUFFER;
+    ibd.CPUAccessFlags = 0;
+    ibd.MiscFlags = 0;
+    D3D10_SUBRESOURCE_DATA iinitData;
+    iinitData.pSysMem = indexBuffer2;
+    HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mIB));
+}

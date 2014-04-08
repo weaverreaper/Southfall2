@@ -86,7 +86,8 @@ void Southfall::initApp()
 	pigKilled = false;
 
 	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-	goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body, &terrain[level]);
+	goblin.setMFX(mFX);
+	goblin.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 
 	fireballObj.setLight(&lights.lights[FIREBALL]);
 
@@ -104,9 +105,10 @@ void Southfall::initApp()
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Title.png", 0, 0, &mSplashTextureRV, 0 ));
 
+	/*
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\goblinskin.jpg", 0, 0, &mGoblinSkinTextureRV, 0 ));
-
+		*/
 	origin.init(md3dDevice, 10);
 	terrain[0].initFile("Worlds/Beach.txt");
 	terrain[1].initFile("Worlds/Forest.txt");
@@ -254,7 +256,7 @@ void Southfall::updateScene(float dt)
 			if(level >= LEVELS)
 				level = LEVELS-1;
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-			goblin.init(mTech,mfxWVPVar, mfxWorldVar, &head, &body, &terrain[level]);
+			goblin.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			lights.lights[POINT1].pos		= Vector3(380, 400, (terrain[level].z-3)*terrain[level].scale);
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.4,.4,.4,1);

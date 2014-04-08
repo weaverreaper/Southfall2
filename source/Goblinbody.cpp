@@ -10,35 +10,35 @@ GoblinBody::GoblinBody()
 	
 	//start shoulders
 	vertices[1] = Vertex(D3DXVECTOR3(1.2f, 3.6f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.0f);
-	vertices[2] = Vertex(D3DXVECTOR3(0.8f, 3.6f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.3f);
-	vertices[3] = Vertex(D3DXVECTOR3(1.4f, 3.4f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.0f);
-	vertices[4] = Vertex(D3DXVECTOR3(0.6f, 3.4f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.3f);
+	vertices[2] = Vertex(D3DXVECTOR3(0.8f, 3.6f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 1.0f);
+	vertices[3] = Vertex(D3DXVECTOR3(1.4f, 3.4f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 1.0f, 0.0f);
+	vertices[4] = Vertex(D3DXVECTOR3(0.6f, 3.4f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 1.0f, 1.0f);
 	vertices[5] = Vertex(D3DXVECTOR3(1.2f, 3.6f, -0.2f),D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 1.0f);
-	vertices[6] = Vertex(D3DXVECTOR3(0.8f, 3.6f, -0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.6f);
-	vertices[7] = Vertex(D3DXVECTOR3(1.4f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 1.0f);
-	vertices[8] = Vertex(D3DXVECTOR3(0.8f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.6f);
+	vertices[6] = Vertex(D3DXVECTOR3(0.8f, 3.6f, -0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.0f);
+	vertices[7] = Vertex(D3DXVECTOR3(1.4f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 1.0f, 1.0f);
+	vertices[8] = Vertex(D3DXVECTOR3(0.8f, 3.4f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 1.0f, 0.0f);
 	//end shoulders
 	//begin waist
-	vertices[9] = Vertex(D3DXVECTOR3(1.2f, 2.0f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.0f);
-	vertices[10] = Vertex(D3DXVECTOR3(1.2f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.4f);
-	vertices[11] = Vertex(D3DXVECTOR3(1.2f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.2f);
-	vertices[12] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 1.0f);
-	vertices[13] = Vertex(D3DXVECTOR3(0.6f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.6f);
-	vertices[14] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.8f);
+	vertices[9] = Vertex(D3DXVECTOR3(1.2f, 2.0f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.0f, 0.0f);
+	vertices[10] = Vertex(D3DXVECTOR3(1.2f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.0f, 1.0f);
+	vertices[11] = Vertex(D3DXVECTOR3(1.2f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.0f, 0.0f);
+	vertices[12] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.0f, 1.0f);
+	vertices[13] = Vertex(D3DXVECTOR3(0.6f, 2.0f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.0f, 0.0f);
+	vertices[14] = Vertex(D3DXVECTOR3(0.6f, 2.0f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.0f, 1.0f);
 	//begin legs
-    vertices[15] = Vertex(D3DXVECTOR3(1.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[16] = Vertex(D3DXVECTOR3(0.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, -0.0f), 0.6f, 0.5f);
-	vertices[17] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.0f);
-	vertices[18] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.0f);
-	vertices[19] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.3f);
-	vertices[20] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.3f);
-	vertices[21] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.5f);
-	vertices[22] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.5f);
-	vertices[23] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.7f);
-	vertices[24] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.7f);
+    vertices[15] = Vertex(D3DXVECTOR3(1.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 1.0f, 0.0f);
+	vertices[16] = Vertex(D3DXVECTOR3(0.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, -0.0f), 1.0f, 1.0f);
+	vertices[17] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.0f);
+	vertices[18] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 1.0f);
+	vertices[19] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.0f, 1.0f);
+	vertices[20] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.0f, 0.0f);
+	vertices[21] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.0f);
+	vertices[22] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 1.0f);
+	vertices[23] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.0f, 1.0f);
+	vertices[24] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.0f, 0.0f);
 	// feet
-	vertices[25] = Vertex(D3DXVECTOR3(1.8f, -0.2f, 0.5f), D3DXVECTOR3(0.8f, -1.2f, 0.5f), 1.0f, 1.0f);
-	vertices[26] = Vertex(D3DXVECTOR3(1.4f, -0.2f, -0.5f), D3DXVECTOR3(0.8f, -1.2f, -0.5f), 1.0f, 1.0f);
+	vertices[25] = Vertex(D3DXVECTOR3(1.8f, -0.2f, 0.5f), D3DXVECTOR3(0.8f, -1.2f, 0.5f), 0.0f, 1.0f);
+	vertices[26] = Vertex(D3DXVECTOR3(1.4f, -0.2f, -0.5f), D3DXVECTOR3(0.8f, -1.2f, -0.5f), 0.0f, 0.0f);
 }
 
 //Left side is positive
@@ -57,19 +57,11 @@ void GoblinBody::init(ID3D10Device* device, float scale)
 	for(DWORD i = 0; i < mNumVertices; ++i)
 		vertices[i].pos *= scale;
     
-	D3D10_BUFFER_DESC vbd;
-    vbd.Usage = D3D10_USAGE_IMMUTABLE;
-    vbd.ByteWidth = sizeof(Vertex) * mNumVertices;
-    vbd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
-    vbd.CPUAccessFlags = 0;
-    vbd.MiscFlags = 0;
-    D3D10_SUBRESOURCE_DATA vinitData;
-    vinitData.pSysMem = vertices;
-    HR(md3dDevice->CreateBuffer(&vbd, &vinitData, &mVB));
+	
 	//md3dDevice->
 
 	// Create the index buffer
-
+	
 	DWORD indices[] = {
 		//end of head beginning body 25 triangles
 		1, 4, 3,
@@ -123,15 +115,9 @@ void GoblinBody::init(ID3D10Device* device, float scale)
 
 	};
 
-	D3D10_BUFFER_DESC ibd;
-    ibd.Usage = D3D10_USAGE_IMMUTABLE;
-    ibd.ByteWidth = sizeof(DWORD) * mNumFaces*3;
-    ibd.BindFlags = D3D10_BIND_INDEX_BUFFER;
-    ibd.CPUAccessFlags = 0;
-    ibd.MiscFlags = 0;
-    D3D10_SUBRESOURCE_DATA iinitData;
-    iinitData.pSysMem = indices;
-    HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mIB));
+	redoBuffers(indices);
+
+	
 }
 
 void GoblinBody::draw()
@@ -155,3 +141,53 @@ void GoblinBody::draw()
 //BREAK------------------------------
 //
 //-----------------------------------
+
+void GoblinBody::redoBuffers(DWORD ind[44*3])
+{
+	Vertex vertexBuffer2[44*3];
+	DWORD indexBuffer2[44*3];
+
+	for(int i = 0; i < 44; ++i)
+	{
+		for(int j = 0; j < 3; ++j)
+		{
+			vertexBuffer2[i*3+j] = vertices[ind[i*3+j]];
+			if(j == 0)
+			{
+				vertexBuffer2[i*3+j].texC.x = 0;
+				vertexBuffer2[i*3+j].texC.y = 0;
+			}
+			else if(j == 1)
+			{
+				vertexBuffer2[i*3+j].texC.x = 0;
+				vertexBuffer2[i*3+j].texC.y = 1;
+			}
+			else if(j == 2)
+			{
+				vertexBuffer2[i*3+j].texC.x = 1;
+				vertexBuffer2[i*3+j].texC.y = 0;
+			}
+			indexBuffer2[i*3+j] = i*3+j;
+		}
+	}
+
+	D3D10_BUFFER_DESC vbd;
+    vbd.Usage = D3D10_USAGE_IMMUTABLE;
+    vbd.ByteWidth = sizeof(Vertex) * 132;
+    vbd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
+    vbd.CPUAccessFlags = 0;
+    vbd.MiscFlags = 0;
+    D3D10_SUBRESOURCE_DATA vinitData;
+    vinitData.pSysMem = vertexBuffer2;
+    HR(md3dDevice->CreateBuffer(&vbd, &vinitData, &mVB));
+
+	D3D10_BUFFER_DESC ibd;
+    ibd.Usage = D3D10_USAGE_IMMUTABLE;
+    ibd.ByteWidth = sizeof(DWORD) * mNumFaces*3;
+    ibd.BindFlags = D3D10_BIND_INDEX_BUFFER;
+    ibd.CPUAccessFlags = 0;
+    ibd.MiscFlags = 0;
+    D3D10_SUBRESOURCE_DATA iinitData;
+    iinitData.pSysMem = indexBuffer2;
+    HR(md3dDevice->CreateBuffer(&ibd, &iinitData, &mIB));
+}
