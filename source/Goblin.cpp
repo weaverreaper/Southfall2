@@ -24,14 +24,22 @@ void Goblin::update(float dt, Vector3 cam)
 {
 	Vector3 direction = body.getPosition() - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
+	if(D3DXVec3Length(&direction) < 1000)
+	{
 	D3DXVec3Normalize(&direction,&direction);
 	Vector3 v = -direction*100;
 	v.y = 0;
-	//head.setVelocity(v);
-	//body.setVelocity(v);
+	head.setVelocity(v);
+	body.setVelocity(v);
+	}
+	else
+	{
+	head.setVelocity(Vector3(0,0,0));
+	body.setVelocity(Vector3(0,0,0));
+	}
 	
-	//head.setroty(rot);
-	//body.setroty(rot);
+	head.setroty(rot);
+	body.setroty(rot);
 	head.update2(dt);
 	body.update2(dt);
 }

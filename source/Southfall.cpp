@@ -87,7 +87,8 @@ void Southfall::initApp()
 	pigKilled = false;
 
 	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
-	bear.init(mTech,mfxWVPVar, mfxWorldVar, &bearmodel, &terrain[level]);
+	bear.setMFX(mFX);
+	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 	goblin.setMFX(mFX);
 	goblin.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 
