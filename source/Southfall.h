@@ -26,6 +26,7 @@
 #include "Goblinhead.h"
 #include "Bear.h"
 #include "BearObj.h"
+#include "Waves.h"
 
 	const int LEVELS = 2;
 
@@ -33,13 +34,19 @@
 	ID3D10EffectMatrixVariable* mfxWorldVar;
 	ID3D10EffectVariable* mfxEyePosVar;
 	ID3D10EffectVariable* mfxLightVar;
+
 	ID3D10ShaderResourceView* mDiffuseMapRV[LEVELS];
 	ID3D10ShaderResourceView* mSpecMapRV;
 	ID3D10ShaderResourceView* mSplashTextureRV;
 	ID3D10ShaderResourceView* mGoblinSkinTextureRV;
+	ID3D10ShaderResourceView* mWaterMapRV;
+
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
 	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
 	ID3D10EffectMatrixVariable* mfxTexMtxVar;
+
+	ID3D10RasterizerState* mNoCullRS;
+	ID3D10BlendState* mTransparentBS;
 	
 	enum 
 	{
@@ -91,6 +98,9 @@ private:
 	Camera camera;
 
 	LightingManager lights;
+
+	Waves mWaves;
+	D3DXVECTOR2 mWaterTexOffset;
 
 	float mTheta;
 	float mPhi;

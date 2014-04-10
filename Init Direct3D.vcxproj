@@ -34,6 +34,7 @@
     <ClCompile Include="source\SwordObj.cpp" />
     <ClCompile Include="source\Terrain.cpp" />
     <ClCompile Include="source\textDX.cpp" />
+    <ClCompile Include="source\Waves.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\color.fx" />
@@ -69,6 +70,7 @@
     <ClInclude Include="source\Terrain.h" />
     <ClInclude Include="source\textDX.h" />
     <ClInclude Include="source\Vertex.h" />
+    <ClInclude Include="source\Waves.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EFB7FFF1-3E24-4A4E-B50A-5E90B88EFD20}</ProjectGuid>

@@ -53,9 +53,9 @@ void Surroundings::init(	ID3D10EffectTechnique* t,
 
 	 RotateX(&m1,-PI/2);
 	 Scale(&m2,(terrain->x-2)*terrain->scale, 1000, 0);
-	 //RotateX(&m3, PI/2);
+	 Translate(&m3,0,-10,0);
 	 w0.init(t,f,w,&wall,Vertex(),Vertex());
-	 w0.setWorldMatrix(m1*m2);
+	 w0.setWorldMatrix(m1*m2*m3);
 
 	 RotateX(&m1,-PI/2);
 	 Scale(&m2,(terrain->x-2)*terrain->scale, 1000, 0);

@@ -67,6 +67,14 @@ VS_OUT VS(VS_IN vIn)
 
 float4 PS(VS_OUT pIn) : SV_Target
 {
+	// Get materials from texture maps.
+	float alpha    = gDiffuseMap.Sample( gTriLinearSam, pIn.texC ).a;
+	
+	// Discard pixel if texture alpha < 0.25.  Note that we do this
+	// test as soon as possible so that we can potentially exit the shader 
+	// early, thereby skipping the rest of the shader code.
+	clip(alpha - 0.25f);
+	
 	float4 diffuse = gDiffuseMap.Sample( gTriLinearSam, pIn.texC );
 	float4 spec    = gSpecMap.Sample( gTriLinearSam, pIn.texC );
 

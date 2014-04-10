@@ -44,6 +44,14 @@ Southfall::~Southfall()
 
 	ReleaseCOM(mFX);
 	ReleaseCOM(mVertexLayout);
+	ReleaseCOM(mNoCullRS);
+	ReleaseCOM(mTransparentBS);	
+	ReleaseCOM(mSpecMapRV);
+	ReleaseCOM(mSplashTextureRV);
+	ReleaseCOM(mGoblinSkinTextureRV);
+	ReleaseCOM(mWaterMapRV);
+
+	for (int i=0; i<LEVELS; i++) ReleaseCOM(mDiffuseMapRV[i]);
 }
 
 void Southfall::initApp()
@@ -113,6 +121,9 @@ void Southfall::initApp()
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Title.png", 0, 0, &mSplashTextureRV, 0 ));
 
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\water2a.dds", 0, 0, &mWaterMapRV, 0 ));
+
 	/*
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\goblinskin.jpg", 0, 0, &mGoblinSkinTextureRV, 0 ));
@@ -129,7 +140,7 @@ void Southfall::initApp()
 		surr[i].setDevice(md3dDevice); 
 		surr[i].setMFX(mFX);
 	}
-	surr[0].initTextures(NULL, L"Textures/water.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
+	surr[0].initTextures(NULL, L"Textures/sandBack.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
 	surr[1].initTextures(L"Textures/Rock1.jpg",NULL,L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
 	for(int i = 0; i < LEVELS; ++i)
 	{
@@ -145,15 +156,53 @@ void Southfall::initApp()
 	bear.setPosition(D3DXVECTOR3(450,120,1200));
 	bear.setScale(5.0f);
 	bear.setInActive();
-	goblin1.body.setActive();
-	goblin1.head.setActive();
+	goblin1.body.setInActive();
+	goblin1.head.setInActive();
 	goblin2.body.setInActive();
 	goblin2.head.setInActive();
 	goblin3.body.setInActive();
 	goblin3.head.setInActive();
 	score = 0;
-	gameState = SPLASH1;
-	audio.playCue(BAR_BACKGROUND_CUE);
+
+//Wave stuff
+
+	mWaterTexOffset = D3DXVECTOR2(0.0f, 0.0f);
+
+	D3D10_RASTERIZER_DESC rsDesc;
+	ZeroMemory(&rsDesc, sizeof(D3D10_RASTERIZER_DESC));
+	rsDesc.FillMode = D3D10_FILL_SOLID;
+	rsDesc.CullMode = D3D10_CULL_NONE;
+
+	HR(md3dDevice->CreateRasterizerState(&rsDesc, &mNoCullRS));
+
+	D3D10_BLEND_DESC blendDesc = {0};
+	blendDesc.AlphaToCoverageEnable = false;
+	blendDesc.BlendEnable[0] = true;
+	blendDesc.SrcBlend       = D3D10_BLEND_SRC_ALPHA;
+	blendDesc.DestBlend      = D3D10_BLEND_INV_SRC_ALPHA;
+	blendDesc.BlendOp        = D3D10_BLEND_OP_ADD;
+	blendDesc.SrcBlendAlpha  = D3D10_BLEND_ONE;
+	blendDesc.DestBlendAlpha = D3D10_BLEND_ZERO;
+	blendDesc.BlendOpAlpha   = D3D10_BLEND_OP_ADD;
+	blendDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
+
+	HR(md3dDevice->CreateBlendState(&blendDesc, &mTransparentBS));
+
+	// No wave damping.
+	mWaves.init(md3dDevice, 257, 257, 8, .015f, 30.25f, 0.0f);
+
+	// Generate some waves at start up.
+	for(int k = 0; k < 30; ++k)
+	{ 
+		DWORD i = 5 + rand() % 250;
+		DWORD j = 5 + rand() % 250;
+		float r = RandF(0.5f, 1.25f);
+
+		mWaves.disturb(i, j, r);
+	}
+
+	gameState = LEVEL1;
+	//audio.playCue(BAR_BACKGROUND_CUE);
 	input.clearAll();
 }
 
@@ -173,7 +222,7 @@ void Southfall::updateScene(float dt)
 	GeoObject tempO;
 
 	if(input.wasKeyPressed(VK_ESCAPE))
-		exit(0);//PostQuitMessage(0);
+		PostQuitMessage(0);
 	
 	switch (gameState)
 	{
@@ -287,6 +336,13 @@ void Southfall::updateScene(float dt)
 			swordObj.swing();
 		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
 
+//Waves stuff
+		// Animate water texture as a function of time.
+		mWaterTexOffset.y += 0.1f*dt;
+		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
+
+		mWaves.update(dt);
+
 		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
 			
@@ -320,6 +376,10 @@ void Southfall::updateScene(float dt)
 			lights.lights[POINT1].on = 0;
 			pigKilled = false;
 		}
+
+
+
+
 		if (input.isKeyDown('O'))
 		{
 			lights.lights[POINT1].on = 1;
@@ -423,6 +483,8 @@ void Southfall::drawScene()
 	mWVP = mView*mProj;
 	std::stringstream q;
 	Vector3 temp;
+	D3DXMATRIX T, S;
+	D3DXMATRIX waterTexMtx;
 	
 	switch (gameState)
 	{
@@ -444,13 +506,45 @@ void Southfall::drawScene()
 
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
-		surr[level].draw(&mWVP);
+		//surr[level].draw(&mWVP);
 		fireballObj.draw(&mWVP);
 		goblin1.draw(&mWVP);
 		goblin2.draw(&mWVP);
 		goblin3.draw(&mWVP);
 		bear.draw(&mWVP);
 		swordObj.draw(&mWVP);
+
+	//Waves stuff (will be put in modules soon)
+
+		// Scale texture coordinates by 5 units to map [0,1]-->[0,5]
+		// so that the texture repeats five times in each direction.	
+		D3DXMatrixScaling(&S, 5.0f, 5.0f, 5.0f);
+	
+		// Scale and translate the texture.
+		
+		D3DXMatrixTranslation(&T, mWaterTexOffset.x, mWaterTexOffset.y, 0.0f);
+		waterTexMtx = S*T;
+
+		D3D10_TECHNIQUE_DESC techDesc;
+		mTech->GetDesc( &techDesc );
+
+		for(UINT i = 0; i < techDesc.Passes; ++i)
+		{
+			ID3D10EffectPass* pass = mTech->GetPassByIndex(i);
+
+			Matrix mWavesWorld; Identity(&mWavesWorld);
+			mWVP = mWavesWorld*mView*mProj;
+			mfxWVPVar->SetMatrix((float*)&mWVP);
+			mfxWorldVar->SetMatrix((float*)&mWavesWorld);
+			mfxTexMtxVar->SetMatrix((float*)&waterTexMtx);
+			mfxDiffuseMapVar->SetResource(mWaterMapRV);
+			mfxSpecMapVar->SetResource(mSpecMapRV);
+			pass->Apply(0);
+			float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};
+			md3dDevice->OMSetBlendState(0, blendFactor, 0xffffffff);
+			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
+			mWaves.draw();
+		}
 
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);	
@@ -463,7 +557,6 @@ void Southfall::drawScene()
 
 	mSwapChain->Present(0, 0);
 }
-
 
 void Southfall::buildFX()
 {
