@@ -162,7 +162,7 @@ void Southfall::onResize()
 	D3DApp::onResize();
 
 	float aspect = (float)mClientWidth/mClientHeight;
-	D3DXMatrixPerspectiveFovLH(&mProj, 0.25f*PI, aspect, 1.0f, 1000.0f);
+	D3DXMatrixPerspectiveFovLH(&mProj, 0.25f*PI, aspect, 1.0f, 4000.0f);
 }
 
 void Southfall::updateScene(float dt)
@@ -180,7 +180,7 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			gameState = CUT1;	
+			gameState = CUT1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
@@ -468,10 +468,12 @@ void Southfall::drawScene()
 void Southfall::buildFX()
 {
 	DWORD shaderFlags = D3D10_SHADER_ENABLE_STRICTNESS;
+/*
 #if defined( DEBUG ) || defined( _DEBUG )
     shaderFlags |= D3D10_SHADER_DEBUG;
 	shaderFlags |= D3D10_SHADER_SKIP_OPTIMIZATION;
 #endif
+	*/
  
 	ID3D10Blob* compilationErrors = 0;
 	HRESULT hr = 0;
