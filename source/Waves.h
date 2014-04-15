@@ -6,6 +6,7 @@
 #define WAVES_H
 
 #include "d3dUtil.h"
+#include "constants.h"
 
 class Waves
 {
@@ -14,7 +15,7 @@ public:
 	~Waves();
 
  
-	void init(ID3D10Device* device, DWORD m, DWORD n, float dx, float dt, float speed, float damping);
+	void init(ID3D10Device* device, DWORD m, DWORD n, float dx, float dt, float speed, float damping, Vector3 position);
 	void update(float dt);
 	void disturb(DWORD i, DWORD j, float magnitude);
 	void draw();

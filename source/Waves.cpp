@@ -24,7 +24,7 @@ Waves::~Waves()
 	ReleaseCOM(mIB);
 }
 
-void Waves::init(ID3D10Device* device, DWORD m, DWORD n, float dx, float dt, float speed, float damping)
+void Waves::init(ID3D10Device* device, DWORD m, DWORD n, float dx, float dt, float speed, float damping, Vector3 position)
 {
 	md3dDevice = device;
 
@@ -58,8 +58,8 @@ void Waves::init(ID3D10Device* device, DWORD m, DWORD n, float dx, float dt, flo
 		{
 			float x = -halfWidth + j*dx;
 
-			mPrevSolution[i*n+j] = D3DXVECTOR3(x, 0.0f, z);
-			mCurrSolution[i*n+j] = D3DXVECTOR3(x, 0.0f, z);
+			mPrevSolution[i*n+j] = D3DXVECTOR3(x, 0.0f, z) + position;
+			mCurrSolution[i*n+j] = D3DXVECTOR3(x, 0.0f, z) + position;
 			mNormals[i*n+j]      = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 		}
 	}
@@ -113,9 +113,22 @@ void Waves::init(ID3D10Device* device, DWORD m, DWORD n, float dx, float dt, flo
 void Waves::update(float dt)
 {
 	static float t = 0;
+	static float t2 = 16;
 
 	// Accumulate time.
 	t += dt;
+	t2 += dt;
+
+	if (rand() % ((int)floor(t2/5.f)+1) > 1)
+	{
+		//Generate waves
+		for(int j = 10; j < mNumCols-10; j++)
+		{ 
+		float r = RandF(2.5f, (mNumCols/2 - abs(int(j-mNumCols/2)))/4.f);	
+		disturb(mNumCols-5, j, r);
+		}
+		t2 = 0;
+	}
 
 	// Only update the simulation at the specified time step.
 	if( t >= mTimeStep )

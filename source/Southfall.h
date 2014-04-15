@@ -40,6 +40,7 @@
 	ID3D10ShaderResourceView* mSplashTextureRV;
 	ID3D10ShaderResourceView* mGoblinSkinTextureRV;
 	ID3D10ShaderResourceView* mWaterMapRV;
+	ID3D10ShaderResourceView* mWaterSpecMapRV;
 
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
 	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;

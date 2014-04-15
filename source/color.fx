@@ -92,7 +92,7 @@ float4 PS(VS_OUT pIn) : SV_Target
 	for (uint i = 1; i < NUM_POINT_LIGHTS+1; i++) 
 		litColor += PointLight(v, gLights[i], gEyePosW);
 
-	return float4(litColor, diffuse.a);
+	return float4(litColor, alpha);
 }
 
 technique10 ColorTech

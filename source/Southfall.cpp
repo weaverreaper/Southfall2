@@ -9,6 +9,7 @@
 //=============================================================================
 
 #include "Southfall.h"
+#include <ctime>
 
 const static float delta = .000001f;
 
@@ -122,7 +123,9 @@ void Southfall::initApp()
 		L"Textures\\Title.png", 0, 0, &mSplashTextureRV, 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\water2a.dds", 0, 0, &mWaterMapRV, 0 ));
+		L"Textures\\water.png", 0, 0, &mWaterMapRV, 0 ));
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\water2a.dds", 0, 0, &mWaterSpecMapRV, 0 ));
 
 	/*
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
@@ -188,21 +191,23 @@ void Southfall::initApp()
 
 	HR(md3dDevice->CreateBlendState(&blendDesc, &mTransparentBS));
 
-	// No wave damping.
-	mWaves.init(md3dDevice, 257, 257, 8, .015f, 30.25f, 0.0f);
+	int m = 357;
+	mWaves.init(md3dDevice, m, m, 4.f, 0.03f, 80.25f, 0.2f, Vector3(400,25,-600));
+	srand(time(0));
 
 	// Generate some waves at start up.
 	for(int k = 0; k < 30; ++k)
 	{ 
 		DWORD i = 5 + rand() % 250;
 		DWORD j = 5 + rand() % 250;
-		float r = RandF(0.5f, 1.25f);
+
+		float r = RandF(9.5f, 12.25f);
 
 		mWaves.disturb(i, j, r);
 	}
 
-	gameState = LEVEL1;
-	//audio.playCue(BAR_BACKGROUND_CUE);
+	gameState = SPLASH1;
+	audio.playCue(BAR_BACKGROUND_CUE);
 	input.clearAll();
 }
 
@@ -506,7 +511,7 @@ void Southfall::drawScene()
 
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+		surr[level].draw(&mWVP);
 		fireballObj.draw(&mWVP);
 		goblin1.draw(&mWVP);
 		goblin2.draw(&mWVP);
@@ -540,8 +545,7 @@ void Southfall::drawScene()
 			mfxDiffuseMapVar->SetResource(mWaterMapRV);
 			mfxSpecMapVar->SetResource(mSpecMapRV);
 			pass->Apply(0);
-			float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};
-			md3dDevice->OMSetBlendState(0, blendFactor, 0xffffffff);
+			float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};			
 			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
 			mWaves.draw();
 		}
