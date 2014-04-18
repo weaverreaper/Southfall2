@@ -78,8 +78,9 @@ void Southfall::initApp()
 	
 	fireball.init(md3dDevice, 5);
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
-	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &fireball);
+	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball);
 	fireballObj.setInActive();
+
 	head.init(md3dDevice, 5);
 	body.init(md3dDevice, 5);
 	bearmodel.init(md3dDevice, 5);
@@ -494,6 +495,7 @@ void Southfall::drawScene()
 	switch (gameState)
 	{
 	case SPLASH1:
+		//gameState = LEVEL1;
 		temp = Vector3(0,0,0);
 		mfxEyePosVar->SetRawValue(&temp, 0, sizeof(D3DXVECTOR3));
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
@@ -512,7 +514,7 @@ void Southfall::drawScene()
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
 		surr[level].draw(&mWVP);
-		fireballObj.draw(&mWVP);
+		
 		goblin1.draw(&mWVP);
 		goblin2.draw(&mWVP);
 		goblin3.draw(&mWVP);
@@ -529,6 +531,9 @@ void Southfall::drawScene()
 		
 		D3DXMatrixTranslation(&T, mWaterTexOffset.x, mWaterTexOffset.y, 0.0f);
 		waterTexMtx = S*T;
+		
+		md3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		md3dDevice->IASetInputLayout(mVertexLayout);
 
 		D3D10_TECHNIQUE_DESC techDesc;
 		mTech->GetDesc( &techDesc );
@@ -549,7 +554,7 @@ void Southfall::drawScene()
 			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
 			mWaves.draw();
 		}
-
+		fireballObj.draw(&mWVP);
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);	
 		break;

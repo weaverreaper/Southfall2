@@ -1,6 +1,5 @@
 #include "Camera.h"
 
-
 const float speed = 300;
 const float yAcc = -500;
 const float termYVel = -1000;
