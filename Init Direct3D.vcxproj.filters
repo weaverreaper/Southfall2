@@ -1,33 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="source\audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Bear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BearObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="source\d3dApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3dUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DamageSprites.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Fireball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FireballSprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\GameTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\GeoObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Goblin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Goblinbody.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Goblinhead.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\input.cpp">
@@ -42,34 +58,16 @@
     <ClCompile Include="source\Pyramid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Square.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\textDX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Camera.cpp">
+    <ClCompile Include="source\Sky.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Southfall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Terrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Goblin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Fireball.cpp">
+    <ClCompile Include="source\Square.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Surroundings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Goblinbody.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Goblinhead.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Sword.cpp">
@@ -78,45 +76,27 @@
     <ClCompile Include="source\SwordObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\BearObj.cpp">
+    <ClCompile Include="source\Terrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Bear.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Waves.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\FireballSprites.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="source\Sky.cpp">
+    <ClCompile Include="source\textDX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\TextureMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\d3dUtil.cpp">
-=======
-    <ClCompile Include="source\DamageSprites.cpp">
->>>>>>> 96adaf5b4ab576127bcd4b24516bc1f357c98091
+    <ClCompile Include="source\Waves.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="source\color.fx" />
-    <None Include="source\lighthelper.fx" />
-    <None Include="source\random.fx" />
-    <None Include="source\fireball.fx" />
-<<<<<<< HEAD
-    <None Include="source\sky.fx" />
-=======
-    <None Include="source\damage.fx" />
->>>>>>> 96adaf5b4ab576127bcd4b24516bc1f357c98091
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="source\audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Bear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BearObj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Box.h">
@@ -125,10 +105,22 @@
     <ClInclude Include="source\constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="source\d3dApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\d3dUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DamageSprites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fireball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FireballSprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\gameError.h">
@@ -143,7 +135,19 @@
     <ClInclude Include="source\GeoObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Goblin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Goblinbody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Goblinhead.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="source\input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Lighting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Line.h">
@@ -155,69 +159,54 @@
     <ClInclude Include="source\Pyramid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Square.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\textDX.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Terrain.h">
+    <ClInclude Include="source\Sky.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Southfall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Lighting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Goblin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Fireball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Surroundings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Goblinbody.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Goblinhead.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Sword.h">
+    <ClInclude Include="source\Square.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\SwordObj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Bear.h">
+    <ClInclude Include="source\Terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\BearObj.h">
+    <ClInclude Include="source\textDX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TextureMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Waves.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\FireballSprites.h">
+    <ClInclude Include="source\Surroundings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="source\Sky.h">
+    <ClInclude Include="source\Sword.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\TextureMgr.h">
-=======
-    <ClInclude Include="source\DamageSprites.h">
->>>>>>> 96adaf5b4ab576127bcd4b24516bc1f357c98091
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\lighthelper.fx" />
+    <None Include="source\random.fx" />
+    <None Include="source\sky.fx" />
+    <None Include="source\color.fx" />
+    <None Include="source\damage.fx" />
+    <None Include="source\fireball.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{5c9d8bc5-9673-4986-b37d-965220d8feec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4dd0e038-6dbb-44ba-b8a4-27c098a72b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

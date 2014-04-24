@@ -16,11 +16,8 @@
     <ClCompile Include="source\BearObj.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="source\d3dUtil.cpp" />
-=======
     <ClCompile Include="source\DamageSprites.cpp" />
->>>>>>> 96adaf5b4ab576127bcd4b24516bc1f357c98091
     <ClCompile Include="source\Fireball.cpp" />
     <ClCompile Include="source\FireballSprites.cpp" />
     <ClCompile Include="source\Goblin.cpp" />
