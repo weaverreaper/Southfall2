@@ -16,6 +16,7 @@
     <ClCompile Include="source\BearObj.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
+    <ClCompile Include="source\DamageSprites.cpp" />
     <ClCompile Include="source\Fireball.cpp" />
     <ClCompile Include="source\FireballSprites.cpp" />
     <ClCompile Include="source\Goblin.cpp" />
@@ -39,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="source\color.fx" />
+    <None Include="source\damage.fx" />
     <None Include="source\fireball.fx" />
     <None Include="source\lighthelper.fx" />
     <None Include="source\random.fx" />
@@ -52,6 +54,7 @@
     <ClInclude Include="source\constants.h" />
     <ClInclude Include="source\d3dApp.h" />
     <ClInclude Include="source\d3dUtil.h" />
+    <ClInclude Include="source\DamageSprites.h" />
     <ClInclude Include="source\Fireball.h" />
     <ClInclude Include="source\FireballSprites.h" />
     <ClInclude Include="source\gameError.h" />

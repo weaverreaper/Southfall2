@@ -27,6 +27,7 @@
 #include "Bear.h"
 #include "BearObj.h"
 #include "Waves.h"
+#include "DamageSprites.h"
 
 	const int LEVELS = 2;
 

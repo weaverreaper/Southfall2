@@ -107,6 +107,8 @@ void Sword::init(ID3D10Device* device, float scale)
 
 void Sword::draw()
 {
+	md3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 	UINT stride = sizeof(Vertex);
     UINT offset = 0;
     md3dDevice->IASetVertexBuffers(0, 1, &mVB, &stride, &offset);

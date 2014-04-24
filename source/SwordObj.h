@@ -3,7 +3,10 @@
 
 #include "GeoObject.h"
 #include "Lighting.h"
+#include "d3dUtil.h"
 
+const int SWORD_BASE_DAMAGE = 32;
+const int SWORD_DAMAGE_VARIATION = 18;
 const float MAX_THETA =  PI/4;
 const float SWING_SPEED = PI/2;
 
@@ -11,6 +14,7 @@ class SwordObj : public GeoObject
 {
 public:
 	SwordObj(){}
+
 	virtual void update(float dt);
 	virtual void draw(Matrix* vp);
 
@@ -25,6 +29,8 @@ public:
 	void swing();
 	bool hit;
 	float theta;
+	int getDamage(){return SWORD_BASE_DAMAGE + rand()%SWORD_DAMAGE_VARIATION;}
+
 private:
 	float angle;
 

@@ -7,7 +7,7 @@ void SwordObj::init(	ID3D10EffectTechnique* t,
 {
 	theta = -1;	
 	hit = false;
-	setRadius(125);
+	setRadius(150);
 
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();

@@ -90,12 +90,16 @@
     <ClCompile Include="source\FireballSprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\DamageSprites.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\color.fx" />
     <None Include="source\lighthelper.fx" />
     <None Include="source\random.fx" />
     <None Include="source\fireball.fx" />
+    <None Include="source\damage.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\audio.h">
@@ -189,6 +193,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\FireballSprites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DamageSprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

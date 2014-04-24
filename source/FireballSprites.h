@@ -14,7 +14,6 @@ struct FireballVertex
 	float offset;
 	float seed;
 	float depth;
-	D3DXVECTOR3 centerW;
 	D3DXVECTOR2 sizeW;
 };
 
@@ -25,13 +24,13 @@ public:
 	FireballSprites();
 	~FireballSprites();
 
-	void init(ID3D10Device* device, const D3DXVECTOR3 centers[], UINT numFireballs);
+	void init(ID3D10Device* device, UINT numFireballs);
 	void draw(const D3DXVECTOR3& eyePosW, const D3DXMATRIX& viewProj);
 	void update(float dt);
 	void setPath(Vector3 posV, Vector3 dirV);
 
 private:
-	void buildVB(const D3DXVECTOR3 centers[]);
+	void buildVB();
 	void buildFX();
 	void buildVertexLayout();
 	void buildShaderResourceView();
