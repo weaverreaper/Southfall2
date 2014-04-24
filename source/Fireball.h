@@ -4,9 +4,12 @@
 #include "GeoObject.h"
 #include "Lighting.h"
 #include "FireballSprites.h"
+#include "d3dUtil.h"
 
 class Camera;
 
+const int FIREBALL_BASE_DAMAGE = 28;
+const int FIREBALL_DAMAGE_VARIATION = 12;
 const float MAX_DIST =  900.f;
 const float FIREBALL_SPEED = 300.f;
 
@@ -26,6 +29,7 @@ public:
 	void setLight(Light* l){ light = l; }
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
+	int getDamage(){return FIREBALL_BASE_DAMAGE + rand()%FIREBALL_DAMAGE_VARIATION;}
 
 	void shoot(Vector3 pos, Vector3 dir);
 	Light* light;

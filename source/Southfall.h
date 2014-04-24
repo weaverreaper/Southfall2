@@ -28,6 +28,8 @@
 #include "Waves.h"
 #include "Sky.h"
 #include "TextureMgr.h"
+#include "DamageSprites.h"
+
 
 	const int LEVELS = 2;
 

@@ -90,6 +90,7 @@
     <ClCompile Include="source\FireballSprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="source\Sky.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,6 +98,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\d3dUtil.cpp">
+=======
+    <ClCompile Include="source\DamageSprites.cpp">
+>>>>>>> 96adaf5b4ab576127bcd4b24516bc1f357c98091
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,7 +109,11 @@
     <None Include="source\lighthelper.fx" />
     <None Include="source\random.fx" />
     <None Include="source\fireball.fx" />
+<<<<<<< HEAD
     <None Include="source\sky.fx" />
+=======
+    <None Include="source\damage.fx" />
+>>>>>>> 96adaf5b4ab576127bcd4b24516bc1f357c98091
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\audio.h">
@@ -201,10 +209,14 @@
     <ClInclude Include="source\FireballSprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="source\Sky.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\TextureMgr.h">
+=======
+    <ClInclude Include="source\DamageSprites.h">
+>>>>>>> 96adaf5b4ab576127bcd4b24516bc1f357c98091
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

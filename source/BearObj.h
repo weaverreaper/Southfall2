@@ -10,6 +10,8 @@
 #include "GeoObject.h"
 #include "Fireball.h"
 #include "SwordObj.h"
+#include <vector>
+#include "DamageSprites.h"
 
 class BearObj : public GeoObject
 {
@@ -21,8 +23,14 @@ public:
 	void update(float dt, Vector3 cam);
 	void draw(D3DXMATRIX* vp);
 	int health;
-void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
+	void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
+	bool done(){return dmgfx.empty() && health < 0;}
+	
 private:
+
+	std::vector<DamageSprites*> dmgfx;
+	bool firstDraw;
+
 	ID3D10Device* md3dDevice;	
 	ID3D10ShaderResourceView* mDiffuseMapRV;
 	ID3D10ShaderResourceView* mSpecMapRV;

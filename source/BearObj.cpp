@@ -16,21 +16,34 @@ BearObj::~BearObj()
 }
 void BearObj::draw(D3DXMATRIX* vp)
 {
-	if(!active) return;
+	
+	if(active)
+	{
+		mfxDiffuseMapVar->SetResource(mDiffuseMapRV);
+		mfxSpecMapVar->SetResource(mSpecMapRV);
 
-	mfxDiffuseMapVar->SetResource(mDiffuseMapRV);
-	mfxSpecMapVar->SetResource(mSpecMapRV);
+		D3DXMatrixMultiply(&wvp,&world,vp);
+		fxMatrix->SetMatrix((float*)&(wvp));
+		fxWorld->SetMatrix((float*)&world);
 
-	D3DXMatrixMultiply(&wvp,&world,vp);
-	fxMatrix->SetMatrix((float*)&(wvp));
-	fxWorld->SetMatrix((float*)&world);
+		D3D10_TECHNIQUE_DESC techDesc;
+		tech->GetDesc( &techDesc );
+		for(UINT p = 0; p < techDesc.Passes; ++p)
+		{
+			tech->GetPassByIndex( p )->Apply(0);
+			geom->draw();
+		}
+	}
 
-	D3D10_TECHNIQUE_DESC techDesc;
-    tech->GetDesc( &techDesc );
-    for(UINT p = 0; p < techDesc.Passes; ++p)
-    {
-        tech->GetPassByIndex( p )->Apply(0);
-		geom->draw();
+	if(firstDraw)
+	{
+		std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
+		while(ds != dmgfx.end())
+		{
+			(*ds)->draw(*vp);
+			++ds;
+		}
+		firstDraw = false;
 	}
 }
 
@@ -58,17 +71,37 @@ void BearObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D
 }
 void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
+	firstDraw = true;
+	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
+	while(ds != dmgfx.end())
+	{
+		(*ds)->update(cam, position, dt);
+		if((*ds)->done())
+		{
+			delete (*ds);
+			ds = dmgfx.erase(ds);
+		}
+		else
+			++ds;
+	}
 	if (!getActiveState())
 		return;
 	if(this->collided(fo) && fo->getActiveState())
-	{		health -= 10;
+	{		
+		int dHealth = fo->getDamage();
+		health -= dHealth;
+		dmgfx.push_back(new DamageSprites());
+		dmgfx.back()->init(md3dDevice, dHealth);
 		fo->setInActive();
 		//fo->light->on = 0;
 		//fo->dist = 0;
 	}
 	if(this->collided(so) && !so->hit && so->theta > 0)
 	{
-		health -= 25;
+		int dHealth = so->getDamage();
+		health -= dHealth;
+		dmgfx.push_back(new DamageSprites());
+		dmgfx.back()->init(md3dDevice, dHealth);
 		so->hit = true;
 	}
 	if(health <= 0)
