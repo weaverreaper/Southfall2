@@ -125,7 +125,7 @@ void Waves::update(float dt)
 		for(int j = 10; j < mNumCols-10; j++)
 		{ 
 		float r = RandF(2.5f, (mNumCols/2 - abs(int(j-mNumCols/2)))/4.f);	
-		disturb(mNumCols-5, j, r);
+		disturb(mNumCols-5+RandF(-1,1), j, r);
 		}
 		t2 = 0;
 	}

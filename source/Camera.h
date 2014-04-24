@@ -7,6 +7,7 @@
 #include "audio.h"
 #include "Lighting.h"
 #include "Fireball.h"
+#include "Waves.h"
 
 const float HEAD_HEIGHT = 70;
 
@@ -17,14 +18,17 @@ public:
 
 	~Camera(){};
 
-	void init(Vector3 pos, Vector3 tar, Input* i, Audio* a, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens = .5);
+	void init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Matrix* proj, Terrain* t, LightingManager* l, float sens = .5);
 
 	void update(float dt);
 	
 	D3DXVECTOR3 getTarget(){return target;}
 	D3DXVECTOR3 getPos(){return position;}
 	float getTheta(){return mTheta;}
+	Matrix getView(){return *mView;}
+	Matrix getProj(){return *mProj;}
 	void setFireball(Fireball* f){fireball = f;}
+	void setWaves(Waves* w){waves = w;}
 	void setVelocity(Vector3 v){velocity = v;}
 	void shootFireBall();
 
@@ -44,10 +48,12 @@ private:
 	Vector3 target;
 	Vector3 up;
 
-	Terrain* terr;
-	D3DXMATRIX* mView;
+	Matrix *mView, *mProj;
+
+	Terrain* terr;	
 	Fireball* fireball;
 	LightingManager* lights;
+	Waves* waves;
 
 	float stepTime;
 

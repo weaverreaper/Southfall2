@@ -16,11 +16,13 @@
     <ClCompile Include="source\BearObj.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
+    <ClCompile Include="source\d3dUtil.cpp" />
     <ClCompile Include="source\Fireball.cpp" />
     <ClCompile Include="source\FireballSprites.cpp" />
     <ClCompile Include="source\Goblin.cpp" />
     <ClCompile Include="source\Goblinbody.cpp" />
     <ClCompile Include="source\Goblinhead.cpp" />
+    <ClCompile Include="source\Sky.cpp" />
     <ClCompile Include="source\Southfall.cpp" />
     <ClCompile Include="source\d3dApp.cpp" />
     <ClCompile Include="source\GameTimer.cpp" />
@@ -35,6 +37,7 @@
     <ClCompile Include="source\SwordObj.cpp" />
     <ClCompile Include="source\Terrain.cpp" />
     <ClCompile Include="source\textDX.cpp" />
+    <ClCompile Include="source\TextureMgr.cpp" />
     <ClCompile Include="source\Waves.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +45,7 @@
     <None Include="source\fireball.fx" />
     <None Include="source\lighthelper.fx" />
     <None Include="source\random.fx" />
+    <None Include="source\sky.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\audio.h" />
@@ -66,6 +70,7 @@
     <ClInclude Include="source\Line.h" />
     <ClInclude Include="source\Origin.h" />
     <ClInclude Include="source\Pyramid.h" />
+    <ClInclude Include="source\Sky.h" />
     <ClInclude Include="source\Southfall.h" />
     <ClInclude Include="source\Square.h" />
     <ClInclude Include="source\Surroundings.h" />
@@ -73,6 +78,7 @@
     <ClInclude Include="source\SwordObj.h" />
     <ClInclude Include="source\Terrain.h" />
     <ClInclude Include="source\textDX.h" />
+    <ClInclude Include="source\TextureMgr.h" />
     <ClInclude Include="source\Vertex.h" />
     <ClInclude Include="source\Waves.h" />
   </ItemGroup>

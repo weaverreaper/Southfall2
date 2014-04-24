@@ -11,7 +11,7 @@ float findHeight(float z3, float z1, float z2, float a, float b)
 	return t*(1-b)+z3*b;
 }
 
-void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, D3DXMATRIX* view, Terrain* t, LightingManager* l, float sens)
+void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Matrix* proj, Terrain* t, LightingManager* l, float sens)
 {
 	position = pos;
 	target = tar;
@@ -21,6 +21,7 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, D3DXMATRIX* view
 	input = i; 
 	audio = a;
 	mView = view;
+	mProj = proj;
 	terr = t;
 	onGround = true;
 	velocity = Vector3(0,0,0);
@@ -75,7 +76,7 @@ void Camera::update(float dt)
 		velocity += speed*dpos;
 	}
 
-	if (input->getMouseLButton()) shootFireBall();
+	if (input->getMouseRButton()) shootFireBall();
 
 	position += velocity*dt;
 	velocity.y += yAcc*dt;
@@ -114,6 +115,8 @@ void Camera::update(float dt)
 		}
 	}
 
+
+
  	float x =  lookRadius * sinf(mPhi)*sinf(mTheta) + position.x;
 	float y =  lookRadius * cosf(mPhi) + position.y;
 	float z = -lookRadius * sinf(mPhi)*cosf(mTheta) + position.z;
@@ -121,7 +124,7 @@ void Camera::update(float dt)
 	target = Vector3(x,y,z);
 
 	D3DXMatrixLookAtLH(mView, &position, &target, &up);
-	fireball->update(dt);	
+	fireball->update(dt);
 }
 
 float Camera::getTerrHeight()

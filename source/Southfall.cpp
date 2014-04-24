@@ -97,7 +97,7 @@ void Southfall::initApp()
 	pigKilled = false;
 	bearKilled = false;
 
-	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
+	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 	bear.setMFX(mFX);
 	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 	goblin1.setMFX(mFX);
@@ -168,7 +168,7 @@ void Southfall::initApp()
 	goblin3.head.setInActive();
 	score = 0;
 
-//Wave stuff
+//// Wave stuff
 
 	mWaterTexOffset = D3DXVECTOR2(0.0f, 0.0f);
 
@@ -207,9 +207,21 @@ void Southfall::initApp()
 		mWaves.disturb(i, j, r);
 	}
 
+/////
+
+//// Sky stuff
+	tm.init(md3dDevice);
+	mEnvMapRV = tm.createCubeTex(L"Textures\\grassenvmap1024.dds");
+
+	sky.init(md3dDevice, mEnvMapRV, 5000.0f);
+	sky.setCamera(&camera);
+
+////
+
 	gameState = SPLASH1;
 	audio.playCue(BAR_BACKGROUND_CUE);
 	input.clearAll();
+	camera.setWaves(&mWaves);
 }
 
 void Southfall::onResize()
@@ -338,9 +350,9 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseRButton())
+		if(input.getMouseLButton())
 			swordObj.swing();
-		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
+		//if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
 
 //Waves stuff
 		// Animate water texture as a function of time.
@@ -348,7 +360,7 @@ void Southfall::updateScene(float dt)
 		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
 
 		mWaves.update(dt);
-
+//End level
 		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
 			
@@ -358,7 +370,7 @@ void Southfall::updateScene(float dt)
 			audio.playCue(FOREST_CUE);
 			if(level >= LEVELS)
 				level = LEVELS-1;
-			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &terrain[level], &lights);
+			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 			bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 			goblin1.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin2.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
@@ -385,7 +397,7 @@ void Southfall::updateScene(float dt)
 
 
 
-
+//Cheat
 		if (input.isKeyDown('O'))
 		{
 			lights.lights[POINT1].on = 1;
@@ -513,7 +525,7 @@ void Southfall::drawScene()
 
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
-		surr[level].draw(&mWVP);
+		//surr[level].draw(&mWVP);
 		
 		goblin1.draw(&mWVP);
 		goblin2.draw(&mWVP);
@@ -557,6 +569,8 @@ void Southfall::drawScene()
 		fireballObj.draw(&mWVP);
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);	
+
+		sky.draw();
 		break;
 	case END:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));

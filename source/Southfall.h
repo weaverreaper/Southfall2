@@ -17,7 +17,6 @@
 #include "Camera.h"
 #include "Terrain.h"
 #include "Lighting.h"
-#include "fireshaderclass.h"
 #include "modelclass.h"
 #include "Surroundings.h"
 #include "Sword.h"
@@ -27,6 +26,8 @@
 #include "Bear.h"
 #include "BearObj.h"
 #include "Waves.h"
+#include "Sky.h"
+#include "TextureMgr.h"
 
 	const int LEVELS = 2;
 
@@ -41,6 +42,7 @@
 	ID3D10ShaderResourceView* mGoblinSkinTextureRV;
 	ID3D10ShaderResourceView* mWaterMapRV;
 	ID3D10ShaderResourceView* mWaterSpecMapRV;
+	ID3D10ShaderResourceView* mEnvMapRV;
 
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
 	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
@@ -118,6 +120,8 @@ private:
 	GeoObject terrainObj[LEVELS];
 	
 	Surroundings surr[LEVELS];
+	Sky sky;
+	TextureMgr tm;
 
 	Sword sword;
 	SwordObj swordObj;
