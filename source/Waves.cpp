@@ -113,13 +113,13 @@ void Waves::init(ID3D10Device* device, DWORD m, DWORD n, float dx, float dt, flo
 void Waves::update(float dt)
 {
 	static float t = 0;
-	static float t2 = 16;
+	static float t2 = 900;
 
 	// Accumulate time.
 	t += dt;
 	t2 += dt;
 
-	if (rand() % ((int)floor(t2/5.f)+1) > 1)
+	if (rand() % ((int)floor(t2/15.f)+1) > 1)
 	{
 		//Generate waves
 		for(int j = 10; j < mNumCols-10; j++)

@@ -102,7 +102,8 @@ void Southfall::initApp()
 	pigKilled = false;
 	bearKilled = false;
 
-	camera.init(Vector3(400,40,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+	camera.init(Vector3(400,20,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+	
 	bear.setMFX(mFX);
 	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 	goblin1.setMFX(mFX);
@@ -197,8 +198,8 @@ void Southfall::initApp()
 
 	HR(md3dDevice->CreateBlendState(&blendDesc, &mTransparentBS));
 
-	int m = 357;
-	mWaves.init(md3dDevice, m, m, 4.f, 0.03f, 80.25f, 0.2f, Vector3(400,25,-600));
+	int m = 300;
+	mWaves.init(md3dDevice, m, m, 30.f, 0.03f, 180.25f, 0.05f, Vector3(400,25,-50));
 	srand(time(0));
 
 	// Generate some waves at start up.
@@ -209,16 +210,23 @@ void Southfall::initApp()
 
 		float r = RandF(9.5f, 12.25f);
 
+
 		mWaves.disturb(i, j, r);
 	}
+
+	for(int j = 10; j < m-10; j++)
+		{ 
+		float r = RandF(2.5f, (m/2 - abs(int(j-m/2)))/4.f)/4;	
+		mWaves.disturb(125+RandF(-1,1), j, r);
+		}
 
 /////
 
 //// Sky stuff
 	tm.init(md3dDevice);
-	mEnvMapRV = tm.createCubeTex(L"Textures\\grassenvmap1024.dds");
 
-	sky.init(md3dDevice, mEnvMapRV, 5000.0f);
+	mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Level1Sky.dds");
+	sky.init(md3dDevice, mEnvMapRV, 15000.0f);
 	sky.setCamera(&camera);
 
 ////
@@ -257,7 +265,10 @@ void Southfall::updateScene(float dt)
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
 			for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
-			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,1);
+			
+			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(0.1064453125, 0.1123046875, 0.1337890625,1);
+			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(0.9921, 0.9058, 0.5450, 1.f);
+			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-.75,.75);	
 
 			lights.lights[POINT1].pos		= Vector3(380, 600, (terrain[level].z-3)*terrain[level].scale);
 			lights.lights[POINT1].diffuse	= Color(.05f,.05f,.05f,.5f);
@@ -303,6 +314,13 @@ void Southfall::updateScene(float dt)
 			D3DXMatrixLookAtLH(&mView, &position, &target, &up);
 
 		}
+		
+		//Speed along wave progress	
+		mWaterTexOffset.y += 0.1f*dt;
+		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
+
+		mWaves.update(dt);
+		
 		break;
 	case CUT1:
 		if (mTimer.getGameTime() - startCut1 > 3)
@@ -317,6 +335,15 @@ void Southfall::updateScene(float dt)
 		alpha += 80*dt;
 		if (alpha > 255) alpha = 255;
 		if (alpha < 0) alpha = 0;
+
+		//Speed along wave progress
+		for (int i=0; i<3; i++)
+		{
+			mWaterTexOffset.y += 0.1f*dt;
+			mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
+
+			mWaves.update(dt);
+		}
 		break;
 	case CUT2:
 		if (mTimer.getGameTime() - startCut2 > 3)
@@ -329,6 +356,16 @@ void Southfall::updateScene(float dt)
 		alpha += 80*dt;
 		if (alpha > 255) alpha = 255;
 		if (alpha < 0) alpha = 0;
+
+		//Speed along wave progress
+		for (int i=0; i<3; i++)
+		{
+			mWaterTexOffset.y += 0.1f*dt;
+			mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
+
+			mWaves.update(dt);
+		}
+
 		break;
 
 	case LEVEL1:
@@ -398,6 +435,9 @@ void Southfall::updateScene(float dt)
 
 			lights.lights[POINT1].on = 0;
 			pigKilled = false;
+
+			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Rainforest.dds");
+			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
 		}
 
 
@@ -447,7 +487,7 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseRButton())
+		if(input.getMouseLButton())
 			swordObj.swing();
 		if (input.isKeyDown('O') || bear.health <= 0)
 		{
@@ -527,11 +567,10 @@ void Southfall::drawScene()
 		theText.print("Your finger will light the way...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
 	case LEVEL1:
-
-	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
-		
+		sky.draw();
+		setShaderVals();
 		goblin1.draw(&mWVP);
 		setShaderVals();
 		goblin2.draw(&mWVP);
@@ -542,7 +581,7 @@ void Southfall::drawScene()
 		setShaderVals();
 		swordObj.draw(&mWVP);
 
-	//Waves stuff (will be put in modules soon)
+	//Waves stuff (will NOT be put into modules ever)
 
 		// Scale texture coordinates by 5 units to map [0,1]-->[0,5]
 		// so that the texture repeats five times in each direction.	
@@ -578,10 +617,30 @@ void Southfall::drawScene()
 		setShaderVals();
 		fireballObj.draw(&mWVP);
 		q << "Bacon: " << score;
-		theText.print(q.str(),0, 0);	
-
-		sky.draw();
+		theText.print(q.str(),0, 0);
 		break;
+
+	case LEVEL2:
+		terrainObj[level].draw(&mWVP);
+		//surr[level].draw(&mWVP);
+		sky.draw();
+		setShaderVals();
+		goblin1.draw(&mWVP);
+		setShaderVals();
+		goblin2.draw(&mWVP);
+		setShaderVals();
+		goblin3.draw(&mWVP);
+		setShaderVals();
+		bear.draw(&mWVP);
+		setShaderVals();
+		swordObj.draw(&mWVP);
+	
+		setShaderVals();
+		fireballObj.draw(&mWVP);
+		q << "Bacon: " << score;
+		theText.print(q.str(),0, 0);
+		break;
+
 	case END:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
 		theText.print("To be continued...",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);		
