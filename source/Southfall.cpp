@@ -436,7 +436,7 @@ void Southfall::updateScene(float dt)
 			lights.lights[POINT1].on = 0;
 			pigKilled = false;
 
-			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Rainforest.dds");
+			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Level2Forest.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
 		}
 
