@@ -43,6 +43,8 @@ Southfall::~Southfall()
 	if( md3dDevice )
 		md3dDevice->ClearState();
 
+	DamageSprites::releaseStatics();
+
 	ReleaseCOM(mFX);
 	ReleaseCOM(mVertexLayout);
 	ReleaseCOM(mNoCullRS);
@@ -61,6 +63,9 @@ void Southfall::initApp()
 
 	buildFX();
 	buildVertexLayouts();
+
+	DamageSprites::buildShaderResourceView(md3dDevice);
+	DamageSprites::buildFX();
 
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
@@ -428,13 +433,13 @@ void Southfall::updateScene(float dt)
 		{
 			exit(0);
 		}
-		if(goblin1.head.getActiveState())
+		if(!goblin1.done())
 			goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(goblin2.head.getActiveState())
+		if(!goblin2.done())
 			goblin2.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(goblin3.head.getActiveState())
+		if(!goblin3.done())
 			goblin3.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(bear.getActiveState())
+		if(!bear.done())
 			bear.update(dt,camera.getPos(), &fireballObj, &swordObj);
 
 		camera.update(dt);
@@ -528,9 +533,13 @@ void Southfall::drawScene()
 		//surr[level].draw(&mWVP);
 		
 		goblin1.draw(&mWVP);
+		setShaderVals();
 		goblin2.draw(&mWVP);
+		setShaderVals();
 		goblin3.draw(&mWVP);
+		setShaderVals();
 		bear.draw(&mWVP);
+		setShaderVals();
 		swordObj.draw(&mWVP);
 
 	//Waves stuff (will be put in modules soon)
@@ -566,6 +575,7 @@ void Southfall::drawScene()
 			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
 			mWaves.draw();
 		}
+		setShaderVals();
 		fireballObj.draw(&mWVP);
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);	
@@ -589,7 +599,7 @@ void Southfall::buildFX()
     shaderFlags |= D3D10_SHADER_DEBUG;
 	shaderFlags |= D3D10_SHADER_SKIP_OPTIMIZATION;
 #endif
-	*/
+*/
  
 	ID3D10Blob* compilationErrors = 0;
 	HRESULT hr = 0;

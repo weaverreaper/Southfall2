@@ -22,18 +22,37 @@ void Goblin::update(float dt)
 }
 void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
+	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
+	while(ds != dmgfx.end())
+	{
+		(*ds)->update(cam, head.getPosition(), dt);
+		if((*ds)->done())
+		{
+			delete (*ds);
+			ds = dmgfx.erase(ds);
+		}
+		else
+			++ds;
+	}
 	if (!head.getActiveState())
 		return;
 	if((head.collided(fo) || body.collided(fo)) && fo->getActiveState())
-	{		health -= 10;
+	{		
+		int dHealth = fo->getDamage();
+		health -= dHealth;
 		fo->setInActive();
+		dmgfx.push_back(new DamageSprites());
+		dmgfx.back()->init(md3dDevice, dHealth);
 		//fo->light->on = 0;
 		//fo->dist = 0;
 	}
 
 	if((head.collided(so) || body.collided(so)) && !so->hit && so->theta > 0)
 	{
-		health -= 25;
+		int dHealth = so->getDamage();
+		health -= dHealth;
+		dmgfx.push_back(new DamageSprites());
+		dmgfx.back()->init(md3dDevice, dHealth);
 		so->hit = true;
 	}
 	if(health <= 0)
@@ -96,6 +115,14 @@ void Goblin::draw(D3DXMATRIX* vp)
 	mfxDiffuseMapVar->SetResource(mDiffuseMapRV1);
 	mfxSpecMapVar->SetResource(mSpecMapRV);
 	body.draw(vp);
+	
+	D3DXMATRIX temp = *vp;
+	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
+	while(ds != dmgfx.end())
+	{
+		(*ds)->draw(*vp);
+		++ds;
+	}
 }
 //BREAK------------------------------
 //

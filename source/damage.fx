@@ -12,10 +12,9 @@
 cbuffer cbPerFrame
 {
 	float dt;
-	Light gLight;
 	float3 gEyePosW;
 	float3 gCenter;
-	float4x4 gViewProj; 
+	float4x4 gViewProj;
 };
  
 // Nonnumeric values cannot be added to a cbuffer.
@@ -31,20 +30,21 @@ SamplerState gTriLinearSam
 
 struct VS_IN
 {
-	float offset   : FOG;
 	float seed	   : PSIZE;
-	float depth	   : BLENDWEIGHT;
+	float value	   : BLENDWEIGHT;
 	float2 sizeW   : SIZE;
 };
 
 struct VS_OUT
 {
+	float value	   : BLENDWEIGHT;
 	float3 centerW : POSITION;
 	float2 sizeW   : SIZE;
 };
 
 struct GS_OUT
 {
+	float value	   : BLENDWEIGHT;
 	float4 posH    : SV_POSITION;
     float3 posW    : POSITION;
     float3 normalW : NORMAL;
@@ -61,7 +61,7 @@ VS_OUT VS(VS_IN vIn)
 	// Just pass data into geometry shader stage.
 	//vOut.centerW  = vIn.centerW;
 	
-	rng_state = hash(int(dt-vIn.offset)*vIn.seed);
+	rng_state = hash(vIn.seed);
 
 	float3 look = gEyePosW - gCenter;
 	look = normalize(look);
@@ -74,18 +74,19 @@ VS_OUT VS(VS_IN vIn)
 
 	float x = randfloat(-1.0f,1.0f);
 	float y = randfloat(-1.0f,1.0f);
-
-	while(x*x+y*y+vIn.depth*vIn.depth > 1.1)
+	while(x*x+y*y > 1)
 	{
 		x = randfloat(-1.0f,1.0f);
 		y = randfloat(-1.0f,1.0f);
 	}
 
 	float sc = 20;
-	vOut.centerW = ((dt-vIn.offset)-int(dt-vIn.offset))*sc*(up*y+right*x+look*vIn.depth);//do things
+	float MOB_HEIGHT = 100;
+	vOut.centerW = dt*sc*(up*(y*.125+.5)+right*x*.75) + MOB_HEIGHT*up;  //do things
 
 	vOut.centerW += gCenter;
 	vOut.sizeW    = vIn.sizeW;
+	vOut.value = vIn.value;
 
 	return vOut;
 }
@@ -111,10 +112,10 @@ void GS(point VS_OUT gIn[1],
 	// Compute texture coordinates to stretch texture over quad.
 	//
 	float2 texC[4];
-	texC[0] = float2(0.0f, 1.0f);
-	texC[1] = float2(1.0f, 1.0f);
-	texC[2] = float2(0.0f, 0.0f);
-	texC[3] = float2(1.0f, 0.0f);
+	texC[0] = float2(1.0f, 1.0f);
+	texC[1] = float2(0.0f, 1.0f);
+	texC[2] = float2(1.0f, 0.0f);
+	texC[3] = float2(0.0f, 0.0f);
 	//
 	// Compute world matrix so that billboard is aligned with
 	// the y-axis and faces the camera.
@@ -162,7 +163,7 @@ void GS(point VS_OUT gIn[1],
 		gOut.normalW  = look;
 		gOut.texC     = texC[i];
 		gOut.primID   = primID;
-		
+		gOut.value	  = gIn[0].value;
 		triStream.Append(gOut);
 	}
 }
@@ -170,7 +171,9 @@ void GS(point VS_OUT gIn[1],
 float4 PS(GS_OUT pIn) : SV_Target
 {
 	// Get materials from texture maps.
-	float3 uvw = float3(pIn.texC, pIn.primID%4);
+	
+	//float3 uvw = float3(pIn.texC, pIn.primID%4);
+	float3 uvw = float3(pIn.texC, pIn.value);
 	float4 diffuse = gDiffuseMapArray.Sample( gTriLinearSam, uvw );
  
 	// Discard pixel if texture alpha < 0.25.  Note that we do this
@@ -183,7 +186,7 @@ float4 PS(GS_OUT pIn) : SV_Target
     return diffuse;
 }
  
-technique10 FireballBillboardTech
+technique10 DamageBillboardTech
 {
     pass P0
     {

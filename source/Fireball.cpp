@@ -13,13 +13,8 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 	 cam = c;
 
 	const int FIREBALL_COUNT = 200;
-	D3DXVECTOR3 ballCenters[FIREBALL_COUNT];
-	for(UINT i = 0; i < FIREBALL_COUNT; ++i)
-	{
-		ballCenters[i] = position;
-		//FIX POSITION AND VEL
-	}
-	fireballSprites.init(md3dDevice, ballCenters, FIREBALL_COUNT);
+	
+	fireballSprites.init(md3dDevice, FIREBALL_COUNT);
 
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
@@ -63,10 +58,10 @@ void Fireball::draw(Matrix* vp)
 	D3DXMATRIX texMtx;
 	D3DXMatrixIdentity(&texMtx);
 	mfxTexMtxVar->SetMatrix((float*)&texMtx);
+	
 	//GeoObject::draw(vp);
 	
 	fireballSprites.draw(cam->getPos(), *vp);
-	
 	
 }
 
