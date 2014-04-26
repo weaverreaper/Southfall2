@@ -33,6 +33,8 @@ public:
 	
 	
 private:
+	
+	Vector3 direction;
 	std::vector<DamageSprites*> dmgfx;
 
 	ID3D10Effect* mFX;

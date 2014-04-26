@@ -4,6 +4,8 @@
 
 #include "BearObj.h"
 
+const float KNOCKBACK = 50;
+
 BearObj::BearObj()
 {
 	health = 400;
@@ -98,6 +100,7 @@ void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	}
 	if(this->collided(so) && !so->hit && so->theta > 0)
 	{
+		setPosition(getPosition() + direction*KNOCKBACK);
 		int dHealth = so->getDamage();
 		health -= dHealth;
 		dmgfx.push_back(new DamageSprites());
@@ -112,7 +115,7 @@ void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 }
 void BearObj::update(float dt, Vector3 cam)
 {
-	Vector3 direction = position - cam;
+	direction = position - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
 	if(D3DXVec3Length(&direction) < 1000)
 	{
