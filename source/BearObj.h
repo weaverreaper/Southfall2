@@ -10,6 +10,7 @@
 #include "GeoObject.h"
 #include "Fireball.h"
 #include "SwordObj.h"
+#include "audio.h"
 #include <vector>
 #include "DamageSprites.h"
 
@@ -25,6 +26,7 @@ public:
 	int health;
 	void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
 	bool done(){return dmgfx.empty() && health < 0;}
+	void setAudio(Audio* a) {audio = a;}
 	
 private:
 
@@ -39,6 +41,8 @@ private:
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
 	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
 	ID3D10EffectMatrixVariable* mfxTexMtxVar;
+
+	Audio* audio;
 };
 
 

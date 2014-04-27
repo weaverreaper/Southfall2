@@ -59,14 +59,15 @@
 		SPLASH1,
 		CUT1,
 		CUT2,
-		LEVEL1,
 		CUT3,
-		LEVEL2,
+		LEVEL1,
 		CUT4,
-		LEVEL3,
+		LEVEL2,
 		CUT5,
-		LEVEL4,
+		LEVEL3,
 		CUT6,
+		LEVEL4,
+		CUT7,
 		END
 	};
 

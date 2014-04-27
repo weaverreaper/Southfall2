@@ -26,7 +26,7 @@ public:
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
 	void setAngle(float ang) {angle = ang;}
-	void swing();
+	bool swing();
 	bool hit;
 	float theta;
 	int getDamage(){return SWORD_BASE_DAMAGE + rand()%SWORD_DAMAGE_VARIATION;}

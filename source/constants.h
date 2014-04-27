@@ -33,6 +33,10 @@ const char BAR_BACKGROUND_CUE[] = "Bar2_Background";
 const char BEACH_CUE[] = "Beach";
 const char FOREST_CUE[] = "Forest";
 const char ZELDA_CUE[] = "Zelda_Success";
+const char DAMAGE_CUE[] = "Damage";
+const char DEATH_CUE[] = "goblin death";
+const char SWING_CUE[] = "Hooh";
+
 
 
 //const double PI = 3.14159265;

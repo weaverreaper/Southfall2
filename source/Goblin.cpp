@@ -46,7 +46,8 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		dmgfx.push_back(new DamageSprites());
 		dmgfx.back()->init(md3dDevice, dHealth);
 		//fo->light->on = 0;
-		//fo->dist = 0;
+		//fo->dist = 0;	
+		audio->playCue(DAMAGE_CUE);
 	}
 
 	if((head.collided(so) || body.collided(so)) && !so->hit && so->theta > 0)
@@ -57,11 +58,13 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		dmgfx.push_back(new DamageSprites());
 		dmgfx.back()->init(md3dDevice, dHealth);
 		so->hit = true;
+		audio->playCue(DAMAGE_CUE);
 	}
 	if(health <= 0)
 	{
 		body.setInActive();
 		head.setInActive();
+		audio->playCue(DEATH_CUE);
 	}
 	direction = body.getPosition() - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);

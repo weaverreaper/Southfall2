@@ -60,11 +60,12 @@ void SwordObj::draw(Matrix* vp)
 
 }
 
-void SwordObj::swing()
+bool SwordObj::swing()
 {
 	if(theta >= 0)
-		return;
+		return false;
 	theta = 0;
 	hit = false;
+	return true;
 }
 

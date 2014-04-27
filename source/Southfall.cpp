@@ -113,7 +113,7 @@ void Southfall::initApp()
 	goblinsKilled = false;
 	wraithKilled = false;
 
-	camera.init(Vector3(400,20,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+	camera.init(Vector3(400,20,10), Vector3(400,50,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 	
 	bear.setMFX(mFX);
 	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
@@ -123,6 +123,11 @@ void Southfall::initApp()
 	goblin2.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 	goblin3.setMFX(mFX);
 	goblin3.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);	
+
+	goblin1.setAudio(&audio);
+	goblin2.setAudio(&audio);
+	goblin3.setAudio(&audio);
+	bear.setAudio(&audio);
 
 	camera.setFireball(&fireballObj);	
 
@@ -277,8 +282,7 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			//gameState = CUT1;
-			gameState = LEVEL1;
+			gameState = CUT1;			
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
@@ -386,6 +390,12 @@ void Southfall::updateScene(float dt)
 
 		break;
 
+	case CUT3:
+		//Intro "cut scene," camera bobbing and moving toward the island like on a boat
+		//Can we get a boat model?
+
+		break;
+
 	case LEVEL1:
 
 		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
@@ -410,8 +420,7 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseLButton())
-			swordObj.swing();
+		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		//if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
 
 //Waves stuff
@@ -471,7 +480,7 @@ void Southfall::updateScene(float dt)
 		}
 
 		break;
-	case CUT3:
+	case CUT4:
 		++gameState;
 		break;
 	case LEVEL2:
@@ -509,8 +518,8 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseLButton())
-			swordObj.swing();
+		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
+
 		if (input.isKeyDown('O') || bear.health <= 0)
 		{
 			bear.health = 1;
@@ -530,7 +539,7 @@ void Southfall::updateScene(float dt)
 		}
 
 		break;
-	case CUT4:
+	case CUT5:
 		++gameState;
 		break;
 	case LEVEL3:
@@ -543,8 +552,7 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseLButton())
-			swordObj.swing();
+		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		if (input.isKeyDown('O'))// || bear.health <= 0)
 		{
 			bear.health = 1;
@@ -565,7 +573,7 @@ void Southfall::updateScene(float dt)
 		}
 
 		break;
-	case CUT5:
+	case CUT6:
 		++gameState;
 		break;
 	case LEVEL4:
@@ -579,8 +587,9 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseLButton())
-			swordObj.swing();
+
+		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
+
 		if (input.isKeyDown('O'))//|| bear.health <= 0)
 		{
 			bear.health = 1;
@@ -598,7 +607,7 @@ void Southfall::updateScene(float dt)
 		}
 
 		break;
-	case CUT6:
+	case CUT7:
 		++gameState;
 		break;
 	case END:		
