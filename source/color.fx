@@ -6,7 +6,7 @@
 
 #include "lighthelper.fx"
 
-#define NUM_POINT_LIGHTS 5
+#define NUM_POINT_LIGHTS 7
 
 cbuffer cbPerFrame
 {

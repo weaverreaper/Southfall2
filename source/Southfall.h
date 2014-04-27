@@ -29,6 +29,7 @@
 #include "Sky.h"
 #include "TextureMgr.h"
 #include "DamageSprites.h"
+#include "Torch.h"
 
 
 	const int LEVELS = 2;
@@ -130,10 +131,12 @@ private:
 	GoblinHead head;
 	GoblinBody body;
 	Goblin goblin1, goblin2, goblin3;
-	Box fireball;
-	Fireball fireballObj;
+	Box fireball, torch;
+	Fireball fireballObj, torch1Fireball;
 	Bear bearmodel;
 	BearObj bear;
+
+	Torch torchObj1, torchObj2;
 };
 
 #endif

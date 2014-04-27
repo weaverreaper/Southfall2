@@ -85,7 +85,16 @@ void Southfall::initApp()
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball);
 	fireballObj.setInActive();
+	fireballObj.setLight(&lights.lights[FIREBALL]);	
 
+	torch1Fireball.setDevice(md3dDevice); torch1Fireball.setMFX(mFX);
+	torch1Fireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball, 100);	
+	torch1Fireball.setLight(&lights.lights[FIREBALL2]);
+
+	torch.init(md3dDevice, 10);
+	torchObj1.setDevice(md3dDevice); torchObj1.setMFX(mFX);
+	torchObj1.init(mTech, mfxWVPVar, mfxWorldVar, &torch1Fireball, &torch, Vector3(400,150,200));
+	
 	head.init(md3dDevice, 5);
 	body.init(md3dDevice, 5);
 	bearmodel.init(md3dDevice, 5);
@@ -111,9 +120,7 @@ void Southfall::initApp()
 	goblin2.setMFX(mFX);
 	goblin2.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 	goblin3.setMFX(mFX);
-	goblin3.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
-
-	fireballObj.setLight(&lights.lights[FIREBALL]);
+	goblin3.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);	
 
 	camera.setFireball(&fireballObj);	
 
@@ -402,6 +409,8 @@ void Southfall::updateScene(float dt)
 		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
 
 		mWaves.update(dt);
+
+		torchObj1.update(dt);
 //End level
 		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
@@ -551,8 +560,7 @@ void Southfall::drawScene()
 	
 	switch (gameState)
 	{
-	case SPLASH1:
-		//gameState = LEVEL1;
+	case SPLASH1:	
 		temp = Vector3(0,0,0);
 		mfxEyePosVar->SetRawValue(&temp, 0, sizeof(D3DXVECTOR3));
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
@@ -560,11 +568,11 @@ void Southfall::drawScene()
 		break;
 	case CUT1:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("You arrive in a darkened land.",GAME_WIDTH/2 - 400,GAME_HEIGHT/2-200);		
+		theText.print("The Wraith has escaped to his coastal home.",GAME_WIDTH/2 - 400,GAME_HEIGHT/2-200);		
 		break;
 	case CUT2:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("Your finger will light the way...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
+		theText.print("You must rid the land of evil!",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
 	case LEVEL1:
 		terrainObj[level].draw(&mWVP);
@@ -580,6 +588,7 @@ void Southfall::drawScene()
 		bear.draw(&mWVP);
 		setShaderVals();
 		swordObj.draw(&mWVP);
+
 
 	//Waves stuff (will NOT be put into modules ever)
 
@@ -615,7 +624,11 @@ void Southfall::drawScene()
 			mWaves.draw();
 		}
 		setShaderVals();
+		torchObj1.draw(&mWVP);
+		
+		setShaderVals();
 		fireballObj.draw(&mWVP);
+		
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;

@@ -16,11 +16,8 @@
     <ClCompile Include="source\BearObj.cpp" />
     <ClCompile Include="source\Box.cpp" />
     <ClCompile Include="source\Camera.cpp" />
-
     <ClCompile Include="source\d3dUtil.cpp" />
-
     <ClCompile Include="source\DamageSprites.cpp" />
-
     <ClCompile Include="source\Fireball.cpp" />
     <ClCompile Include="source\FireballSprites.cpp" />
     <ClCompile Include="source\Goblin.cpp" />
@@ -42,6 +39,7 @@
     <ClCompile Include="source\Terrain.cpp" />
     <ClCompile Include="source\textDX.cpp" />
     <ClCompile Include="source\TextureMgr.cpp" />
+    <ClCompile Include="source\Torch.cpp" />
     <ClCompile Include="source\Waves.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +83,7 @@
     <ClInclude Include="source\Terrain.h" />
     <ClInclude Include="source\textDX.h" />
     <ClInclude Include="source\TextureMgr.h" />
+    <ClInclude Include="source\Torch.h" />
     <ClInclude Include="source\Vertex.h" />
     <ClInclude Include="source\Waves.h" />
   </ItemGroup>

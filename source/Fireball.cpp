@@ -5,16 +5,15 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 						ID3D10EffectMatrixVariable* f,
 						ID3D10EffectMatrixVariable* w,
 						Camera* c,
-						Geometry* g)
+						Geometry* g,
+						int count)
 {
 	 dist = 0;	
 	 setRadius(1);
 
-	 cam = c;
-
-	const int FIREBALL_COUNT = 200;
+	 cam = c;	
 	
-	fireballSprites.init(md3dDevice, FIREBALL_COUNT);
+	fireballSprites.init(md3dDevice, count);	
 
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
@@ -26,7 +25,7 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
 
-	 GeoObject::init(t,f,w,g);
+	 GeoObject::init(t,f,w,g);	 
 }
 
 		

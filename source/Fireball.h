@@ -24,11 +24,13 @@ public:
 						ID3D10EffectMatrixVariable* f,
 						ID3D10EffectMatrixVariable* w,
 						Camera* c,
-						Geometry* g);
+						Geometry* g,
+						int count = 200);
 
 	void setLight(Light* l){ light = l; }
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
+	void setStaticPosition(Vector3 pos) { fireballSprites.setPath(pos, ZERO); }
 	int getDamage(){return FIREBALL_BASE_DAMAGE + rand()%FIREBALL_DAMAGE_VARIATION;}
 
 	void shoot(Vector3 pos, Vector3 dir);

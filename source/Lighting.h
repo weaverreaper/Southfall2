@@ -17,6 +17,8 @@ enum
 	POINT3,
 	POINT4,
 	FIREBALL,
+	FIREBALL2,
+	FIREBALL3,
 
 	//Accurate if last
 	LIGHT_COUNT
@@ -65,13 +67,22 @@ public:
 		lights[POINT4].diffuse	= Color(1.f,0,.4f,1.f);		
 		lights[POINT4].pos		= Vector3(0.f,20.f,-20.f);	
 		lights[POINT4].att		= Vector3(.0f,.03f,0.f);
-		lights[POINT4].range	= 20.01f;		
-
+		lights[POINT4].range	= 20.01f;
 
 		lights[FIREBALL].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
 		lights[FIREBALL].att		= Vector3(0,.03,0);
 		lights[FIREBALL].range		= 1000.f;
-		lights[FIREBALL].on			= 0;		
+		lights[FIREBALL].on			= 0;
+
+		lights[FIREBALL2].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
+		lights[FIREBALL2].att		= Vector3(0,.03,0);
+		lights[FIREBALL2].range		= 1000.f;
+		lights[FIREBALL2].on		= 0;
+
+		lights[FIREBALL3].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
+		lights[FIREBALL3].att		= Vector3(0,.03,0);
+		lights[FIREBALL3].range		= 1000.f;
+		lights[FIREBALL3].on		= 0;
 
 	}	
 

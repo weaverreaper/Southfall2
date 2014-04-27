@@ -115,8 +115,6 @@ void Camera::update(float dt)
 		}
 	}
 
-
-
  	float x =  lookRadius * sinf(mPhi)*sinf(mTheta) + position.x;
 	float y =  lookRadius * cosf(mPhi) + position.y;
 	float z = -lookRadius * sinf(mPhi)*cosf(mTheta) + position.z;

@@ -27,7 +27,7 @@ public:
 	void init(ID3D10Device* device, UINT numFireballs);
 	void draw(const D3DXVECTOR3& eyePosW, const D3DXMATRIX& viewProj);
 	void update(float dt);
-	void setPath(Vector3 posV, Vector3 dirV);
+	void setPath(Vector3 posV, Vector3 dirV);	
 
 private:
 	void buildVB();
