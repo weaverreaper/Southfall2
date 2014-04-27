@@ -32,7 +32,7 @@
 #include "Torch.h"
 
 
-	const int LEVELS = 2;
+	const int LEVELS = 4;
 
 //Global light and shader variables
 	ID3D10EffectMatrixVariable* mfxWorldVar;
@@ -60,7 +60,13 @@
 		CUT1,
 		CUT2,
 		LEVEL1,
+		CUT3,
 		LEVEL2,
+		CUT4,
+		LEVEL3,
+		CUT5,
+		LEVEL4,
+		CUT6,
 		END
 	};
 
@@ -116,7 +122,7 @@ private:
 	float startEndCut;
 	int alpha;
 
-	bool pigKilled, bearKilled;
+	bool pigKilled, bearKilled, goblinsKilled, wraithKilled;
 
 	int level;
 	Terrain terrain[LEVELS];

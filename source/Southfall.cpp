@@ -110,6 +110,8 @@ void Southfall::initApp()
 	level = 0;
 	pigKilled = false;
 	bearKilled = false;
+	goblinsKilled = false;
+	wraithKilled = false;
 
 	camera.init(Vector3(400,20,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 	
@@ -131,6 +133,12 @@ void Southfall::initApp()
 		L"Textures\\Leaves5.jpg", 0, 0, &mDiffuseMapRV[1], 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Stone1.jpg", 0, 0, &mDiffuseMapRV[2], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Cave1.jpg", 0, 0, &mDiffuseMapRV[3], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
 	
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
@@ -148,6 +156,8 @@ void Southfall::initApp()
 	origin.init(md3dDevice, 10);
 	terrain[0].initFile("Worlds/Beach.txt");
 	terrain[1].initFile("Worlds/Forest.txt");
+	terrain[2].initFile("Worlds/Castle.txt");
+	terrain[3].initFile("Worlds/Cave.txt");
 	for(int i = 0; i < LEVELS; ++i)
 	{
 		terrain[i].init(md3dDevice);
@@ -267,7 +277,8 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			gameState = CUT1;
+			//gameState = CUT1;
+			gameState = LEVEL1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
@@ -460,7 +471,9 @@ void Southfall::updateScene(float dt)
 		}
 
 		break;
-
+	case CUT3:
+		++gameState;
+		break;
 	case LEVEL2:
 		
 		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
@@ -508,11 +521,85 @@ void Southfall::updateScene(float dt)
 		}
 		if(bearKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
 		{
-				gameState = END;
-				startEndCut = mTimer.getGameTime();
-				audio.stopCue(FOREST_CUE);
+			++gameState;
+			++level;
+			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+				
+			//startEndCut = mTimer.getGameTime();
+			audio.stopCue(FOREST_CUE);
 		}
 
+		break;
+	case CUT4:
+		++gameState;
+		break;
+	case LEVEL3:
+		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
+		tempO.setPosition(camera.getPos());
+		tempO.setRadius(10);
+		
+		camera.update(dt);
+		fireballObj.update(dt);
+		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
+		swordObj.setAngle(camera.getTheta());
+		swordObj.update(dt);
+		if(input.getMouseLButton())
+			swordObj.swing();
+		if (input.isKeyDown('O'))// || bear.health <= 0)
+		{
+			bear.health = 1;
+			lights.lights[POINT1].on = 1;
+			audio.playCue(ZELDA_CUE);
+			goblinsKilled = true;			
+			alpha = 0;
+		}
+		if(goblinsKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
+		{
+			++gameState;
+			++level;
+				
+			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+			
+			//startEndCut = mTimer.getGameTime();
+			//audio.stopCue(FOREST_CUE);
+		}
+
+		break;
+	case CUT5:
+		++gameState;
+		break;
+	case LEVEL4:
+
+		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
+		tempO.setPosition(camera.getPos());
+		tempO.setRadius(10);
+		
+		camera.update(dt);
+		fireballObj.update(dt);
+		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
+		swordObj.setAngle(camera.getTheta());
+		swordObj.update(dt);
+		if(input.getMouseLButton())
+			swordObj.swing();
+		if (input.isKeyDown('O'))//|| bear.health <= 0)
+		{
+			bear.health = 1;
+			lights.lights[POINT1].on = 1;
+			audio.playCue(ZELDA_CUE);
+			wraithKilled = true;			
+			alpha = 0;
+		}
+		if(wraithKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
+		{
+				++gameState;
+				
+				startEndCut = mTimer.getGameTime();
+				//audio.stopCue(FOREST_CUE);
+		}
+
+		break;
+	case CUT6:
+		++gameState;
 		break;
 	case END:		
 		if (mTimer.getGameTime() - startEndCut > 3) PostQuitMessage(0);
@@ -632,7 +719,8 @@ void Southfall::drawScene()
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
-
+	case CUT3:
+		break;
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
@@ -653,7 +741,36 @@ void Southfall::drawScene()
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
-
+	case CUT4:
+		break;
+	case LEVEL3:
+		terrainObj[level].draw(&mWVP);
+		//surr[level].draw(&mWVP);
+		sky.draw();
+		setShaderVals();
+		
+		swordObj.draw(&mWVP);
+		setShaderVals();
+		fireballObj.draw(&mWVP);
+		q << "Bacon: " << score;
+		theText.print(q.str(),0, 0);
+		break;
+	case CUT5:
+		break;
+	case LEVEL4:
+		terrainObj[level].draw(&mWVP);
+		//surr[level].draw(&mWVP);
+		sky.draw();
+		setShaderVals();
+		
+		swordObj.draw(&mWVP);
+		setShaderVals();
+		fireballObj.draw(&mWVP);
+		q << "Bacon: " << score;
+		theText.print(q.str(),0, 0);
+		break;
+	case CUT6:
+		break;
 	case END:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
 		theText.print("To be continued...",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);		

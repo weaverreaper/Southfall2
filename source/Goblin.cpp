@@ -4,6 +4,8 @@
 
 #include "Goblin.h"
 
+const float KNOCKBACK = 50;
+
 Goblin::Goblin()
 {
 	;
@@ -37,7 +39,7 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	if (!head.getActiveState())
 		return;
 	if((head.collided(fo) || body.collided(fo)) && fo->getActiveState())
-	{		
+	{	
 		int dHealth = fo->getDamage();
 		health -= dHealth;
 		fo->setInActive();
@@ -49,6 +51,7 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 
 	if((head.collided(so) || body.collided(so)) && !so->hit && so->theta > 0)
 	{
+		setPosition(body.getPosition() + direction*KNOCKBACK);
 		int dHealth = so->getDamage();
 		health -= dHealth;
 		dmgfx.push_back(new DamageSprites());
@@ -60,7 +63,7 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		body.setInActive();
 		head.setInActive();
 	}
-	Vector3 direction = body.getPosition() - cam;
+	direction = body.getPosition() - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
 	if(D3DXVec3Length(&direction) < 1000)
 	{
@@ -88,6 +91,7 @@ void Goblin::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D1
 	health = 200;
 	head.setRadius(20);
 	body.setRadius(20);
+	direction = Vector3(0,0,0);
 
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();

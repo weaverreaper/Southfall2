@@ -81,8 +81,9 @@ VS_OUT VS(VS_IN vIn)
 	}
 
 	float sc = 20;
-	float MOB_HEIGHT = 100;
-	vOut.centerW = dt*sc*(up*(y*.125+.5)+right*x*.75) + MOB_HEIGHT*up;  //do things
+	float MOB_HEIGHT = 25;
+	float MOB_WIDTH = 100;
+	vOut.centerW = dt*sc*(up*(y*.125+.5)+right*x*.75) + MOB_HEIGHT*up + MOB_WIDTH*look+randfloat(0,1.0f);  //do things
 
 	vOut.centerW += gCenter;
 	vOut.sizeW    = vIn.sizeW;
