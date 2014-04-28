@@ -24,7 +24,8 @@ void Terrain::initFile(char* file)
 	ifs.open(file);
 	ifs >> x >> z;
 	mNumVertices = (x-1)*(z-1);
-	mNumFaces = 4*(x-2)*(z-2);
+	//mNumFaces = 4*(x-2)*(z-2);
+	mNumFaces = 2*(x-2)*(z-2);
 
 	grid = new float*[x];
 	for(int i = 0; i < x; ++i)
@@ -78,13 +79,14 @@ void Terrain::init(ID3D10Device* device, float sscale)
 
 	// Create the index buffer
 
-	DWORD *indices = new DWORD[(x-2)*(z-2)*3*4];//4 triangles per square
+	DWORD *indices = new DWORD[mNumFaces*3];//3 points per triangle
 	
+	int loc = 0;
 	for(int i = 0; i < x-2; ++i)
 	{
 		for(int j = 0; j < z-2; ++j)
 		{
-			int loc = (i*(z-2)+j)*3*4;
+			//int loc = (i*(z-2)+j)*3*4;
 			int a = i*(z-1)+j;
 			int b = i*(z-1)+j+1;
 			int d = i*(z-1)+j+(z-1);
@@ -93,19 +95,19 @@ void Terrain::init(ID3D10Device* device, float sscale)
 			indices[loc++] = a;
 			indices[loc++] = b;
 			indices[loc++] = c;
-
+			/*
 			indices[loc++] = a;
 			indices[loc++] = b;
 			indices[loc++] = d;
-
+			*/
 			indices[loc++] = a;
 			indices[loc++] = c;
 			indices[loc++] = d;
-
+			/*
 			indices[loc++] = b;
 			indices[loc++] = c;
 			indices[loc++] = d;
-
+			*/
 		}
 	}
 
