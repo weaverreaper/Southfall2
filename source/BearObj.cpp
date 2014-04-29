@@ -88,7 +88,7 @@ void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	}
 	if (!getActiveState())
 		return;
-	if(this->collided(fo) && fo->getActiveState())
+	if(this->collided(fo) && fo->viable())
 	{		
 		int dHealth = fo->getDamage();
 		health -= dHealth;
@@ -99,7 +99,7 @@ void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		//fo->dist = 0;
 		audio->playCue(DAMAGE_CUE);
 	}
-	if(this->collided(so) && !so->hit && so->theta > 0)
+	if(this->collided(so) && so->viable())
 	{
 		setPosition(getPosition() + direction*KNOCKBACK);
 		int dHealth = so->getDamage();

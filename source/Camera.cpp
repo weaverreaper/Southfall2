@@ -10,7 +10,6 @@ float findHeight(float z3, float z1, float z2, float a, float b)
 	float t = z1*(1-a/(1-b))+z2*a/(1-b);
 	return t*(1-b)+z3*b;
 }
-
 void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Matrix* proj, Terrain* t, LightingManager* l, float sens)
 {
 	position = pos;
@@ -38,6 +37,7 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Ma
 
 void Camera::update(float dt)
 {
+	
 	if(input->anyKeyPressed() && onGround)
 	{
 		Vector3 dir = target - position;
@@ -77,6 +77,7 @@ void Camera::update(float dt)
 	}
 
 	if (input->getMouseRButton()) shootFireBall();
+	else if (fireball->rising) {fireball->rising = false; releaseFireBall();}
 
 	position += velocity*dt;
 	velocity.y += yAcc*dt;
@@ -115,6 +116,13 @@ void Camera::update(float dt)
 		}
 	}
 
+	Vector3 right;
+	D3DXVec3Cross(&right, &(target - position), &up);
+	D3DXVec3Normalize(&right, &right);
+	D3DXVec3Normalize(&up, &up);
+
+	position += right*shakeRight + up*shakeUp;
+
  	float x =  lookRadius * sinf(mPhi)*sinf(mTheta) + position.x;
 	float y =  lookRadius * cosf(mPhi) + position.y;
 	float z = -lookRadius * sinf(mPhi)*cosf(mTheta) + position.z;
@@ -122,7 +130,20 @@ void Camera::update(float dt)
 	target = Vector3(x,y,z);
 
 	D3DXMatrixLookAtLH(mView, &position, &target, &up);
+
+	position -= right*shakeRight + up*shakeUp;
+	
+	shakeRight = 0;
+	shakeUp = 0;
+
 	fireball->update(dt);
+}
+
+void Camera::addShake(float intensity)
+{
+	float theta = RandF(0,2*PI);
+	shakeRight = intensity*sin(theta)/5;
+	shakeUp = intensity*cos(theta);
 }
 
 float Camera::getTerrHeight()
@@ -151,9 +172,19 @@ float Camera::getTerrHeight()
 void Camera::shootFireBall()
 {
 	int index = FIREBALL;
-	while (lights->lights[index].on){ ++index; if (index > FIREBALL) return; }
+	while (lights->lights[index].on){ ++index; if (index > FIREBALL) break;}//return; }
 	Vector3 dir = target - position;
 	D3DXVec3Normalize(&dir, &dir);
-	fireball->shoot(position, dir);
+	if(!fireball->getActiveState() || fireball->rising)
+		if(fireball->shoot(position, dir))
+			audio->playCue(FIREBALL_CUE);
+}
+
+
+void Camera::releaseFireBall()
+{
+	Vector3 dir = target - position;
+	D3DXVec3Normalize(&dir, &dir);
+	fireball->release(position, dir);
 	audio->playCue(FIREBALL_CUE);
 }

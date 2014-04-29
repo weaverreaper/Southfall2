@@ -38,7 +38,7 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	}
 	if (!head.getActiveState())
 		return;
-	if((head.collided(fo) || body.collided(fo)) && fo->getActiveState())
+	if((head.collided(fo) || body.collided(fo)) && fo->viable())
 	{	
 		int dHealth = fo->getDamage();
 		health -= dHealth;
@@ -50,7 +50,7 @@ void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		audio->playCue(DAMAGE_CUE);
 	}
 
-	if((head.collided(so) || body.collided(so)) && !so->hit && so->theta > 0)
+	if((head.collided(so) || body.collided(so)) && so->viable())
 	{
 		setPosition(body.getPosition() + direction*KNOCKBACK);
 		int dHealth = so->getDamage();

@@ -27,8 +27,8 @@ public:
 	void init(ID3D10Device* device, UINT numFireballs);
 	void draw(const D3DXVECTOR3& eyePosW, const D3DXMATRIX& viewProj);
 	void update(float dt);
-	void setPath(Vector3 posV, Vector3 dirV);	
-
+	void setPath(Vector3 posV, Vector3 dirV, bool timeReset = true);	
+	float scale;
 private:
 	void buildVB();
 	void buildFX();
@@ -54,6 +54,7 @@ private:
 	ID3D10EffectVariable* mfxCenterVar;
 	ID3D10EffectVariable* mfxLightVar;
 	ID3D10EffectVariable* mfxTimeVar;
+	ID3D10EffectVariable* mfxScaleVar;
 	ID3D10EffectShaderResourceVariable* mfxFireballMapArrayVar;
 
 	ID3D10InputLayout* mVertexLayout;

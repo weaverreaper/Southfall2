@@ -7,8 +7,11 @@
 
 const int SWORD_BASE_DAMAGE = 32;
 const int SWORD_DAMAGE_VARIATION = 18;
-const float MAX_THETA =  PI/4;
-const float SWING_SPEED = PI/2;
+const float SWORD_SWING_SCALING = 40;
+const float MAX_THETA =  3*PI/8;
+const float MAX_POWER =  3;
+const float SWING_ACCEL = 2*PI;
+
 
 class SwordObj : public GeoObject
 {
@@ -27,12 +30,21 @@ public:
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
 	void setAngle(float ang) {angle = ang;}
 	bool swing();
+	bool viable();
+	void release();
 	bool hit;
 	float theta;
-	int getDamage(){return SWORD_BASE_DAMAGE + rand()%SWORD_DAMAGE_VARIATION;}
+	int getDamage();
+	bool rising;
+	float power;
 
 private:
 	float angle;
+	float vel;
+	
+	int up;
+	bool reset;
+	int cuts;
 
 	ID3D10Effect* mFX;
 	ID3D10Device* md3dDevice;	

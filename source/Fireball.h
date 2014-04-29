@@ -10,6 +10,7 @@ class Camera;
 
 const int FIREBALL_BASE_DAMAGE = 28;
 const int FIREBALL_DAMAGE_VARIATION = 12;
+const float MAX_FIRE_POWER = 3;
 const float MAX_DIST =  900.f;
 const float FIREBALL_SPEED = 300.f;
 
@@ -31,14 +32,18 @@ public:
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
 	void setStaticPosition(Vector3 pos) { fireballSprites.setPath(pos, ZERO); }
-	int getDamage(){return FIREBALL_BASE_DAMAGE + rand()%FIREBALL_DAMAGE_VARIATION;}
+	int getDamage();
+	bool viable(){return getActiveState() && !rising;}
 
-	void shoot(Vector3 pos, Vector3 dir);
+	bool shoot(Vector3 pos, Vector3 dir);
+	void Fireball::release(Vector3 pos, Vector3 dir);
 	Light* light;
 	float dist;
+	bool rising;
 
 private:
 	
+	float power;
 	FireballSprites fireballSprites;
 	Camera* cam;
 

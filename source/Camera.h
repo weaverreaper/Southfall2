@@ -31,10 +31,12 @@ public:
 	void setWaves(Waves* w){waves = w;}
 	void setVelocity(Vector3 v){velocity = v;}
 	void shootFireBall();
-
+	void releaseFireBall();
+	void addShake(float intensity);
 private:
 	float getTerrHeight();
 
+	float shakeRight, shakeUp;
 	Input* input;
 	Audio* audio;
 	float mPhi, mTheta;

@@ -12,6 +12,7 @@
 cbuffer cbPerFrame
 {
 	float dt;
+	float scale;
 	Light gLight;
 	float3 gEyePosW;
 	float3 gCenter;
@@ -82,10 +83,10 @@ VS_OUT VS(VS_IN vIn)
 	}
 
 	float sc = 20;
-	vOut.centerW = ((dt-vIn.offset)-int(dt-vIn.offset))*sc*(up*y+right*x+look*vIn.depth);//do things
+	vOut.centerW = ((dt-vIn.offset)-int(dt-vIn.offset))*sc*scale*(up*y+right*x+look*vIn.depth);//do things
 
 	vOut.centerW += gCenter;
-	vOut.sizeW    = vIn.sizeW;
+	vOut.sizeW    = vIn.sizeW*scale;
 
 	return vOut;
 }

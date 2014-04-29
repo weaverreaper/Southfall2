@@ -18,6 +18,7 @@ void FireballSprites::init(ID3D10Device* device, UINT numFireballs)
 {
 	md3dDevice = device;
 
+	scale = 1;
 	mNumFireballs = numFireballs;
 	t = 4;
 	pos = Vector3(0,0,0);
@@ -28,9 +29,10 @@ void FireballSprites::init(ID3D10Device* device, UINT numFireballs)
 	buildFX();
 	buildVertexLayout();
 }
-void FireballSprites::setPath(Vector3 posV, Vector3 dirV)
+void FireballSprites::setPath(Vector3 posV, Vector3 dirV, bool timeReset)
 {
-	t = 4;
+	if(timeReset)
+		t = 4;
 	pos = posV;
 	dir = dirV;
 }
@@ -44,6 +46,7 @@ void FireballSprites::draw(const D3DXVECTOR3& eyePosW, const D3DXMATRIX& viewPro
 {
 	D3DXMATRIX tmat;
 	
+	mfxScaleVar->SetRawValue((void*)&scale,0,sizeof(float));
 	mfxEyePosVar->SetRawValue((void*)&eyePosW, 0, sizeof(D3DXVECTOR3));
 	mfxCenterVar->SetRawValue((void*)&(dir*(t-4)/2+pos), 0, sizeof(D3DXVECTOR3));
 	mfxViewProjVar->SetMatrix((float*)&viewProj);
@@ -140,6 +143,7 @@ void FireballSprites::buildFX()
 	mfxCenterVar       = mFX->GetVariableByName("gCenter");
 	mfxLightVar        = mFX->GetVariableByName("gLight");
 	mfxTimeVar		   = mFX->GetVariableByName("dt");
+	mfxScaleVar		   = mFX->GetVariableByName("scale");
 	mfxFireballMapArrayVar = mFX->GetVariableByName("gDiffuseMapArray")->AsShaderResource();
 }
 

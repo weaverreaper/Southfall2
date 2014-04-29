@@ -81,14 +81,14 @@ void Southfall::initApp()
 	splashObj.setWorldMatrix(tm1);
 	
 	
-	fireball.init(md3dDevice, 5);
+	fireball.init(md3dDevice, 1);
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball);
 	fireballObj.setInActive();
 	fireballObj.setLight(&lights.lights[FIREBALL]);	
 
 	torch1Fireball.setDevice(md3dDevice); torch1Fireball.setMFX(mFX);
-	torch1Fireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball, 100);	
+	torch1Fireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball, 100);	//fireball double use?
 	torch1Fireball.setLight(&lights.lights[FIREBALL2]);
 
 	torch.init(md3dDevice, 10);
@@ -282,7 +282,8 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			gameState = CUT1;			
+			//gameState = CUT1;			
+			gameState = LEVEL1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
@@ -420,7 +421,10 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		else {swordObj.rising = false;}
+		
+		
 		//if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
 
 //Waves stuff
@@ -518,7 +522,8 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		else {swordObj.rising = false;}
 
 		if (input.isKeyDown('O') || bear.health <= 0)
 		{
@@ -552,7 +557,8 @@ void Southfall::updateScene(float dt)
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		else {swordObj.rising = false;}
 		if (input.isKeyDown('O'))// || bear.health <= 0)
 		{
 			bear.health = 1;
@@ -588,7 +594,8 @@ void Southfall::updateScene(float dt)
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
 
-		if(input.getMouseLButton()){if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
+		else {swordObj.rising = false;}
 
 		if (input.isKeyDown('O'))//|| bear.health <= 0)
 		{
