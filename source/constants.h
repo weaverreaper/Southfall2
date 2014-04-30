@@ -36,8 +36,7 @@ const char ZELDA_CUE[] = "Zelda_Success";
 const char DAMAGE_CUE[] = "Damage";
 const char DEATH_CUE[] = "goblin death";
 const char SWING_CUE[] = "Hooh";
-
-
+const char BOSS_CUE[] = "Pokemon_battle";
 
 //const double PI = 3.14159265;
 const int GAME_WIDTH =  1280;               // width of game in pixels

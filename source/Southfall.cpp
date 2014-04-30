@@ -8,6 +8,9 @@
 //
 //=============================================================================
 
+
+//Special thanks to this guy for the Pokemon music: http://www.wimp.com/pokemonpiano/
+
 #include "Southfall.h"
 #include <ctime>
 
@@ -293,8 +296,8 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			//gameState = CUT1;			
-			gameState = LEVEL1;
+			gameState = CUT1;			
+			//gameState = LEVEL1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 0;	
@@ -303,6 +306,7 @@ void Southfall::updateScene(float dt)
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(0.1064453125, 0.1123046875, 0.1337890625,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(0.9921, 0.9058, 0.5450, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-.75,.75);	
+			
 
 			lights.lights[POINT1].pos		= Vector3(380, 600, (terrain[level].z-3)*terrain[level].scale);
 			lights.lights[POINT1].diffuse	= Color(.05f,.05f,.05f,.5f);
@@ -483,7 +487,8 @@ void Southfall::updateScene(float dt)
 			lights.lights[POINT1].on = 0;			
 
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Level2Forest.dds");
-			sky.init(md3dDevice, mEnvMapRV, 15000.0f);}
+			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
+		}
 
 
 
@@ -538,7 +543,7 @@ void Southfall::updateScene(float dt)
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
 
-		if (input.isKeyDown('O') || bear.health <= 0)
+		if (!bearKilled && (input.isKeyDown('O') || bear.health <= 0))
 		{
 			bear.health = 1;
 			lights.lights[POINT1].on = 1;
@@ -554,6 +559,15 @@ void Southfall::updateScene(float dt)
 				
 			//startEndCut = mTimer.getGameTime();
 			audio.stopCue(FOREST_CUE);
+
+			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\StormyDays.dds");
+			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
+
+			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.9,.9,.9,1);
+			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.8f, .8f, .8f, 1.f);
+			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(-1,-.25,0);	
+
+	
 		}
 
 		break;
@@ -572,7 +586,7 @@ void Southfall::updateScene(float dt)
 		swordObj.update(dt);
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
-		if (input.isKeyDown('O'))// || bear.health <= 0)
+		if (!goblinsKilled && input.isKeyDown('O'))// || bear.health <= 0)
 		{
 			bear.health = 1;
 			lights.lights[POINT1].on = 1;
@@ -587,8 +601,15 @@ void Southfall::updateScene(float dt)
 				
 			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 			
-			//startEndCut = mTimer.getGameTime();
-			//audio.stopCue(FOREST_CUE);
+			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Miramar.dds");
+			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
+
+			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.3,.3,.3,1);
+			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.7f, .71f, .7f, 1.f);
+			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(1,-.45,0);	
+
+			audio.playCue(BOSS_CUE);
+
 		}
 
 		break;
@@ -610,7 +631,7 @@ void Southfall::updateScene(float dt)
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
 
-		if (input.isKeyDown('O'))//|| bear.health <= 0)
+		if (!wraithKilled && input.isKeyDown('O'))//|| bear.health <= 0)
 		{
 			bear.health = 1;
 			lights.lights[POINT1].on = 1;
@@ -684,17 +705,18 @@ void Southfall::drawScene()
 		break;
 	case CUT1:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("The Wraith has escaped to his coastal home.",GAME_WIDTH/2 - 400,GAME_HEIGHT/2-200);		
+		theText.print("The Wraith has fled!",GAME_WIDTH/2 - 400,GAME_HEIGHT/2-200);		
 		break;
 	case CUT2:
 		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("You must rid the land of evil!",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
+		theText.print("You must chase him down!",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
 	case LEVEL1:
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
+		setShaderVals();
 		sky.draw();
-		
+		setShaderVals();
 		swordObj.draw(&mWVP);
 
 
@@ -731,6 +753,7 @@ void Southfall::drawScene()
 			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
 			mWaves.draw();
 		}
+
 		setShaderVals();
 		torchObj1.draw(&mWVP);
 		setShaderVals();
