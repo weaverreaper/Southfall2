@@ -1,5 +1,6 @@
 #include "GeoObject.h"
 #include "Fireball.h"
+#include  "audio.h"
 
 class Torch : public GeoObject
 {
@@ -12,16 +13,19 @@ public:
 	virtual void init(	ID3D10EffectTechnique* t, 
 						ID3D10EffectMatrixVariable* f,
 						ID3D10EffectMatrixVariable* w,
-						Fireball* fb,
-						Geometry* g,
+						Fireball* _light, Fireball* gameFB,
+						Geometry* g, Audio* a,
 						Vector3 pos);
 
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
 
+	bool isLit() {return fire->getActiveState();}
+
 private:
 
-	Fireball* light;
+	Fireball* fire, *fb;
+	Audio* audio;
 
 	ID3D10Effect* mFX;
 	ID3D10Device* md3dDevice;	

@@ -138,8 +138,8 @@ private:
 	GoblinHead head;
 	GoblinBody body;
 	Goblin goblin1, goblin2, goblin3;
-	Box fireball, torch;
-	Fireball fireballObj, torch1Fireball;
+	Box fireball, fireball2, fireball3, torch, torch2;
+	Fireball fireballObj, torch1Fireball, torch2Fireball;
 	Bear bearmodel;
 	BearObj bear;
 

@@ -27,7 +27,7 @@ const char SOUND_BANK[] = "audio\\Win\\SoundsExample1.xsb";
 
 // audio cues
 const char FIREBALL_CUE[] = "Fireball";
-const char SAND_CUE[] = "SandStep";
+const char TORCH_CUE[] = "torch_lit";
 const char BACKGROUND_CUE[] = "Background";
 const char BAR_BACKGROUND_CUE[] = "Bar2_Background";
 const char BEACH_CUE[] = "Beach";

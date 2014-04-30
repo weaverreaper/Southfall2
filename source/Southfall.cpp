@@ -82,18 +82,29 @@ void Southfall::initApp()
 	
 	
 	fireball.init(md3dDevice, 1);
+	fireball2.init(md3dDevice, 1);
+	fireball3.init(md3dDevice, 1);
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball);
 	fireballObj.setInActive();
 	fireballObj.setLight(&lights.lights[FIREBALL]);	
 
 	torch1Fireball.setDevice(md3dDevice); torch1Fireball.setMFX(mFX);
-	torch1Fireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball, 100);	//fireball double use?
+	torch1Fireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball2, 100);
 	torch1Fireball.setLight(&lights.lights[FIREBALL2]);
+	torch1Fireball.setInActive();
 
 	torch.init(md3dDevice, 10);
+	torch2.init(md3dDevice, 10);
 	torchObj1.setDevice(md3dDevice); torchObj1.setMFX(mFX);
-	torchObj1.init(mTech, mfxWVPVar, mfxWorldVar, &torch1Fireball, &torch, Vector3(400,150,200));
+	torchObj1.init(mTech, mfxWVPVar, mfxWorldVar, &torch1Fireball, &fireballObj, &torch, &audio, Vector3(1400,175,2500));
+
+	torch2Fireball.setDevice(md3dDevice); torch2Fireball.setMFX(mFX);
+	torch2Fireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball3, 100);	
+	torch2Fireball.setLight(&lights.lights[FIREBALL3]);		
+
+	torchObj2.setDevice(md3dDevice); torchObj2.setMFX(mFX);
+	torchObj2.init(mTech, mfxWVPVar, mfxWorldVar, &torch2Fireball, &fireballObj, &torch2, &audio, Vector3(1550,175,2500));
 	
 	head.init(md3dDevice, 5);
 	body.init(md3dDevice, 5);
@@ -423,6 +434,9 @@ void Southfall::updateScene(float dt)
 		swordObj.update(dt);
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
+
+		torchObj1.update(dt);
+		torchObj2.update(dt);
 		
 		
 		//if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
@@ -434,7 +448,7 @@ void Southfall::updateScene(float dt)
 
 		mWaves.update(dt);
 
-		torchObj1.update(dt);
+
 //End level
 		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
@@ -466,21 +480,20 @@ void Southfall::updateScene(float dt)
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.6f, .75f, .6f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,0);	
 
-			lights.lights[POINT1].on = 0;
-			pigKilled = false;
+			lights.lights[POINT1].on = 0;			
 
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Level2Forest.dds");
-			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
-		}
+			sky.init(md3dDevice, mEnvMapRV, 15000.0f);}
 
 
 
 //Cheat
-		if (input.isKeyDown('O'))
+		if (!pigKilled && (input.isKeyDown('O') || torchObj1.isLit()))
 		{
 			lights.lights[POINT1].on = 1;
 			audio.playCue(ZELDA_CUE);
 			pigKilled = true;
+			torchObj2.setInActive();
 		}
 
 		break;
@@ -681,15 +694,7 @@ void Southfall::drawScene()
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
 		sky.draw();
-		setShaderVals();
-		goblin1.draw(&mWVP);
-		setShaderVals();
-		goblin2.draw(&mWVP);
-		setShaderVals();
-		goblin3.draw(&mWVP);
-		setShaderVals();
-		bear.draw(&mWVP);
-		setShaderVals();
+		
 		swordObj.draw(&mWVP);
 
 
@@ -728,7 +733,8 @@ void Southfall::drawScene()
 		}
 		setShaderVals();
 		torchObj1.draw(&mWVP);
-		
+		setShaderVals();
+		torchObj2.draw(&mWVP);		
 		setShaderVals();
 		fireballObj.draw(&mWVP);
 		

@@ -138,6 +138,7 @@ float GeoObject::getTerrHeight()
 
 bool GeoObject::collided(GeoObject *gameObject)
 {
+	if (!active || !gameObject->getActiveState()) return false;
 	Vector3 diff = position - gameObject->getPosition();
 	float length = D3DXVec3LengthSq(&diff);
 	float radii = radiusSquared + gameObject->getRadiusSquare();
