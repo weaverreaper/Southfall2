@@ -40,6 +40,7 @@ public:
 	Light* light;
 	float dist;
 	bool rising;
+	bool ready;
 
 private:
 	
