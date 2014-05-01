@@ -36,6 +36,7 @@ const char ZELDA_CUE[] = "Zelda_Success";
 const char DAMAGE_CUE[] = "Damage";
 const char DEATH_CUE[] = "goblin death";
 const char SWING_CUE[] = "Hooh";
+const char HEARTBEAT_CUE[] = "Heartbeat";
 const char BOSS_CUE[] = "Pokemon_battle";
 
 //const double PI = 3.14159265;
@@ -50,14 +51,5 @@ inline void safeRelease(T& ptr)
         ptr = NULL;
     }
 }
-enum location {EMPTY, BASE, TOWER};
-struct tower
-{
-	int r,g,b;
-	tower():r(0),g(0),b(0){}
-	tower(int r,int g,int b):r(r),g(g),b(b){}
-
-};
-
 
 #endif

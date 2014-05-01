@@ -30,6 +30,7 @@
 #include "TextureMgr.h"
 #include "DamageSprites.h"
 #include "Torch.h"
+#include "LadderBillboard.h"
 
 
 	const int LEVELS = 4;
@@ -121,7 +122,7 @@ private:
 	float startCut1;
 	float startCut2;
 	float startEndCut;
-	int alpha;
+	double alpha;
 
 	bool pigKilled, bearKilled, goblinsKilled, wraithKilled;
 
@@ -144,6 +145,8 @@ private:
 	BearObj bear;
 
 	Torch torchObj1, torchObj2;
+
+	LadderBillboard ladder;
 };
 
 #endif

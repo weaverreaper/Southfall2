@@ -271,6 +271,11 @@ void Southfall::initApp()
 	audio.playCue(BAR_BACKGROUND_CUE);
 	input.clearAll();
 	camera.setWaves(&mWaves);
+
+	Vector3 centers[1];
+
+	centers[0] = Vector3(480,650,3100);
+	ladder.init(md3dDevice, centers, 1);
 }
 
 void Southfall::onResize()
@@ -300,14 +305,13 @@ void Southfall::updateScene(float dt)
 			//gameState = LEVEL1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
-			alpha = 0;	
+			alpha = 20;	
 			for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
 			
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(0.1064453125, 0.1123046875, 0.1337890625,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(0.9921, 0.9058, 0.5450, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-.75,.75);	
 			
-
 			lights.lights[POINT1].pos		= Vector3(380, 600, (terrain[level].z-3)*terrain[level].scale);
 			lights.lights[POINT1].diffuse	= Color(.05f,.05f,.05f,.5f);
 			lights.lights[POINT1].att		= Vector3(0,.0008f,0);
@@ -316,7 +320,6 @@ void Southfall::updateScene(float dt)
 		}
 		else
 		{
-
 			camera.setVelocity(Vector3(0,0,0));
 
 			float time = mTimer.getGameTime();
@@ -361,48 +364,31 @@ void Southfall::updateScene(float dt)
 		
 		break;
 	case CUT1:
-		if (mTimer.getGameTime() - startCut1 > 3)
+		if (mTimer.getGameTime() - startCut1 > 8)
 		{
 			gameState = CUT2;
 			camera.update(dt);
 			startCut2 = mTimer.getGameTime();
-			alpha = 0;
+			alpha = 20;
 			Sleep(400);
 			break;
 		}
-		alpha += 80*dt;
+		alpha += 25*dt;
 		if (alpha > 255) alpha = 255;
 		if (alpha < 0) alpha = 0;
 
-		//Speed along wave progress
-		for (int i=0; i<3; i++)
-		{
-			mWaterTexOffset.y += 0.1f*dt;
-			mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
-
-			mWaves.update(dt);
-		}
 		break;
 	case CUT2:
-		if (mTimer.getGameTime() - startCut2 > 3)
+		if (mTimer.getGameTime() - startCut2 > 4)
 		{
 			gameState = LEVEL1;
 			camera.update(dt);
 			audio.playCue(BEACH_CUE);
 			break;
 		}
-		alpha += 80*dt;
+		alpha += 35*dt;
 		if (alpha > 255) alpha = 255;
 		if (alpha < 0) alpha = 0;
-
-		//Speed along wave progress
-		for (int i=0; i<3; i++)
-		{
-			mWaterTexOffset.y += 0.1f*dt;
-			mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
-
-			mWaves.update(dt);
-		}
 
 		break;
 
@@ -440,10 +426,9 @@ void Southfall::updateScene(float dt)
 		else {swordObj.rising = false;}
 
 		torchObj1.update(dt);
-		torchObj2.update(dt);
+		torchObj2.update(dt);		
 		
-		
-		//if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done
+	
 
 //Waves stuff
 		// Animate water texture as a function of time.
@@ -567,6 +552,7 @@ void Southfall::updateScene(float dt)
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.8f, .8f, .8f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(-1,-.25,0);	
 
+			audio.playCue(HEARTBEAT_CUE);
 	
 		}
 
@@ -594,7 +580,7 @@ void Southfall::updateScene(float dt)
 			goblinsKilled = true;			
 			alpha = 0;
 		}
-		if(goblinsKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
+		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
 		{
 			++gameState;
 			++level;
@@ -608,6 +594,7 @@ void Southfall::updateScene(float dt)
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.7f, .71f, .7f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(1,-.45,0);	
 
+			audio.stopCue(HEARTBEAT_CUE);
 			audio.playCue(BOSS_CUE);
 
 		}
@@ -704,12 +691,12 @@ void Southfall::drawScene()
 		splashObj.draw(&mWVP);
 		break;
 	case CUT1:
-		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("The Wraith has fled!",GAME_WIDTH/2 - 400,GAME_HEIGHT/2-200);		
+		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
+		theText.print("\"Attack him where he is unprepared, appear where you are not expected.\" \n -- Sun Tzu, The Art of War",GAME_WIDTH/2 - 400,GAME_HEIGHT/2-200);		
 		break;
 	case CUT2:
-		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
-		theText.print("You must chase him down!",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
+		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
+		theText.print("One wraith remains.  You arrive at his secret lair...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
 	case LEVEL1:
 		terrainObj[level].draw(&mWVP);
@@ -718,7 +705,6 @@ void Southfall::drawScene()
 		sky.draw();
 		setShaderVals();
 		swordObj.draw(&mWVP);
-
 
 	//Waves stuff (will NOT be put into modules ever)
 
@@ -780,6 +766,11 @@ void Southfall::drawScene()
 		bear.draw(&mWVP);
 		setShaderVals();
 		swordObj.draw(&mWVP);
+
+		setShaderVals();
+		ladder.draw(lights.lights[0], camera.getPos(), mView*mProj);
+		md3dDevice->RSSetState(0);
+
 	
 		setShaderVals();
 		fireballObj.draw(&mWVP);
@@ -817,7 +808,7 @@ void Southfall::drawScene()
 	case CUT6:
 		break;
 	case END:
-		theText.setFontColor(SETCOLOR_ARGB(alpha, 255,255,255));
+		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
 		theText.print("To be continued...",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);		
 		break;
 	}
