@@ -696,7 +696,7 @@ void Southfall::drawScene()
 		break;
 	case CUT2:
 		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
-		theText.print("One wraith remains.  You arrive at his secret lair...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
+		theText.print("One wraith remains. \n   You approach his secret lair...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
 	case LEVEL1:
 		terrainObj[level].draw(&mWVP);
