@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="pig.cpp" />
+    <ClCompile Include="PigObj.cpp" />
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\Bear.cpp" />
     <ClCompile Include="source\BearObj.cpp" />
@@ -53,6 +55,8 @@
     <None Include="source\tree.fx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pig.h" />
+    <ClInclude Include="PigObj.h" />
     <ClInclude Include="source\audio.h" />
     <ClInclude Include="source\Bear.h" />
     <ClInclude Include="source\BearObj.h" />
