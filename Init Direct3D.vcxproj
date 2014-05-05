@@ -23,6 +23,9 @@
     <ClCompile Include="source\Goblin.cpp" />
     <ClCompile Include="source\Goblinbody.cpp" />
     <ClCompile Include="source\Goblinhead.cpp" />
+    <ClCompile Include="source\LadderBillboard.cpp" />
+    <ClCompile Include="source\Pig.cpp" />
+    <ClCompile Include="source\PigObj.cpp" />
     <ClCompile Include="source\Sky.cpp" />
     <ClCompile Include="source\Southfall.cpp" />
     <ClCompile Include="source\d3dApp.cpp" />
@@ -41,6 +44,8 @@
     <ClCompile Include="source\TextureMgr.cpp" />
     <ClCompile Include="source\Torch.cpp" />
     <ClCompile Include="source\Waves.cpp" />
+    <ClCompile Include="source\Wraith.cpp" />
+    <ClCompile Include="source\WraithObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\color.fx" />
@@ -49,6 +54,7 @@
     <None Include="source\lighthelper.fx" />
     <None Include="source\random.fx" />
     <None Include="source\sky.fx" />
+    <None Include="source\tree.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\audio.h" />
@@ -70,9 +76,12 @@
     <ClInclude Include="source\Goblinbody.h" />
     <ClInclude Include="source\Goblinhead.h" />
     <ClInclude Include="source\input.h" />
+    <ClInclude Include="source\LadderBillboard.h" />
     <ClInclude Include="source\Lighting.h" />
     <ClInclude Include="source\Line.h" />
     <ClInclude Include="source\Origin.h" />
+    <ClInclude Include="source\pig.h" />
+    <ClInclude Include="source\PigObj.h" />
     <ClInclude Include="source\Pyramid.h" />
     <ClInclude Include="source\Sky.h" />
     <ClInclude Include="source\Southfall.h" />
@@ -86,6 +95,8 @@
     <ClInclude Include="source\Torch.h" />
     <ClInclude Include="source\Vertex.h" />
     <ClInclude Include="source\Waves.h" />
+    <ClInclude Include="source\Wraith.h" />
+    <ClInclude Include="source\WraithObj.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EFB7FFF1-3E24-4A4E-B50A-5E90B88EFD20}</ProjectGuid>
