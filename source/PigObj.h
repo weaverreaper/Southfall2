@@ -14,17 +14,17 @@
 #include <vector>
 #include "DamageSprites.h"
 
-class pigObj : public GeoObject
+class PigObj : public GeoObject
 {
 public:
 
-	pigObj();
-	~pigObj();
+	PigObj();
+	~PigObj();
 	void init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D10EffectMatrixVariable* w,ID3D10Device* device, Geometry* g, Terrain* ter);
 	void update(float dt, Vector3 cam);
 	void draw(D3DXMATRIX* vp);
 	int health;
-	void pigObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
+	void PigObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
 	bool done(){return dmgfx.empty() && health < 0;}
 	void setAudio(Audio* a) {audio = a;}
 	

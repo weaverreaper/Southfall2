@@ -9,12 +9,12 @@
 #include "d3dUtil.h"
 #include "Geometry.h"
 
-class pig : public Geometry
+class Pig : public Geometry
 {
 public:
 
-	pig();
-	~pig();
+	Pig();
+	~Pig();
 
 	void init(ID3D10Device* device, float scale = 1);
 	void draw();

@@ -6,17 +6,17 @@
 
 const float KNOCKBACK = 50;
 
-pigObj::pigObj()
+PigObj::PigObj()
 {
-	health = 400;
+	health = 50;
 	radius = 25;
 }
  
-pigObj::~pigObj()
+PigObj::~PigObj()
 {
 	;
 }
-void pigObj::draw(D3DXMATRIX* vp)
+void PigObj::draw(D3DXMATRIX* vp)
 {
 	
 	if(active)
@@ -49,7 +49,7 @@ void pigObj::draw(D3DXMATRIX* vp)
 	}
 }
 
-void pigObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D10EffectMatrixVariable* w,ID3D10Device* device, Geometry* g, Terrain* ter)
+void PigObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D10EffectMatrixVariable* w,ID3D10Device* device, Geometry* g, Terrain* ter)
 {
 	//md3dDevice = device;
 	md3dDevice = device;
@@ -59,7 +59,7 @@ void pigObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D1
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures/fur.jpg", 0, 0, &mDiffuseMapRV, 0 ));
+		L"Textures/pig.jpg", 0, 0, &mDiffuseMapRV, 0 ));
 	 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
@@ -71,7 +71,7 @@ void pigObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D1
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&wvp);
 }
-void pigObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
+void PigObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
 	firstDraw = true;
 	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
@@ -116,14 +116,14 @@ void pigObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 	}
 	update(dt,cam);
 }
-void pigObj::update(float dt, Vector3 cam)
+void PigObj::update(float dt, Vector3 cam)
 {
 	direction = position - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
-	if(D3DXVec3Length(&direction) < 1000)
+	if(D3DXVec3Length(&direction) < 10000)
 	{
 	D3DXVec3Normalize(&direction,&direction);
-	Vector3 v = -direction*100;
+	Vector3 v = -direction*0;
 	v.y = 0;
 	roty = rot;
 	velocity = v;
@@ -132,7 +132,7 @@ void pigObj::update(float dt, Vector3 cam)
 	Matrix temp;
 	Identity(&temp);
 	Identity(&world);
-	position.y = getTerrHeight()+15;
+	position.y = getTerrHeight();
 	D3DXMatrixRotationYawPitchRoll(&temp, roty, rotz, rotx);
 	world *= temp;
 	Scale(&temp,scale,scale,scale);

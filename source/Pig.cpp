@@ -4,88 +4,88 @@
 
 #include "pig.h"
 
-pig::pig()
+Pig::Pig()
 :md3dDevice(0), mVB(0), mIB(0)
 {
 	
-	vertices[0] = Vertex(D3DXVECTOR3(4.7f, 2.4f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f); //nosetip
-	vertices[1] = Vertex(D3DXVECTOR3(4.5f, 2.3f, -0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.7f, 0.0f);//sidesofnoses
-	vertices[2] = Vertex(D3DXVECTOR3(4.5f, 2.3f, 0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.7f, 1.0f);
-	vertices[3] = Vertex(D3DXVECTOR3(4.5f, 2.6f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.4f, 0.0f);//top
-	vertices[4] = Vertex(D3DXVECTOR3(4.5f, 2.0f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.8f, 0.4f);//bottom
-	vertices[5] = Vertex(D3DXVECTOR3(4.5f, 2.0f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.2f);//chin x3
-	vertices[6] = Vertex(D3DXVECTOR3(4.2f, 2.0f, 0.2f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.4f);
-	vertices[7] = Vertex(D3DXVECTOR3(4.2f, 2.0f, -0.2f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.6f);
-	vertices[8] = Vertex(D3DXVECTOR3(4.2f, 2.8f, 0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.2f, 0.0f); //crown
-	vertices[9] = Vertex(D3DXVECTOR3(4.2f, 2.8f, -0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.2f, 0.5f);
-	vertices[10] = Vertex(D3DXVECTOR3(4.4f, 2.6f, 0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.4f, 0.5f); 
-	vertices[11] = Vertex(D3DXVECTOR3(4.4f, 2.6f, -0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.4f, 1.0f);
-	vertices[12] = Vertex(D3DXVECTOR3(4.2f, 3.0f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.0f, 0.0f);
-	vertices[13] = Vertex(D3DXVECTOR3(4.0f, 2.8f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.2f, 1.0f);
-	vertices[14] = Vertex(D3DXVECTOR3(3.8f, 2.0f, -0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.8f);
-	vertices[15] = Vertex(D3DXVECTOR3(3.8f, 2.0f, 0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 1.0f);//end head
+	vertices[0] = Vertex(D3DXVECTOR3(4.8f, 2.4f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.6f, 0.5f); //nosetip
+	vertices[1] = Vertex(D3DXVECTOR3(4.7f, 2.3f, -0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.7f, 0.0f);//sidesofnoses
+	vertices[2] = Vertex(D3DXVECTOR3(4.7f, 2.3f, 0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.7f, 1.0f);
+	vertices[3] = Vertex(D3DXVECTOR3(4.7f, 2.6f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.4f, 0.0f);//top
+	vertices[4] = Vertex(D3DXVECTOR3(4.7f, 2.0f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.8f, 0.4f);//bottom
+	vertices[5] = Vertex(D3DXVECTOR3(4.7f, 2.0f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.2f);//chin x3
+	vertices[6] = Vertex(D3DXVECTOR3(4.0f, 2.0f, 0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.4f);
+	vertices[7] = Vertex(D3DXVECTOR3(4.0f, 2.0f, -0.3f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.6f);
+	vertices[8] = Vertex(D3DXVECTOR3(4.0f, 2.8f, 0.5f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.2f, 0.0f); //crown
+	vertices[9] = Vertex(D3DXVECTOR3(4.0f, 2.8f, -0.5f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.2f, 0.5f);
+	vertices[10] = Vertex(D3DXVECTOR3(4.5f, 2.6f, 0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.4f, 0.5f); 
+	vertices[11] = Vertex(D3DXVECTOR3(4.5f, 2.6f, -0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.4f, 1.0f);
+	vertices[12] = Vertex(D3DXVECTOR3(3.9f, 3.0f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.0f, 0.0f);
+	vertices[13] = Vertex(D3DXVECTOR3(3.7f, 2.8f, 0.0f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 0.2f, 1.0f);
+	vertices[14] = Vertex(D3DXVECTOR3(3.5f, 2.0f, -0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 0.8f);
+	vertices[15] = Vertex(D3DXVECTOR3(3.5f, 2.0f, 0.4f),D3DXVECTOR3(1.4f, 4.1f, 0.0f), 1.0f, 1.0f);//end head
 	//right arm
-	vertices[16] = Vertex(D3DXVECTOR3(3.6f, 2.2f, 1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
-	vertices[17] = Vertex(D3DXVECTOR3(2.8f, 2.0f, 1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);
-	vertices[18] = Vertex(D3DXVECTOR3(3.2f, 1.8f, 0.7f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
-	vertices[19] = Vertex(D3DXVECTOR3(3.0f, 0.0f, 1.2f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//22
-	vertices[20] = Vertex(D3DXVECTOR3(3.4f, 0.2f, 0.9f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);//24
-	vertices[21] = Vertex(D3DXVECTOR3(3.2f, 0.0f, 0.7f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//23
-	vertices[22] = Vertex(D3DXVECTOR3(3.5f, 0.0f, 1.2f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
-	vertices[23] = Vertex(D3DXVECTOR3(3.5f, 0.0f, 0.6f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.0f);
-	vertices[24] = Vertex(D3DXVECTOR3(3.6f, 0.2f, 0.9f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
+	vertices[16] = Vertex(D3DXVECTOR3(3.8f, 2.2f, 0.5f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
+	vertices[17] = Vertex(D3DXVECTOR3(3.4f, 2.0f, 0.5f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);
+	vertices[18] = Vertex(D3DXVECTOR3(3.4f, 1.8f, 0.3f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
+	vertices[19] = Vertex(D3DXVECTOR3(3.4f, 0.7f, 0.6f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//22
+	vertices[20] = Vertex(D3DXVECTOR3(3.6f, 0.8f, 0.4f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);//24
+	vertices[21] = Vertex(D3DXVECTOR3(3.5f, 0.7f, 0.3f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//23
+	vertices[22] = Vertex(D3DXVECTOR3(3.6f, 0.7f, 0.5f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
+	vertices[23] = Vertex(D3DXVECTOR3(3.7f, 0.7f, 0.3f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.0f);
+	vertices[24] = Vertex(D3DXVECTOR3(3.8f, 0.8f, 0.4f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
 	//left arm
-	vertices[25] = Vertex(D3DXVECTOR3(3.6f, 2.2f, -1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
-	vertices[26] = Vertex(D3DXVECTOR3(2.8f, 2.0f, -1.0f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);
-	vertices[27] = Vertex(D3DXVECTOR3(3.2f, 1.8f, -0.7f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
-	vertices[28] = Vertex(D3DXVECTOR3(3.0f, 0.0f, -1.2f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//31
-	vertices[29] = Vertex(D3DXVECTOR3(3.4f, 0.2f, -0.9f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);//33
-	vertices[30] = Vertex(D3DXVECTOR3(3.2f, 0.0f, -0.7f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//32
-	vertices[31] = Vertex(D3DXVECTOR3(3.5f, 0.0f, -1.2f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
-	vertices[32] = Vertex(D3DXVECTOR3(3.5f, 0.0f, -0.6f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.0f);
-	vertices[33] = Vertex(D3DXVECTOR3(3.6f, 0.2f, -0.9f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
+	vertices[25] = Vertex(D3DXVECTOR3(3.8f, 2.2f, -0.5f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
+	vertices[26] = Vertex(D3DXVECTOR3(3.4f, 2.0f, -0.5f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);
+	vertices[27] = Vertex(D3DXVECTOR3(3.4f, 1.8f, -0.3f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);
+	vertices[28] = Vertex(D3DXVECTOR3(3.4f, 0.7f, -0.6f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//22
+	vertices[29] = Vertex(D3DXVECTOR3(3.6f, 0.8f, -0.4f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.0f);//24
+	vertices[30] = Vertex(D3DXVECTOR3(3.5f, 0.7f, -0.3f), D3DXVECTOR3(1.0f, 2.0f, 1.0f), 0.2f, 0.3f);//23
+	vertices[31] = Vertex(D3DXVECTOR3(3.6f, 0.7f, -0.5f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
+	vertices[32] = Vertex(D3DXVECTOR3(3.7f, 0.7f, -0.3f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.0f);
+	vertices[33] = Vertex(D3DXVECTOR3(3.8f, 0.8f, -0.4f), D3DXVECTOR3(2.0f, 1.9f, 1.0f), 0.2f, 0.3f);
 		//start shoulders
-	vertices[34] = Vertex(D3DXVECTOR3(4.0f, 1.2f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.0f);
-	vertices[35] = Vertex(D3DXVECTOR3(4.0f, 2.4f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.3f);
-	vertices[36] = Vertex(D3DXVECTOR3(3.8f, 1.4f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.0f);
-	vertices[37] = Vertex(D3DXVECTOR3(3.8f, 2.2f, 1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.3f);
-	vertices[38] = Vertex(D3DXVECTOR3(4.0f, 1.2f, -0.2f),D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 1.0f);
-	vertices[39] = Vertex(D3DXVECTOR3(4.0f, 2.4f, -0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.6f);
-	vertices[40] = Vertex(D3DXVECTOR3(3.8f, 1.4f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 1.0f);
-	vertices[41] = Vertex(D3DXVECTOR3(3.8f, 2.2f, -1.0f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.6f);
+	vertices[34] = Vertex(D3DXVECTOR3(4.0f, 1.6f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.0f);
+	vertices[35] = Vertex(D3DXVECTOR3(4.0f, 2.8f, 0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.3f);
+	vertices[36] = Vertex(D3DXVECTOR3(3.8f, 1.6f, 0.6f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.0f);
+	vertices[37] = Vertex(D3DXVECTOR3(3.8f, 2.0f, 0.6f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.3f);
+	vertices[38] = Vertex(D3DXVECTOR3(4.0f, 1.6f, -0.2f),D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 1.0f);
+	vertices[39] = Vertex(D3DXVECTOR3(4.0f, 2.8f, -0.2f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.0f, 0.6f);
+	vertices[40] = Vertex(D3DXVECTOR3(3.8f, 1.6f, -0.6f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 1.0f);
+	vertices[41] = Vertex(D3DXVECTOR3(3.8f, 2.0f, -0.6f), D3DXVECTOR3(1.0f, 3.5f, 0.0f), 0.2f, 0.6f);
 	//end shoulders
 	//begin waist
-	vertices[42] = Vertex(D3DXVECTOR3(2.2f, 1.5f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.0f);
-	vertices[43] = Vertex(D3DXVECTOR3(2.2f, 1.5f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.4f);
-	vertices[44] = Vertex(D3DXVECTOR3(2.2f, 1.5f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.2f);
-	vertices[45] = Vertex(D3DXVECTOR3(0.6f, 2.4f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 1.0f);
-	vertices[46] = Vertex(D3DXVECTOR3(0.6f, 2.4f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.6f);
-	vertices[47] = Vertex(D3DXVECTOR3(0.6f, 2.4f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.8f);
+	vertices[42] = Vertex(D3DXVECTOR3(2.6f, 1.5f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.0f);
+	vertices[43] = Vertex(D3DXVECTOR3(2.6f, 1.5f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.4f);
+	vertices[44] = Vertex(D3DXVECTOR3(2.6f, 1.5f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.2f);
+	vertices[45] = Vertex(D3DXVECTOR3(1.8f, 2.4f, 0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 1.0f);
+	vertices[46] = Vertex(D3DXVECTOR3(1.8f, 2.4f, -0.6f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.6f);
+	vertices[47] = Vertex(D3DXVECTOR3(1.8f, 2.4f, 0.0f), D3DXVECTOR3(0.8f, 2.0f, 0.0f), 0.4f, 0.8f);
 	//begin legs
-    vertices[48] = Vertex(D3DXVECTOR3(1.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
-	vertices[49] = Vertex(D3DXVECTOR3(0.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, -0.0f), 0.6f, 0.5f);
-	vertices[50] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.0f);
-	vertices[51] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.0f);
-	vertices[52] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.3f);
-	vertices[53] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.3f);
-	vertices[54] = Vertex(D3DXVECTOR3(1.4f, 0.0f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.5f);
-	vertices[55] = Vertex(D3DXVECTOR3(1.0f, 0.0f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.5f);
-	vertices[56] = Vertex(D3DXVECTOR3(0.8f, -0.2f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.7f);
-	vertices[57] = Vertex(D3DXVECTOR3(0.4f, -0.2f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.7f);
+    vertices[48] = Vertex(D3DXVECTOR3(2.2f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, 0.0f), 0.6f, 0.5f);
+	vertices[49] = Vertex(D3DXVECTOR3(1.6f, 1.6f, 0.0f), D3DXVECTOR3(0.8f, 1.0f, -0.0f), 0.6f, 0.5f);
+	vertices[50] = Vertex(D3DXVECTOR3(2.4f, 1.0f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.0f);
+	vertices[51] = Vertex(D3DXVECTOR3(2.0f, 1.0f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.0f);
+	vertices[52] = Vertex(D3DXVECTOR3(1.8f, 0.8f, 0.4f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.3f);
+	vertices[53] = Vertex(D3DXVECTOR3(1.4f, 0.8f, -0.4f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.3f);
+	vertices[54] = Vertex(D3DXVECTOR3(2.4f, 1.0f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 0.8f, 0.5f);
+	vertices[55] = Vertex(D3DXVECTOR3(2.0f, 1.0f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 0.8f, 0.5f);
+	vertices[56] = Vertex(D3DXVECTOR3(1.8f, 0.8f, 0.6f), D3DXVECTOR3(0.8f, -0.2f, 0.5f), 1.0f, 0.7f);
+	vertices[57] = Vertex(D3DXVECTOR3(1.4f, 0.8f, -0.6f), D3DXVECTOR3(0.8f, -0.2f, -0.5f), 1.0f, 0.7f);
 	// feet
-	vertices[58] = Vertex(D3DXVECTOR3(1.8f, -0.2f, 0.5f), D3DXVECTOR3(0.8f, -1.2f, 0.5f), 1.0f, 1.0f);
-	vertices[59] = Vertex(D3DXVECTOR3(1.4f, -0.2f, -0.5f), D3DXVECTOR3(0.8f, -1.2f, -0.5f), 1.0f, 1.0f);
+	vertices[58] = Vertex(D3DXVECTOR3(2.6f, 0.8f, 0.4f), D3DXVECTOR3(0.8f, -1.2f, 0.5f), 1.0f, 1.0f);
+	vertices[59] = Vertex(D3DXVECTOR3(2.2f, 0.8f, -0.4f), D3DXVECTOR3(0.8f, -1.2f, -0.5f), 1.0f, 1.0f);
 }
 
 
  
-pig::~pig()
+Pig::~Pig()
 {
 	ReleaseCOM(mVB);
 	ReleaseCOM(mIB);
 }
 
-void pig::init(ID3D10Device* device, float scale)
+void Pig::init(ID3D10Device* device, float scale)
 {
 	md3dDevice = device;
  
@@ -228,7 +228,7 @@ void pig::init(ID3D10Device* device, float scale)
 	redoBuffers(indices);
 }
 
-void pig::draw()
+void Pig::draw()
 {
 	/*
 	for(DWORD i = 0; i < mNumVertices; ++i)
@@ -247,7 +247,7 @@ void pig::draw()
 	md3dDevice->DrawIndexed(mNumFaces*3, 0, 0);
 }
 
-void pig::redoBuffers(DWORD ind[300])
+void Pig::redoBuffers(DWORD ind[300])
 {
 	Vertex vertexBuffer2[300];
 	DWORD indexBuffer2[300];

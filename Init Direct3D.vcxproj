@@ -11,8 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pig.cpp" />
-    <ClCompile Include="PigObj.cpp" />
     <ClCompile Include="source\audio.cpp" />
     <ClCompile Include="source\Bear.cpp" />
     <ClCompile Include="source\BearObj.cpp" />
@@ -26,6 +24,8 @@
     <ClCompile Include="source\Goblinbody.cpp" />
     <ClCompile Include="source\Goblinhead.cpp" />
     <ClCompile Include="source\LadderBillboard.cpp" />
+    <ClCompile Include="source\Pig.cpp" />
+    <ClCompile Include="source\PigObj.cpp" />
     <ClCompile Include="source\Sky.cpp" />
     <ClCompile Include="source\Southfall.cpp" />
     <ClCompile Include="source\d3dApp.cpp" />
@@ -55,8 +55,6 @@
     <None Include="source\tree.fx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pig.h" />
-    <ClInclude Include="PigObj.h" />
     <ClInclude Include="source\audio.h" />
     <ClInclude Include="source\Bear.h" />
     <ClInclude Include="source\BearObj.h" />
@@ -80,6 +78,8 @@
     <ClInclude Include="source\Lighting.h" />
     <ClInclude Include="source\Line.h" />
     <ClInclude Include="source\Origin.h" />
+    <ClInclude Include="source\pig.h" />
+    <ClInclude Include="source\PigObj.h" />
     <ClInclude Include="source\Pyramid.h" />
     <ClInclude Include="source\Sky.h" />
     <ClInclude Include="source\Southfall.h" />
