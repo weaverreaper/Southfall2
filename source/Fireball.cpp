@@ -8,6 +8,7 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 						Geometry* g,
 						int count)
 {
+	ready = true;
 	rising = false;
 	power = 1;
 	scale = 1;
@@ -53,6 +54,7 @@ void Fireball::update(float dt)
 		light->on = 0;
 		dist = 0;
 		setInActive();
+		ready = true;
 	}
 	
 	if (!active) return;
@@ -83,6 +85,7 @@ void Fireball::draw(Matrix* vp)
 
 void Fireball::release(Vector3 pos, Vector3 dir)
 {
+	ready = false;
 	setPosition(pos + 200*dir);
 	setVelocity(dir*FIREBALL_SPEED);
 	fireballSprites.setPath(position, velocity);

@@ -14,7 +14,8 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Ma
 {
 	position = pos;
 	target = tar;
-
+	
+	shakeIntensity = 0;
 	up = Vector3(0.0f, 1.0f, 0.0f);
 	sensitivity = sens;
 	input = i; 
@@ -74,7 +75,17 @@ void Camera::update(float dt)
 		velocity.x = 0;
 		velocity.z = 0;
 		velocity += speed*dpos;
+		
+		//move restraint
+		float moveRestraint = (1-shakeIntensity)/1;//1/(shakeIntensity+1);
+
+		if(moveRestraint > 1)
+			moveRestraint = 1;
+		else if(moveRestraint < 0)
+			moveRestraint = 0;
+		velocity *= moveRestraint;
 	}
+	shakeIntensity = 0;
 
 	if (input->getMouseRButton()) shootFireBall();
 	else if (fireball->rising) {fireball->rising = false; releaseFireBall();}
@@ -141,6 +152,7 @@ void Camera::update(float dt)
 
 void Camera::addShake(float intensity)
 {
+	shakeIntensity += intensity;
 	float theta = RandF(0,2*PI);
 	shakeRight = intensity*sin(theta)/5;
 	shakeUp = intensity*cos(theta);
@@ -175,7 +187,7 @@ void Camera::shootFireBall()
 	while (lights->lights[index].on){ ++index; if (index > FIREBALL) break;}//return; }
 	Vector3 dir = target - position;
 	D3DXVec3Normalize(&dir, &dir);
-	if(!fireball->getActiveState() || fireball->rising)
+	if(fireball->ready)
 		if(fireball->shoot(position, dir))
 			audio->playCue(FIREBALL_CUE);
 }

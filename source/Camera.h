@@ -36,6 +36,7 @@ public:
 private:
 	float getTerrHeight();
 
+	float shakeIntensity;
 	float shakeRight, shakeUp;
 	Input* input;
 	Audio* audio;

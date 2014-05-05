@@ -30,6 +30,9 @@
 #include "TextureMgr.h"
 #include "DamageSprites.h"
 #include "Torch.h"
+#include "LadderBillboard.h"
+#include "pig.h"
+#include "PigObj.h"
 
 
 	const int LEVELS = 4;
@@ -121,9 +124,9 @@ private:
 	float startCut1;
 	float startCut2;
 	float startEndCut;
-	int alpha;
+	double alpha;
 
-	bool pigKilled, bearKilled, goblinsKilled, wraithKilled;
+	bool pigKilled, bearKilled, goblinsKilled, wraithKilled, torchLit;
 
 	int level;
 	Terrain terrain[LEVELS];
@@ -138,12 +141,16 @@ private:
 	GoblinHead head;
 	GoblinBody body;
 	Goblin goblin1, goblin2, goblin3;
-	Box fireball, torch;
-	Fireball fireballObj, torch1Fireball;
+	Box fireball, fireball2, fireball3, torch, torch2;
+	Fireball fireballObj, torch1Fireball, torch2Fireball;
 	Bear bearmodel;
 	BearObj bear;
+	Pig pigmodel;
+	PigObj pig;
 
 	Torch torchObj1, torchObj2;
+
+	LadderBillboard ladder;
 };
 
 #endif

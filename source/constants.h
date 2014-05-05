@@ -27,7 +27,7 @@ const char SOUND_BANK[] = "audio\\Win\\SoundsExample1.xsb";
 
 // audio cues
 const char FIREBALL_CUE[] = "Fireball";
-const char SAND_CUE[] = "SandStep";
+const char TORCH_CUE[] = "torch_lit";
 const char BACKGROUND_CUE[] = "Background";
 const char BAR_BACKGROUND_CUE[] = "Bar2_Background";
 const char BEACH_CUE[] = "Beach";
@@ -36,8 +36,8 @@ const char ZELDA_CUE[] = "Zelda_Success";
 const char DAMAGE_CUE[] = "Damage";
 const char DEATH_CUE[] = "goblin death";
 const char SWING_CUE[] = "Hooh";
-
-
+const char HEARTBEAT_CUE[] = "Heartbeat";
+const char BOSS_CUE[] = "Pokemon_battle";
 
 //const double PI = 3.14159265;
 const int GAME_WIDTH =  1280;               // width of game in pixels
@@ -51,14 +51,5 @@ inline void safeRelease(T& ptr)
         ptr = NULL;
     }
 }
-enum location {EMPTY, BASE, TOWER};
-struct tower
-{
-	int r,g,b;
-	tower():r(0),g(0),b(0){}
-	tower(int r,int g,int b):r(r),g(g),b(b){}
-
-};
-
 
 #endif
