@@ -92,6 +92,8 @@ float4 PS(VS_OUT pIn) : SV_Target
 	for (uint i = 1; i < NUM_POINT_LIGHTS+1; i++) 
 		litColor += PointLight(v, gLights[i], gEyePosW);
 
+	//litColor += float3(100,0,0);
+
 	return float4(litColor, alpha);
 }
 

@@ -23,16 +23,21 @@ public:
 	void update(float dt);
 	
 	D3DXVECTOR3 getTarget(){return target;}
+	D3DXVECTOR3 getPosShake(){return position+right*shakeRight + up*shakeUp;}
 	D3DXVECTOR3 getPos(){return position;}
+	
+	float getPhi(){return mPhi;}
 	float getTheta(){return mTheta;}
 	Matrix getView(){return *mView;}
 	Matrix getProj(){return *mProj;}
+	float getRadius(){return lookRadius;}
 	void setFireball(Fireball* f){fireball = f;}
 	void setWaves(Waves* w){waves = w;}
 	void setVelocity(Vector3 v){velocity = v;}
 	void shootFireBall();
 	void releaseFireBall();
 	void addShake(float intensity);
+	void clearShake();
 private:
 	float getTerrHeight();
 
@@ -49,7 +54,7 @@ private:
 	Vector3 velocity;
 	Vector3 position;
 	Vector3 target;
-	Vector3 up;
+	Vector3 up, right;
 
 	Matrix *mView, *mProj;
 

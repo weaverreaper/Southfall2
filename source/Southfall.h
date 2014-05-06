@@ -31,7 +31,7 @@
 #include "DamageSprites.h"
 #include "Torch.h"
 #include "LadderBillboard.h"
-
+#include "Blood.h"
 
 	const int LEVELS = 4;
 
@@ -88,11 +88,11 @@ private:
 	void buildVertexLayouts();
 	void setShaderVals(); //called in draw, for modularity
 	void renderFire();
-	
+
 	int gameState;
 	float lastFrameTime;
 
-	Square splash;
+	Square splash, bloodSquare;
 	GeoObject splashObj;
 
 	int score;
@@ -134,6 +134,7 @@ private:
 	Sky sky;
 	TextureMgr tm;
 
+	Blood blood;
 	Sword sword;
 	SwordObj swordObj;
 	GoblinHead head;

@@ -127,7 +127,6 @@ void Camera::update(float dt)
 		}
 	}
 
-	Vector3 right;
 	D3DXVec3Cross(&right, &(target - position), &up);
 	D3DXVec3Normalize(&right, &right);
 	D3DXVec3Normalize(&up, &up);
@@ -144,8 +143,8 @@ void Camera::update(float dt)
 
 	position -= right*shakeRight + up*shakeUp;
 	
-	shakeRight = 0;
-	shakeUp = 0;
+	//shakeRight = 0;
+	//shakeUp = 0;
 
 	fireball->update(dt);
 }
@@ -156,6 +155,13 @@ void Camera::addShake(float intensity)
 	float theta = RandF(0,2*PI);
 	shakeRight = intensity*sin(theta)/5;
 	shakeUp = intensity*cos(theta);
+}
+
+void Camera::clearShake()
+{
+	shakeIntensity = 0;
+	shakeRight = 0;
+	shakeUp = 0;
 }
 
 float Camera::getTerrHeight()
