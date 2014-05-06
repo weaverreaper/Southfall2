@@ -8,7 +8,6 @@
 //
 //=============================================================================
 
-
 //Special thanks to this guy for the Pokemon music: http://www.wimp.com/pokemonpiano/
 
 #include "Southfall.h"
@@ -708,6 +707,7 @@ void Southfall::drawScene()
 		theText.print("One wraith remains. \n   You approach his secret lair...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
 	case LEVEL1:
+
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
 		setShaderVals();
@@ -760,6 +760,7 @@ void Southfall::drawScene()
 			pig.draw(&mWVP);
 		q << "Health: " << score;
 		theText.print(q.str(),0, 0);
+
 		break;
 	case CUT3:
 		break;
