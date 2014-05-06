@@ -476,7 +476,7 @@ void D3DApp::initDirect3D()
 	sd.BufferUsage  = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.BufferCount  = 1;
 	sd.OutputWindow = mhMainWnd;
-	sd.Windowed     = true;
+	sd.Windowed     = false;
 	sd.SwapEffect   = DXGI_SWAP_EFFECT_DISCARD;
 	sd.Flags        = 0;
 

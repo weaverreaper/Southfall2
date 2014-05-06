@@ -727,7 +727,7 @@ void Southfall::drawScene()
 	
 	switch (gameState)
 	{
-	case SPLASH1:	
+	case SPLASH1:
 		temp = Vector3(0,0,0);
 		mfxEyePosVar->SetRawValue(&temp, 0, sizeof(D3DXVECTOR3));
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
@@ -824,8 +824,7 @@ void Southfall::drawScene()
 
 		setShaderVals();
 		ladder.draw(lights.lights[0], camera.getPos(), mView*mProj);
-		md3dDevice->RSSetState(0);
-
+		//md3dDevice->RSSetState(0);
 	
 		setShaderVals();
 		fireballObj.draw(&mWVP);
