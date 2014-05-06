@@ -113,6 +113,7 @@ void Southfall::initApp()
 	body.init(md3dDevice, 5);
 	bearmodel.init(md3dDevice, 5);
 	pigmodel.init(md3dDevice, 5);
+	wraithmodel.init(md3dDevice, 5);
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
@@ -130,6 +131,8 @@ void Southfall::initApp()
 
 	camera.init(Vector3(400,20,10), Vector3(400,50,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 	
+	wraith.setMFX(mFX);
+	wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
 	bear.setMFX(mFX);
 	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 	pig.setMFX(mFX);
@@ -146,6 +149,7 @@ void Southfall::initApp()
 	goblin3.setAudio(&audio);
 	bear.setAudio(&audio);
 	pig.setAudio(&audio);
+	wraith.setAudio(&audio);
 
 	camera.setFireball(&fireballObj);	
 
@@ -171,11 +175,6 @@ void Southfall::initApp()
 		L"Textures\\water.png", 0, 0, &mWaterMapRV, 0 ));
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\water2a.dds", 0, 0, &mWaterSpecMapRV, 0 ));
-
-	/*
-	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\goblinskin.jpg", 0, 0, &mGoblinSkinTextureRV, 0 ));
-		*/
 	origin.init(md3dDevice, 10);
 	terrain[0].initFile("Worlds/Beach.txt");
 	terrain[1].initFile("Worlds/Forest.txt");
@@ -207,8 +206,11 @@ void Southfall::initApp()
 	bear.setScale(5.0f);
 	pig.setPosition(D3DXVECTOR3(1500,120,2200));
 	pig.setScale(3.0f);
+	wraith.setPosition(D3DXVECTOR3(800,120,800));
+	wraith.setScale(7.0f);
 	bear.setInActive();
 	pig.setActive();
+	wraith.setActive();
 	goblin1.body.setInActive();
 	goblin1.head.setInActive();
 	goblin2.body.setInActive();
@@ -413,6 +415,8 @@ void Southfall::updateScene(float dt)
 		{
 			exit(0);
 		}
+		if(wraith.getActiveState())
+			wraith.update(dt,camera.getPos(), &fireballObj, &swordObj);
 		if(pig.getActiveState())
 			pig.update(dt,camera.getPos(), &fireballObj, &swordObj);
 		if(goblin1.head.getActiveState())
@@ -748,7 +752,8 @@ void Southfall::drawScene()
 			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
 			mWaves.draw();
 		}
-
+		setShaderVals();
+		wraith.draw(&mWVP);
 		setShaderVals();
 		torchObj1.draw(&mWVP);
 		setShaderVals();

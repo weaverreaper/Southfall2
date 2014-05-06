@@ -33,6 +33,8 @@
 #include "LadderBillboard.h"
 #include "pig.h"
 #include "PigObj.h"
+#include "Wraith.h"
+#include "WraithObj.h"
 
 
 	const int LEVELS = 4;
@@ -147,6 +149,8 @@ private:
 	BearObj bear;
 	Pig pigmodel;
 	PigObj pig;
+	Wraith wraithmodel;
+	WraithObj wraith;
 
 	Torch torchObj1, torchObj2;
 
