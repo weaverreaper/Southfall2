@@ -31,6 +31,8 @@
 #include "DamageSprites.h"
 #include "Torch.h"
 #include "LadderBillboard.h"
+#include "pig.h"
+#include "PigObj.h"
 #include "Blood.h"
 
 	const int LEVELS = 4;
@@ -124,7 +126,7 @@ private:
 	float startEndCut;
 	double alpha;
 
-	bool pigKilled, bearKilled, goblinsKilled, wraithKilled;
+	bool pigKilled, bearKilled, goblinsKilled, wraithKilled, torchLit;
 
 	int level;
 	Terrain terrain[LEVELS];
@@ -144,6 +146,8 @@ private:
 	Fireball fireballObj, torch1Fireball, torch2Fireball;
 	Bear bearmodel;
 	BearObj bear;
+	Pig pigmodel;
+	PigObj pig;
 
 	Torch torchObj1, torchObj2;
 

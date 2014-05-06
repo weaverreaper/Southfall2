@@ -112,6 +112,7 @@ void Southfall::initApp()
 	head.init(md3dDevice, 5);
 	body.init(md3dDevice, 5);
 	bearmodel.init(md3dDevice, 5);
+	pigmodel.init(md3dDevice, 5);
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
@@ -138,6 +139,8 @@ void Southfall::initApp()
 
 	bear.setMFX(mFX);
 	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
+	pig.setMFX(mFX);
+	pig.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &pigmodel, &terrain[level]);
 	goblin1.setMFX(mFX);
 	goblin1.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 	goblin2.setMFX(mFX);
@@ -149,6 +152,7 @@ void Southfall::initApp()
 	goblin2.setAudio(&audio);
 	goblin3.setAudio(&audio);
 	bear.setAudio(&audio);
+	pig.setAudio(&audio);
 
 	camera.setFireball(&fireballObj);	
 
@@ -208,7 +212,10 @@ void Southfall::initApp()
 	goblin3.setScale(5.0f);
 	bear.setPosition(D3DXVECTOR3(450,120,1200));
 	bear.setScale(5.0f);
+	pig.setPosition(D3DXVECTOR3(1500,120,2200));
+	pig.setScale(3.0f);
 	bear.setInActive();
+	pig.setActive();
 	goblin1.body.setInActive();
 	goblin1.head.setInActive();
 	goblin2.body.setInActive();
@@ -310,7 +317,7 @@ void Southfall::updateScene(float dt)
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
-			//gameState = CUT1;			
+			gameState = CUT1;			
 			gameState = LEVEL1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
@@ -408,7 +415,6 @@ void Southfall::updateScene(float dt)
 		break;
 
 	case LEVEL1:
-
 		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 		tempO.setPosition(camera.getPos());
 		tempO.setRadius(10);
@@ -416,11 +422,14 @@ void Southfall::updateScene(float dt)
 		{
 			exit(0);
 		}
+		if(pig.getActiveState())
+			pig.update(dt,camera.getPos(), &fireballObj, &swordObj);
 		if(goblin1.head.getActiveState())
 			goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(goblin1.health <= 0)
+		if(pig.health <= 0)
 		{
-			goblin1.health = 1;
+			pig.health = 1;
+			pig.setInActive();
 			lights.lights[POINT1].on = 1;
 			audio.playCue(ZELDA_CUE);
 			pigKilled = true;
@@ -454,7 +463,7 @@ void Southfall::updateScene(float dt)
 
 
 //End level
-		if(pigKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
+		if((pigKilled&&torchLit) && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
 		{
 			
 			++gameState;
@@ -493,11 +502,11 @@ void Southfall::updateScene(float dt)
 
 
 //Cheat
-		if (!pigKilled && (input.isKeyDown('O') || torchObj1.isLit()))
+		if (!torchLit && (input.isKeyDown('O') || torchObj1.isLit()))
 		{
 			lights.lights[POINT1].on = 1;
 			audio.playCue(ZELDA_CUE);
-			pigKilled = true;
+			torchLit = true;
 			torchObj2.setInActive();
 		}
 
@@ -781,6 +790,10 @@ void Southfall::drawScene()
 		torchObj2.draw(&mWVP);		
 		setShaderVals();
 		fireballObj.draw(&mWVP);
+		setShaderVals();
+		if(pig.getActiveState())
+			pig.draw(&mWVP);
+		q << "Health: " << score;
 
 		lights.setNoLight();
 		setShaderVals();
