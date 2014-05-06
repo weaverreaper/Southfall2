@@ -34,7 +34,8 @@
 #include "pig.h"
 #include "PigObj.h"
 #include "Blood.h"
-
+#include "Wraith.h"
+#include "WraithObj.h"
 	const int LEVELS = 4;
 
 //Global light and shader variables
@@ -148,6 +149,8 @@ private:
 	BearObj bear;
 	Pig pigmodel;
 	PigObj pig;
+	Wraith wraithmodel;
+	WraithObj wraith;
 
 	Torch torchObj1, torchObj2;
 

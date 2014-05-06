@@ -59,7 +59,7 @@ void WraithObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures/fur.jpg", 0, 0, &mDiffuseMapRV, 0 ));
+		L"Textures/wraith.jpg", 0, 0, &mDiffuseMapRV, 0 ));
 	 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
@@ -132,7 +132,7 @@ void WraithObj::update(float dt, Vector3 cam)
 	Matrix temp;
 	Identity(&temp);
 	Identity(&world);
-	position.y = getTerrHeight()+15;
+	position.y = getTerrHeight()+45;
 	D3DXMatrixRotationYawPitchRoll(&temp, roty, rotz, rotx);
 	world *= temp;
 	Scale(&temp,scale,scale,scale);
