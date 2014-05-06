@@ -793,7 +793,6 @@ void Southfall::drawScene()
 		setShaderVals();
 		if(pig.getActiveState())
 			pig.draw(&mWVP);
-		q << "Health: " << score;
 
 		lights.setNoLight();
 		setShaderVals();
