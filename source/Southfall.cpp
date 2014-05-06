@@ -113,6 +113,7 @@ void Southfall::initApp()
 	body.init(md3dDevice, 5);
 	bearmodel.init(md3dDevice, 5);
 	pigmodel.init(md3dDevice, 5);
+	wraithmodel.init(md3dDevice, 5);
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
@@ -137,6 +138,8 @@ void Southfall::initApp()
 
 	camera.init(Vector3(400,20,10), Vector3(400,50,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 
+	wraith.setMFX(mFX);
+	wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
 	bear.setMFX(mFX);
 	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 	pig.setMFX(mFX);
@@ -153,6 +156,7 @@ void Southfall::initApp()
 	goblin3.setAudio(&audio);
 	bear.setAudio(&audio);
 	pig.setAudio(&audio);
+	wraith.setAudio(&audio);
 
 	camera.setFireball(&fireballObj);	
 
@@ -178,11 +182,6 @@ void Southfall::initApp()
 		L"Textures\\water.png", 0, 0, &mWaterMapRV, 0 ));
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\water2a.dds", 0, 0, &mWaterSpecMapRV, 0 ));
-
-	/*
-	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\goblinskin.jpg", 0, 0, &mGoblinSkinTextureRV, 0 ));
-		*/
 	origin.init(md3dDevice, 10);
 	terrain[0].initFile("Worlds/Beach.txt");
 	terrain[1].initFile("Worlds/Forest.txt");
@@ -214,8 +213,11 @@ void Southfall::initApp()
 	bear.setScale(5.0f);
 	pig.setPosition(D3DXVECTOR3(1500,120,2200));
 	pig.setScale(3.0f);
+	wraith.setPosition(D3DXVECTOR3(1800,120,1800));
+	wraith.setScale(7.0f);
 	bear.setInActive();
 	pig.setActive();
+	wraith.setInActive();
 	goblin1.body.setInActive();
 	goblin1.head.setInActive();
 	goblin2.body.setInActive();
@@ -422,6 +424,8 @@ void Southfall::updateScene(float dt)
 		{
 			exit(0);
 		}
+		//if(wraith.getActiveState())
+			//wraith.update(dt,camera.getPos(), &fireballObj, &swordObj);
 		if(pig.getActiveState())
 			pig.update(dt,camera.getPos(), &fireballObj, &swordObj);
 		if(goblin1.head.getActiveState())
@@ -627,6 +631,8 @@ void Southfall::updateScene(float dt)
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Miramar.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
 
+			wraith.setActive();
+
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.3,.3,.3,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.7f, .71f, .7f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(1,-.45,0);	
@@ -657,6 +663,9 @@ void Southfall::updateScene(float dt)
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
 		
+		if(wraith.getActiveState())
+			wraith.update(dt,camera.getPos(), &fireballObj, &swordObj);
+
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
 
@@ -783,7 +792,6 @@ void Southfall::drawScene()
 			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
 			mWaves.draw();
 		}
-
 		setShaderVals();
 		torchObj1.draw(&mWVP);
 		setShaderVals();
@@ -836,7 +844,7 @@ void Southfall::drawScene()
 		setShaderVals();
 
 		q << "Bacon: " << score;
-		theText.print(q.str(),0, 0);
+		//theText.print(q.str(),0, 0);
 		break;
 	case CUT4:
 		break;
@@ -857,7 +865,7 @@ void Southfall::drawScene()
 		setShaderVals();
 
 		q << "Bacon: " << score;
-		theText.print(q.str(),0, 0);
+		//theText.print(q.str(),0, 0);
 		break;
 	case CUT5:
 		break;
@@ -866,7 +874,8 @@ void Southfall::drawScene()
 		//surr[level].draw(&mWVP);
 		sky.draw();
 		setShaderVals();
-		
+		wraith.draw(&mWVP);
+		setShaderVals();
 		swordObj.draw(&mWVP);
 		setShaderVals();
 		fireballObj.draw(&mWVP);
@@ -878,7 +887,7 @@ void Southfall::drawScene()
 		setShaderVals();
 		
 		q << "Bacon: " << score;
-		theText.print(q.str(),0, 0);
+		//theText.print(q.str(),0, 0);
 		break;
 	case CUT6:
 		break;
