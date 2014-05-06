@@ -11,7 +11,7 @@
 class Square : public Geometry
 {
 public:
-	Square(int imgNum = 2);
+	Square(int imgNum = 2, bool centered = false);
 	~Square();
 	void init(ID3D10Device* device, float scale = 1);
 	void draw();

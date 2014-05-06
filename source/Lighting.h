@@ -43,8 +43,13 @@ struct Light
 class LightingManager
 {
 public:
+	
 	LightingManager()
 	{
+		lightP = lights;
+		ZeroMemory(lightsZero, sizeof(Light)*LIGHT_COUNT);
+		lightsZero[AMBIENT_DIFFUSE].ambient	 = Color(.5,.5,.5,1);
+
 		lights[AMBIENT_DIFFUSE].ambient	 = Color(.5,.5,.5,1);
 		lights[AMBIENT_DIFFUSE].diffuse	 = Color(.7f, .9f, .7f, 1.f);
 		lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,0);	
@@ -83,10 +88,21 @@ public:
 		lights[FIREBALL3].att		= Vector3(0,.03,0);
 		lights[FIREBALL3].range		= 1000.f;
 		lights[FIREBALL3].on		= 0;
-
 	}	
 
 	Light lights[LIGHT_COUNT];
+	Light lightsZero[LIGHT_COUNT];
+	Light* lightP;
+
+	void setNoLight()
+	{
+		lightP = lightsZero;
+	}
+	void resetLight()
+	{
+		lightP = lights;
+
+	}
 };
 
 #endif // LIGHT_H

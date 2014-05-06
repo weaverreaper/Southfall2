@@ -121,6 +121,13 @@ void Southfall::initApp()
 	swordObj.init(mTech, mfxWVPVar, mfxWorldVar, &sword, Vertex(), Vertex());
 	swordObj.setActive();
 
+	bloodSquare = Square(1, true);
+	bloodSquare.init(md3dDevice, 1);
+	blood.setDevice(md3dDevice); blood.setMFX(mFX);
+	blood.init(mTech, mfxWVPVar, mfxWorldVar, &bloodSquare, Vertex(), Vertex());
+	blood.setActive();
+	
+
 	level = 0;
 	pigKilled = false;
 	bearKilled = false;
@@ -128,7 +135,7 @@ void Southfall::initApp()
 	wraithKilled = false;
 
 	camera.init(Vector3(400,20,10), Vector3(400,50,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
-	
+
 	bear.setMFX(mFX);
 	bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 	pig.setMFX(mFX);
@@ -155,7 +162,7 @@ void Southfall::initApp()
 		L"Textures\\Leaves5.jpg", 0, 0, &mDiffuseMapRV[1], 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\Stone1.jpg", 0, 0, &mDiffuseMapRV[2], 0 ));
+		L"Textures\\Cloud3.jpg", 0, 0, &mDiffuseMapRV[2], 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Cave1.jpg", 0, 0, &mDiffuseMapRV[3], 0 ));
@@ -282,6 +289,8 @@ void Southfall::initApp()
 
 	centers[0] = Vector3(480,650,3100);
 	ladder.init(md3dDevice, centers, 1);
+	
+	camera.clearShake();
 }
 
 void Southfall::onResize()
@@ -289,7 +298,7 @@ void Southfall::onResize()
 	D3DApp::onResize();
 
 	float aspect = (float)mClientWidth/mClientHeight;
-	D3DXMatrixPerspectiveFovLH(&mProj, 0.25f*PI, aspect, 1.0f, 4000.0f);
+	D3DXMatrixPerspectiveFovLH(&mProj, 0.25f*PI, aspect, .1f, 4000.0f);//near and far clipping planes
 }
 
 void Southfall::updateScene(float dt)
@@ -426,17 +435,23 @@ void Southfall::updateScene(float dt)
 		}
 
 		camera.update(dt);
+
+		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
+		blood.setAngles(camera.getTheta(), camera.getPhi());
+		blood.update(dt);
+
 		fireballObj.update(dt);
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
+		
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
+
 
 		torchObj1.update(dt);
 		torchObj2.update(dt);		
 		
-	
 
 //Waves stuff
 		// Animate water texture as a function of time.
@@ -529,10 +544,16 @@ void Southfall::updateScene(float dt)
 			bear.update(dt,camera.getPos(), &fireballObj, &swordObj);
 
 		camera.update(dt);
+
+		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
+		blood.setAngles(camera.getTheta(), camera.getPhi());
+		blood.update(dt);
+
 		fireballObj.update(dt);
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
+		
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
 
@@ -573,11 +594,18 @@ void Southfall::updateScene(float dt)
 		tempO.setPosition(camera.getPos());
 		tempO.setRadius(10);
 		
+		
 		camera.update(dt);
+
+		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
+		blood.setAngles(camera.getTheta(), camera.getPhi());
+		blood.update(dt);
+
 		fireballObj.update(dt);
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
+		
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
 		if (!goblinsKilled && input.isKeyDown('O'))// || bear.health <= 0)
@@ -618,11 +646,16 @@ void Southfall::updateScene(float dt)
 		tempO.setRadius(10);
 		
 		camera.update(dt);
+
+		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
+		blood.setAngles(camera.getTheta(), camera.getPhi());
+		blood.update(dt);
+
 		fireballObj.update(dt);
 		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
 		swordObj.setAngle(camera.getTheta());
 		swordObj.update(dt);
-
+		
 		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
 		else {swordObj.rising = false;}
 
@@ -669,7 +702,7 @@ void Southfall::setShaderVals()
 	md3dDevice->IASetInputLayout(mVertexLayout);
 	
 	mfxEyePosVar->SetRawValue(&camera.getPos(), 0, sizeof(D3DXVECTOR3));	
-	mfxLightVar->SetRawValue(&lights.lights, 0, sizeof(Light)*LIGHT_COUNT);
+	mfxLightVar->SetRawValue(lights.lightP, 0, sizeof(Light)*LIGHT_COUNT);
 
 	mfxDiffuseMapVar->SetResource(mDiffuseMapRV[level]);
 	mfxSpecMapVar->SetResource(mSpecMapRV);
@@ -679,6 +712,7 @@ void Southfall::setShaderVals()
 	D3DXMatrixIdentity(&texMtx);
 	mfxTexMtxVar->SetMatrix((float*)&texMtx);
 }
+
 
 void Southfall::drawScene()
 {
@@ -714,6 +748,7 @@ void Southfall::drawScene()
 		sky.draw();
 		setShaderVals();
 		swordObj.draw(&mWVP);
+		
 
 	//Waves stuff (will NOT be put into modules ever)
 
@@ -759,6 +794,14 @@ void Southfall::drawScene()
 		if(pig.getActiveState())
 			pig.draw(&mWVP);
 		q << "Health: " << score;
+
+		lights.setNoLight();
+		setShaderVals();
+		blood.draw(&mWVP);
+		lights.resetLight();
+		setShaderVals();
+
+		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 
 		break;
@@ -778,6 +821,7 @@ void Southfall::drawScene()
 		bear.draw(&mWVP);
 		setShaderVals();
 		swordObj.draw(&mWVP);
+		
 
 		setShaderVals();
 		ladder.draw(lights.lights[0], camera.getPos(), mView*mProj);
@@ -786,7 +830,14 @@ void Southfall::drawScene()
 	
 		setShaderVals();
 		fireballObj.draw(&mWVP);
-		q << "Health: " << score;
+		
+		lights.setNoLight();
+		setShaderVals();
+		blood.draw(&mWVP);
+		lights.resetLight();
+		setShaderVals();
+
+		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
 	case CUT4:
@@ -800,7 +851,14 @@ void Southfall::drawScene()
 		swordObj.draw(&mWVP);
 		setShaderVals();
 		fireballObj.draw(&mWVP);
-		q << "Health: " << score;
+		
+		lights.setNoLight();
+		setShaderVals();
+		blood.draw(&mWVP);
+		lights.resetLight();
+		setShaderVals();
+
+		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
 	case CUT5:
@@ -814,7 +872,14 @@ void Southfall::drawScene()
 		swordObj.draw(&mWVP);
 		setShaderVals();
 		fireballObj.draw(&mWVP);
-		q << "health: " << score;
+		
+		lights.setNoLight();
+		setShaderVals();
+		blood.draw(&mWVP);
+		lights.resetLight();
+		setShaderVals();
+		
+		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
 	case CUT6:
