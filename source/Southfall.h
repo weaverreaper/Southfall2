@@ -33,10 +33,9 @@
 #include "LadderBillboard.h"
 #include "pig.h"
 #include "PigObj.h"
+#include "Blood.h"
 #include "Wraith.h"
 #include "WraithObj.h"
-
-
 	const int LEVELS = 4;
 
 //Global light and shader variables
@@ -92,11 +91,11 @@ private:
 	void buildVertexLayouts();
 	void setShaderVals(); //called in draw, for modularity
 	void renderFire();
-	
+
 	int gameState;
 	float lastFrameTime;
 
-	Square splash;
+	Square splash, bloodSquare;
 	GeoObject splashObj;
 
 	int score;
@@ -138,6 +137,7 @@ private:
 	Sky sky;
 	TextureMgr tm;
 
+	Blood blood;
 	Sword sword;
 	SwordObj swordObj;
 	GoblinHead head;
