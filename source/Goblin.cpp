@@ -24,6 +24,7 @@ void Goblin::update(float dt)
 }
 void Goblin::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
+	if (done()) return;
 	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
 	while(ds != dmgfx.end())
 	{
