@@ -22,10 +22,12 @@ public:
 	
 	void setDevice(ID3D10Device* d) { md3dDevice = d; }
 	void setMFX(ID3D10Effect* fx) { mFX = fx; }
-	void setDamage(int d){dmg = d;}
+	void setDamage(float d){dmg = d;}
+	void addDamage(float i){dmg += i;}
+	float getDamage(){return dmg;}
 private:
 
-	int dmg;
+	float dmg;
 	float angle1, angle2;
 
 	ID3D10Effect* mFX;
@@ -36,5 +38,6 @@ private:
 	ID3D10EffectShaderResourceVariable* mfxDiffuseMapVar;
 	ID3D10EffectShaderResourceVariable* mfxSpecMapVar;
 	ID3D10EffectMatrixVariable* mfxTexMtxVar;
+	ID3D10EffectVariable* damageVar;
 };
 #endif

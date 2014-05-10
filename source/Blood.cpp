@@ -10,9 +10,10 @@ void Blood::init(	ID3D10EffectTechnique* t,
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
-
+	damageVar		 = mFX->GetVariableByName("blood")->AsScalar();
+	
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\Red50.png", 0, 0, &mDiffuseMapRV, 0 ));
+		L"Textures\\Red0.png", 0, 0, &mDiffuseMapRV, 0 ));
 	 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));
@@ -34,7 +35,6 @@ void Blood::update(float dt)
 
 void Blood::draw(Matrix* vp)
 {
-
 	if(!active) return;
 
 	D3DXMatrixMultiply(&wvp,&world,vp);
@@ -67,9 +67,11 @@ void Blood::draw(Matrix* vp)
 
 	HR(md3dDevice->CreateBlendState(&blendDesc, &mTransparentBS));
 
+	damageVar->SetRawValue(&dmg, 0, sizeof(float));
+
     for(UINT i = 0; i < techDesc.Passes; ++i)
     {
-        ID3D10EffectPass* pass = tech->GetPassByIndex(i);
+        ID3D10EffectPass* pass = tech->GetPassByIndex(i);		
 		pass->Apply(0);
 
 		float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};	
@@ -77,6 +79,9 @@ void Blood::draw(Matrix* vp)
 			
 		geom->draw();
 	}
+
+	float temp = -1;
+	damageVar->SetRawValue(&temp, 0, sizeof(float));
 
 	//GeoObject::draw(vp);
 

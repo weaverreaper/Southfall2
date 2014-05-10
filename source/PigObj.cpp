@@ -73,6 +73,8 @@ void PigObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D1
 }
 void PigObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
+	if (!getActiveState()) return;
+	
 	firstDraw = true;
 	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
 	while(ds != dmgfx.end())
@@ -86,8 +88,7 @@ void PigObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		else
 			++ds;
 	}
-	if (!getActiveState())
-		return;
+
 	if(this->collided(fo) && fo->viable())
 	{		
 		int dHealth = fo->getDamage();

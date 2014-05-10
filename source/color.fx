@@ -11,7 +11,7 @@
 cbuffer cbPerFrame
 {
 	Light gLights[NUM_POINT_LIGHTS + 1];
-	float3 gEyePosW;	
+	float3 gEyePosW;
 };
 
 bool gSpecularEnabled;
@@ -25,6 +25,7 @@ cbuffer cbPerObject
 
 Texture2D gDiffuseMap;
 Texture2D gSpecMap;
+float blood;
 
 SamplerState gTriLinearSam
 {
@@ -73,7 +74,7 @@ float4 PS(VS_OUT pIn) : SV_Target
 	// Discard pixel if texture alpha < 0.25.  Note that we do this
 	// test as soon as possible so that we can potentially exit the shader 
 	// early, thereby skipping the rest of the shader code.
-	clip(alpha - 0.25f);
+	//clip(alpha - 0.25f);
 	
 	float4 diffuse = gDiffuseMap.Sample( gTriLinearSam, pIn.texC );
 	float4 spec    = gSpecMap.Sample( gTriLinearSam, pIn.texC );
@@ -91,8 +92,10 @@ float4 PS(VS_OUT pIn) : SV_Target
 	[loop]
 	for (uint i = 1; i < NUM_POINT_LIGHTS+1; i++) 
 		litColor += PointLight(v, gLights[i], gEyePosW);
-
-	//litColor += float3(100,0,0);
+	
+	[branch]
+	if (blood > 0) alpha += blood;
+	
 
 	return float4(litColor, alpha);
 }

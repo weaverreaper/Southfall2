@@ -8,7 +8,6 @@
 //
 //=============================================================================
 
-
 //Special thanks to this guy for the Pokemon music: http://www.wimp.com/pokemonpiano/
 
 #include "Southfall.h"
@@ -72,6 +71,8 @@ void Southfall::initApp()
 
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
+
+	endLevel = false;
 
 	splash = Square(1);
 	splash.init(md3dDevice,5);
@@ -291,8 +292,13 @@ void Southfall::initApp()
 	Vector3 centers[1];
 
 	centers[0] = Vector3(480,650,3100);
-	ladder.init(md3dDevice, centers, 1);
+	ladder.init(md3dDevice, centers, 1, L"Textures\\ladder.png", 96, 800);
+	ladder.setActive(false);
 	
+	centers[0] = Vector3(1500, 325 , 3000);
+	portal.init(md3dDevice, centers, 1, L"Textures\\ForestPortal.png", 300, 400);
+	portal.setActive(false);
+
 	camera.clearShake();
 }
 
@@ -306,16 +312,32 @@ void Southfall::onResize()
 
 void Southfall::updateScene(float dt)
 {
-	D3DApp::updateScene(dt);	
+
+	D3DApp::updateScene(dt);
+	fireballObj.update(dt);
+	camera.update(dt);
+
+	blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
+	blood.setAngles(camera.getTheta(), camera.getPhi());
+	blood.update(dt);
+
+	swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
+	swordObj.setAngle(camera.getTheta());
+	swordObj.update(dt);
+
 	Matrix tm1;
 	Box tembB;
 	GeoObject tempO;
 
-	if(input.wasKeyPressed(VK_ESCAPE))
-		PostQuitMessage(0);
+	tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
+	tempO.setPosition(camera.getPos());
+	tempO.setRadius(30);
+
+	if(input.wasKeyPressed(VK_ESCAPE)) PostQuitMessage(0);
 	
 	switch (gameState)
 	{
+#pragma region SPLASH
 	case SPLASH1:
 		if(input.anyKeyPressed())
 		{
@@ -381,6 +403,9 @@ void Southfall::updateScene(float dt)
 		mWaves.update(dt);
 		
 		break;
+#pragma endregion SPLASH
+
+#pragma region CUT1
 	case CUT1:
 		if (mTimer.getGameTime() - startCut1 > 8)
 		{
@@ -396,6 +421,9 @@ void Southfall::updateScene(float dt)
 		if (alpha < 0) alpha = 0;
 
 		break;
+#pragma endregion CUT1
+
+#pragma region CUT2
 	case CUT2:
 		if (mTimer.getGameTime() - startCut2 > 4)
 		{
@@ -409,74 +437,55 @@ void Southfall::updateScene(float dt)
 		if (alpha < 0) alpha = 0;
 
 		break;
+#pragma endregion CUT2
 
+#pragma region CUT3
 	case CUT3:
 		//Intro "cut scene," camera bobbing and moving toward the island like on a boat
 		//Can we get a boat model?
 
 		break;
+#pragma endregion CUT3
 
+#pragma region LEVEL1
 	case LEVEL1:
-		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
-		tempO.setPosition(camera.getPos());
-		tempO.setRadius(10);
-		if(goblin1.head.getActiveState() && (tempO.collided(&goblin1.head) || tempO.collided(&goblin1.body)))
+
+		if(input.getMouseLButton())
 		{
-			exit(0);
+			camera.addShake(.25*(swordObj.power-1.0f)); 
+			if (swordObj.swing()) audio.playCue(SWING_CUE); 
 		}
-		//if(wraith.getActiveState())
-			//wraith.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(pig.getActiveState())
-			pig.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(goblin1.head.getActiveState())
-			goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(pig.health <= 0)
-		{
-			pig.health = 1;
-			pig.setInActive();
-			lights.lights[POINT1].on = 1;
-			audio.playCue(ZELDA_CUE);
-			pigKilled = true;
-		}
-
-		camera.update(dt);
-
-		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
-		blood.setAngles(camera.getTheta(), camera.getPhi());
-		blood.update(dt);
-
-		fireballObj.update(dt);
-		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
-		swordObj.setAngle(camera.getTheta());
-		swordObj.update(dt);
-		
-		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
-		else {swordObj.rising = false;}
-
+		else swordObj.rising = false;
+	
+		pig.update(dt,camera.getPos(), &fireballObj, &swordObj);
 
 		torchObj1.update(dt);
-		torchObj2.update(dt);		
-		
+		torchObj2.update(dt);	
 
-//Waves stuff
-		// Animate water texture as a function of time.
 		mWaterTexOffset.y += 0.1f*dt;
 		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
-
 		mWaves.update(dt);
 
-
-//End level
-		if((pigKilled&&torchLit) && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
+		if (!endLevel && torchObj1.isLit() && pig.health <= 0)
 		{
-			
+			lights.lights[POINT1].on = 1;
+			audio.playCue(ZELDA_CUE);
+			endLevel = true;
+			torchObj2.setInActive();
+			portal.setActive(true);
+		}
+
+#pragma region END_LEVEL1
+		if(endLevel && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)//level done.
+		{			
 			++gameState;
 			++level;
 			audio.stopCue(BEACH_CUE);
 			audio.playCue(FOREST_CUE);
-			if(level >= LEVELS)
-				level = LEVELS-1;
-			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+			if(level >= LEVELS) level = LEVELS-1;
+
+			camera.init(Vector3(400,100,10), Vector3(400,100,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+
 			bear.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &bearmodel, &terrain[level]);
 			goblin1.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin2.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
@@ -491,7 +500,6 @@ void Southfall::updateScene(float dt)
 			goblin3.head.setActive();
 			goblin3.body.setActive();
 			bear.setActive();
-			lights.lights[POINT1].pos		= Vector3(380, 400, (terrain[level].z-3)*terrain[level].scale);
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.4,.4,.4,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.6f, .75f, .6f, 1.f);
@@ -502,65 +510,49 @@ void Southfall::updateScene(float dt)
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Level2Forest.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
 		}
+#pragma endregion END_LEVEL1
 
-
-
-//Cheat
-		if (!torchLit && (input.isKeyDown('O') || torchObj1.isLit()))
-		{
-			lights.lights[POINT1].on = 1;
-			audio.playCue(ZELDA_CUE);
-			torchLit = true;
-			torchObj2.setInActive();
-		}
 
 		break;
+#pragma endregion LEVEL1
+
+#pragma region CUT4
 	case CUT4:
 		++gameState;
 		break;
-	case LEVEL2:
+#pragma endregion CUT4
+
+#pragma region LEVEL2
+	case LEVEL2:	
+
+		if(input.getMouseLButton())
+		{
+			camera.addShake(.25*(swordObj.power-1.0f)); 
+			if (swordObj.swing()) audio.playCue(SWING_CUE); 
+		}
+		else swordObj.rising = false;
 		
-		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
-		tempO.setPosition(camera.getPos());
-		tempO.setRadius(10);
 		if(goblin1.head.getActiveState() && (tempO.collided(&goblin1.head) || tempO.collided(&goblin1.body)))
 		{
-			exit(0);
+			blood.addDamage(.005);
 		}
 		if(goblin2.head.getActiveState() && (tempO.collided(&goblin2.head) || tempO.collided(&goblin2.body)))
 		{
-			exit(0);
+			blood.addDamage(.005);
 		}
 		if(goblin3.head.getActiveState() && (tempO.collided(&goblin3.head) || tempO.collided(&goblin3.body)))
 		{
-			exit(0);
+			blood.addDamage(.005);
 		}
 		if(bear.getActiveState() && (tempO.collided(&bear)))
 		{
-			exit(0);
+			blood.addDamage(.01);
 		}
-		if(!goblin1.done())
-			goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(!goblin2.done())
-			goblin2.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(!goblin3.done())
-			goblin3.update(dt,camera.getPos(), &fireballObj, &swordObj);
-		if(!bear.done())
-			bear.update(dt,camera.getPos(), &fireballObj, &swordObj);
-
-		camera.update(dt);
-
-		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
-		blood.setAngles(camera.getTheta(), camera.getPhi());
-		blood.update(dt);
-
-		fireballObj.update(dt);
-		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
-		swordObj.setAngle(camera.getTheta());
-		swordObj.update(dt);
 		
-		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
-		else {swordObj.rising = false;}
+		goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);		
+		goblin2.update(dt,camera.getPos(), &fireballObj, &swordObj);	
+		goblin3.update(dt,camera.getPos(), &fireballObj, &swordObj);		
+		bear.update(dt,camera.getPos(), &fireballObj, &swordObj);
 
 		if (!bearKilled && (input.isKeyDown('O') || bear.health <= 0))
 		{
@@ -569,64 +561,55 @@ void Southfall::updateScene(float dt)
 			audio.playCue(ZELDA_CUE);
 			bearKilled = true;			
 			alpha = 0;
+			ladder.setActive(true);
 		}
+
+#pragma region END_LEVEL2
 		if(bearKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
 		{
 			++gameState;
 			++level;
-			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+			camera.init(Vector3(1000,100,10), Vector3(1000,100,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 				
-			//startEndCut = mTimer.getGameTime();
 			audio.stopCue(FOREST_CUE);
 
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\StormyDays.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
+			blood.setDamage(0);
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.9,.9,.9,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.8f, .8f, .8f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(-1,-.25,0);	
 
-			audio.playCue(HEARTBEAT_CUE);
-	
+			audio.playCue(HEARTBEAT_CUE);	
 		}
+#pragma endregion END_LEVEL2
 
 		break;
+#pragma endregion LEVEL2
+
+#pragma region CUT5
 	case CUT5:
 		++gameState;
 		break;
-	case LEVEL3:
-		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
-		tempO.setPosition(camera.getPos());
-		tempO.setRadius(10);
-		
-		
-		camera.update(dt);
+#pragma endregion CUT5
 
-		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
-		blood.setAngles(camera.getTheta(), camera.getPhi());
-		blood.update(dt);
-
-		fireballObj.update(dt);
-		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
-		swordObj.setAngle(camera.getTheta());
-		swordObj.update(dt);
+#pragma region LEVEL3
+	case LEVEL3:	
 		
-		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
-		else {swordObj.rising = false;}
-		if (!goblinsKilled && input.isKeyDown('O'))// || bear.health <= 0)
+		if(input.getMouseLButton())
 		{
-			bear.health = 1;
-			lights.lights[POINT1].on = 1;
-			audio.playCue(ZELDA_CUE);
-			goblinsKilled = true;			
-			alpha = 0;
+			camera.addShake(.25*(swordObj.power-1.0f)); 
+			if (swordObj.swing()) audio.playCue(SWING_CUE); 
 		}
+		else swordObj.rising = false;
+
 		if(camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
 		{
 			++gameState;
 			++level;
 				
-			camera.init(Vector3(400,100,10), Vector3(400,200,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+			camera.init(Vector3(400,100,10), Vector3(250,100,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
 			
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Miramar.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
@@ -643,62 +626,81 @@ void Southfall::updateScene(float dt)
 		}
 
 		break;
+#pragma endregion LEVEL3
+
+#pragma region CUT6
 	case CUT6:
 		++gameState;
 		break;
-	case LEVEL4:
+#pragma endregion CUT6
 
-		tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
-		tempO.setPosition(camera.getPos());
-		tempO.setRadius(10);
-		
-		camera.update(dt);
+#pragma region LEVEL4
+	case LEVEL4:				
 
-		blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
-		blood.setAngles(camera.getTheta(), camera.getPhi());
-		blood.update(dt);
-
-		fireballObj.update(dt);
-		swordObj.setPosition(camera.getPos() - .4*Vector3(0,HEAD_HEIGHT,0));
-		swordObj.setAngle(camera.getTheta());
-		swordObj.update(dt);
-		
-		if(wraith.getActiveState())
-			wraith.update(dt,camera.getPos(), &fireballObj, &swordObj);
-
-		if(input.getMouseLButton()){camera.addShake(.25*(swordObj.power-1.0f));if (swordObj.swing()) audio.playCue(SWING_CUE); }
-		else {swordObj.rising = false;}
-
-		if (!wraithKilled && input.isKeyDown('O'))//|| bear.health <= 0)
+		if(input.getMouseLButton())
 		{
-			bear.health = 1;
-			lights.lights[POINT1].on = 1;
-			audio.playCue(ZELDA_CUE);
-			wraithKilled = true;			
+			camera.addShake(.25*(swordObj.power-1.0f)); 
+			if (swordObj.swing()) audio.playCue(SWING_CUE); 
+		}
+		else swordObj.rising = false;
+
+		wraith.update(dt, camera.getPos(), &fireballObj, &swordObj);	
+
+		if(wraith.getActiveState() && (tempO.collided(&wraith)))
+		{
+			blood.addDamage(.01);			
+		}
+
+		if (!wraith.getActiveState())
+		{			
 			alpha = 0;
-		}
-		if(wraithKilled && camera.getPos().z >= (terrain[level].z-3)*terrain[level].scale)
-		{
-				++gameState;
-				
-				startEndCut = mTimer.getGameTime();
-				//audio.stopCue(FOREST_CUE);
+			++gameState;				
+			startEndCut = mTimer.getGameTime();
+			audio.stopCue(BOSS_CUE);
+			audio.playCue(VICTORY_CUE);	
 		}
 
 		break;
+#pragma endregion LEVEL4
+
+#pragma region CUT7
 	case CUT7:
-		++gameState;
+		gameState++;
 		break;
+
+#pragma endregion CUT7
+
+#pragma region END
 	case END:		
-		if (mTimer.getGameTime() - startEndCut > 3) PostQuitMessage(0);
+		if (mTimer.getGameTime() - startEndCut > 10) PostQuitMessage(0);
 		
 		alpha += 80*dt;
 		if (alpha > 255) alpha = 255;
 		if (alpha < 0) alpha = 0;
 
 		break;
+#pragma endregion END
+
+#pragma region LOSE
+	case LOSE:		
+		if (mTimer.getGameTime() - startEndCut > 5) PostQuitMessage(0);
+		
+		alpha += 80*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
+
+		break;	
+#pragma endregion LOSE
 	}
 
+	if (gameState != LOSE && blood.getDamage() > 1)
+		{
+			gameState = LOSE; 
+			startEndCut = mTimer.getGameTime();
+			alpha = 0;
+			audio.stopCue(BOSS_CUE);
+			audio.stopCue(FOREST_CUE);
+		}
 }
 
 void Southfall::setShaderVals()
@@ -722,7 +724,6 @@ void Southfall::setShaderVals()
 	D3DXMatrixIdentity(&texMtx);
 	mfxTexMtxVar->SetMatrix((float*)&texMtx);
 }
-
 
 void Southfall::drawScene()
 {
@@ -748,11 +749,14 @@ void Southfall::drawScene()
 		break;
 	case CUT2:
 		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
-		theText.print("One wraith remains.  You arrive at his secret lair...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
+		theText.print("One wraith remains. \n   You approach his secret lair...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
+	case CUT3: break;
+
+#pragma region LEVEL1
 	case LEVEL1:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+
 		setShaderVals();
 		sky.draw();
 		setShaderVals();
@@ -792,16 +796,21 @@ void Southfall::drawScene()
 			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
 			mWaves.draw();
 		}
+
+		if(pig.getActiveState())
+		pig.draw(&mWVP);
+
+		setShaderVals();
+		portal.draw(lights.lights[0], camera.getPos(), mView*mProj);
+		//md3dDevice->RSSetState(0);
+
 		setShaderVals();
 		torchObj1.draw(&mWVP);
 		setShaderVals();
 		torchObj2.draw(&mWVP);		
 		setShaderVals();
 		fireballObj.draw(&mWVP);
-		setShaderVals();
-		if(pig.getActiveState())
-			pig.draw(&mWVP);
-		q << "Health: " << score;
+		setShaderVals();	
 
 		lights.setNoLight();
 		setShaderVals();
@@ -811,9 +820,14 @@ void Southfall::drawScene()
 
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
+
 		break;
-	case CUT3:
+#pragma endregion LEVEL1
+
+	case CUT4:
 		break;
+
+#pragma region LEVEL2
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
@@ -827,12 +841,10 @@ void Southfall::drawScene()
 		setShaderVals();
 		bear.draw(&mWVP);
 		setShaderVals();
-		swordObj.draw(&mWVP);
-		
+		swordObj.draw(&mWVP);		
 
 		setShaderVals();
 		ladder.draw(lights.lights[0], camera.getPos(), mView*mProj);
-		//md3dDevice->RSSetState(0);
 	
 		setShaderVals();
 		fireballObj.draw(&mWVP);
@@ -844,10 +856,14 @@ void Southfall::drawScene()
 		setShaderVals();
 
 		q << "Bacon: " << score;
-		//theText.print(q.str(),0, 0);
+		theText.print(q.str(),0, 0);
 		break;
-	case CUT4:
+#pragma endregion LEVEL2
+
+	case CUT5:
 		break;
+
+#pragma region LEVEL3
 	case LEVEL3:
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
@@ -865,10 +881,13 @@ void Southfall::drawScene()
 		setShaderVals();
 
 		q << "Bacon: " << score;
-		//theText.print(q.str(),0, 0);
+		theText.print(q.str(),0, 0);
 		break;
-	case CUT5:
+	case CUT6:
 		break;
+#pragma endregion LEVEL3
+
+#pragma region LEVEL4
 	case LEVEL4:
 		terrainObj[level].draw(&mWVP);
 		//surr[level].draw(&mWVP);
@@ -887,14 +906,24 @@ void Southfall::drawScene()
 		setShaderVals();
 		
 		q << "Bacon: " << score;
-		//theText.print(q.str(),0, 0);
+		theText.print(q.str(),0, 0);
 		break;
-	case CUT6:
-		break;
+#pragma endregion LEVEL4
+
+#pragma region END
 	case END:
 		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
-		theText.print("To be continued...",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);		
+		theText.print("The End",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);	
 		break;
+#pragma endregion END
+
+#pragma region LOSE
+	case LOSE:
+		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
+		theText.print("...You Lose...",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);	
+		break;
+	
+#pragma endregion LOSE
 	}
 
 	mSwapChain->Present(0, 0);
