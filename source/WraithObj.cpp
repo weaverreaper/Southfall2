@@ -120,7 +120,7 @@ void WraithObj::update(float dt, Vector3 cam)
 {
 	direction = position - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
-	if(D3DXVec3Length(&direction) < 1000)
+	if(D3DXVec3Length(&direction) < 10000)
 	{
 	D3DXVec3Normalize(&direction,&direction);
 	Vector3 v = -direction*100;
