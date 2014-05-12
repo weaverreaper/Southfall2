@@ -40,10 +40,8 @@ public:
 	void releaseFireBall();
 	void addShake(float intensity);
 	void clearShake();
-	void incSensitivity(){if (sensitivity < 1) sensitivity += .1;}
-	void decSensitivity(){
-		if (sensitivity > .15) sensitivity -= .1;
-	}
+	void incSensitivity(){ if (sensitivity < 1) sensitivity += .1; }
+	void decSensitivity(){ if (sensitivity > .15) sensitivity -= .1; }
 private:
 	float getTerrHeight();
 
@@ -69,8 +67,6 @@ private:
 	Fireball* fireball;
 	LightingManager* lights;
 	Waves* waves;
-
-	float stepTime;
 
 };
 

@@ -394,7 +394,7 @@ void Southfall::updateScene(float dt)
 			lights.lights[4].pos.y = 2*cosf(time);
 			
 			Vector3 up(0,1,0);
-			Vector3 position(2.5,2.5,-7);
+			Vector3 position(2.5,2.5,-15);
 			Vector3 target(2.5,2.5,0);
 
 			position.x += 2.5*cosf(time);
@@ -496,8 +496,7 @@ void Southfall::updateScene(float dt)
 		mWaterTexOffset.y += 0.1f*dt;
 		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
 		mWaves.update(dt);
-		if(pig.health <= 0)
-			blood.setDamage(0);
+		if(pig.health <= 0){ blood.setDamage(0); score = 99; }
 		if (!endLevel && torchObj1.isLit() && pig.health <= 0)
 		{
 			lights.lights[POINT1].on = 1;
@@ -823,7 +822,17 @@ void Southfall::drawScene()
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
 		splashObj.draw(&mWVP);
 		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
-		theText.print("Press Space to continue",GAME_WIDTH/2 - 25,GAME_HEIGHT - 50);	
+
+		theText.print("Press Space to move forward",GAME_WIDTH/2 - 100,GAME_HEIGHT - 50);
+
+		theText.print("Movement - WASD",GAME_WIDTH - 400,GAME_HEIGHT/2-50);	
+		theText.print("Camera - Mouse",GAME_WIDTH - 400,GAME_HEIGHT/2-25);	
+		theText.print("Adjust sensitivity - O and P",GAME_WIDTH - 400,GAME_HEIGHT/2);
+		theText.print("Swing Sword - Left Click (hold to charge)",GAME_WIDTH - 400,GAME_HEIGHT/2+25);
+		theText.print("Shoot Fireball - Right Click (hold to charge)",GAME_WIDTH - 400,GAME_HEIGHT/2+50);
+
+		theText.print("Enter Birmingham Mode - B",200,GAME_HEIGHT/2);	
+
 		break;
 	case CUT1:
 		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
@@ -944,6 +953,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 
@@ -983,6 +993,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
@@ -1010,6 +1021,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
@@ -1035,6 +1047,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 		
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
@@ -1132,7 +1145,7 @@ void Southfall::initBirmingham()
 		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[3], 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\Birmingham.png", 0, 0, &mWaterMapRV, 0 ))
+		L"Textures\\Birmingham.png", 0, 0, &mWaterMapRV, 0 ));
 	
 	ID3D10ShaderResourceView* temp;
 	
