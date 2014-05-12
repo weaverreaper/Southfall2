@@ -9,7 +9,7 @@ const float KNOCKBACK = 50;
 WraithObj::WraithObj()
 {
 	health = 400;
-	radius = 25;
+	radius = 20;
 }
  
 WraithObj::~WraithObj()
@@ -68,6 +68,7 @@ void WraithObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID
 	fxWorld = w;
 	tech = t;
 	terr = ter;
+	firetime = 5;
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&wvp);
 }
@@ -114,6 +115,7 @@ void WraithObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		setInActive();
 		audio->playCue(DEATH_CUE);
 	}
+	firetime -= dt;
 	update(dt,cam);
 }
 void WraithObj::update(float dt, Vector3 cam)
@@ -132,7 +134,7 @@ void WraithObj::update(float dt, Vector3 cam)
 	Matrix temp;
 	Identity(&temp);
 	Identity(&world);
-	position.y = getTerrHeight()+45;
+	position.y = getTerrHeight()+95;
 	Translate(&temp, offset.x, offset.y, offset.z);
 	world *= temp;
 	D3DXMatrixRotationYawPitchRoll(&temp, roty, rotz, rotx);
