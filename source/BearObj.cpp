@@ -97,7 +97,7 @@ void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		dmgfx.push_back(new DamageSprites());
 		dmgfx.back()->init(md3dDevice, dHealth);
 		fo->setInActive();
-		//fo->light->on = 0;
+		fo->light->on = 0;
 		//fo->dist = 0;
 		audio->playCue(DAMAGE_CUE);
 	}

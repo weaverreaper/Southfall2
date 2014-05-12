@@ -33,6 +33,7 @@ public:
 	void setfiretime(float time){firetime = time;}
 private:
 
+	bool evade;
 	std::vector<DamageSprites*> dmgfx;
 	bool firstDraw;
 	Vector3 direction, offset;

@@ -530,8 +530,12 @@ void Southfall::updateScene(float dt)
 			goblin2.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin3.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin1.setPosition(D3DXVECTOR3(450,120,1000));
+			goblin2.setPosition(D3DXVECTOR3(300,120,1400));
+			goblin3.setPosition(D3DXVECTOR3(600,120,1400));
 			bear.setPosition(D3DXVECTOR3(450,120,1200));
 			goblin1.health = 200;
+			goblin2.health = 200;
+			goblin3.health = 200;
 			goblin1.head.setActive();
 			goblin1.body.setActive();
 			goblin2.head.setActive();
@@ -695,6 +699,8 @@ void Southfall::updateScene(float dt)
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Miramar.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
 
+			wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
+			wraith.setPosition(D3DXVECTOR3(1800,120,1800));
 			wraith.setActive();
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.3,.3,.3,1);
@@ -796,11 +802,23 @@ void Southfall::updateScene(float dt)
 
 	if (gameState != LOSE && blood.getDamage() > HEALTH)
 		{
-			gameState = LOSE; 
-			startCut = mTimer.getGameTime();
-			alpha = 0;
+			//if(level == 3)
 			audio.stopCue(BOSS_CUE);
 			audio.stopCue(FOREST_CUE);
+
+			Sleep(2000);
+
+			blood.setDamage(0);
+			--level;
+			camera.setPos(Vector3(0,0,(terrain[level].z-3)*terrain[level].scale));
+			endLevel = true;
+			gameState -= 2;
+			alpha = 0;
+			updateScene(0);
+			/*
+			gameState = LOSE; 
+			startCut = mTimer.getGameTime();
+			*/
 		}
 
 	if (birm) blood.setDamage(0);
