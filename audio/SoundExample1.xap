@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Programming 2D Games\Object Version\Chapter 7 Sound\SoundExample1\audio\SoundExample1.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3354045840;
-    Last Modified High = 30371371;
+    Last Modified Low = 1770615182;
+    Last Modified High = 30371383;
 
     Category
     {
@@ -227,12 +227,10 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 2864822427;
-    PC Bank Last Modified High = 30371370;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 2770012427;
-    Bank Last Revised High = 30371370;
+    PC Bank Last Modified Low = 1770755196;
+    PC Bank Last Modified High = 30371383;
+    Bank Last Revised Low = 1600428165;
+    Bank Last Revised High = 30371383;
 
     Wave
     {
@@ -560,22 +558,22 @@ Wave Bank
     {
         Name = Wraith_teleport;
         File = Wraith_teleport.wav;
-        Build Settings Last Modified Low = 2754802427;
-        Build Settings Last Modified High = 30371370;
+        Build Settings Last Modified Low = 1584216544;
+        Build Settings Last Modified High = 30371383;
 
         Cache
         {
             Format Tag = 0;
-            Channels = 1;
+            Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 24204;
+            Play Region Length = 59392;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2578242427;
-            Last Modified High = 30371370;
+            Last Modified Low = 1083896517;
+            Last Modified High = 30371383;
         }
     }
 }
@@ -587,8 +585,8 @@ Sound Bank
     Windows File = Win\SoundsExample1.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 3354125848;
-    Bank Last Modified High = 30371371;
+    Bank Last Modified Low = 1772935414;
+    Bank Last Modified High = 30371383;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -1259,7 +1257,7 @@ Sound Bank
     Sound
     {
         Name = Wraith_teleport;
-        Volume = 50;
+        Volume = -160;
         Pitch = 0;
         Priority = 0;
 

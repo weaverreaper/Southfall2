@@ -545,6 +545,9 @@ void Southfall::updateScene(float dt)
 			goblin3.body.setActive();
 			bear.setActive();
 
+			swordObj.init(mTech, mfxWVPVar, mfxWorldVar, &sword, Vertex(), Vertex());
+			fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball);
+
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.4,.4,.4,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.6f, .75f, .6f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-1,0);	
@@ -708,7 +711,9 @@ void Southfall::updateScene(float dt)
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.7f, .71f, .7f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(1,-.45,0);	
 			wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
-
+						
+			swordObj.init(mTech, mfxWVPVar, mfxWorldVar, &sword, Vertex(), Vertex());
+			fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball);
 
 			audio.stopCue(HEARTBEAT_CUE);
 			audio.playCue(BOSS_CUE);
