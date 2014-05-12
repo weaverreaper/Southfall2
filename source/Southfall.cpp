@@ -580,21 +580,37 @@ void Southfall::updateScene(float dt)
 		}
 		else swordObj.rising = false;
 		
-		if(goblin1.head.getActiveState() && (tempO.collided(&goblin1.head) || tempO.collided(&goblin1.body)))
+		if(goblin1.head.getActiveState() && goblin1.collided(&tempO))
 		{
-			blood.addDamage(.005);
+			blood.addDamage(.05);
+			Vector3 diff = goblin1.body.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
-		if(goblin2.head.getActiveState() && (tempO.collided(&goblin2.head) || tempO.collided(&goblin2.body)))
+		if(goblin2.head.getActiveState() && goblin2.collided(&tempO))
 		{
-			blood.addDamage(.005);
+			blood.addDamage(.05);
+			Vector3 diff = goblin2.body.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
-		if(goblin3.head.getActiveState() && (tempO.collided(&goblin3.head) || tempO.collided(&goblin3.body)))
-		{
-			blood.addDamage(.005);
+		if(goblin3.head.getActiveState() && goblin3.collided(&tempO))
+		{			
+			blood.addDamage(.05);
+			Vector3 diff = goblin3.body.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
-		if(bear.getActiveState() && (tempO.collided(&bear)))
+		if(bear.getActiveState() && bear.collided(&tempO))
 		{
-			blood.addDamage(.01);
+			blood.addDamage(.1);
+			Vector3 diff = bear.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
 		
 		goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);		
@@ -708,7 +724,11 @@ void Southfall::updateScene(float dt)
 
 		if(wraith.getActiveState() && (tempO.collided(&wraith)))
 		{
-			blood.addDamage(.01);			
+			blood.addDamage(.25);	
+			Vector3 diff = wraith.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
 
 		if (!wraith.getActiveState())
