@@ -19,7 +19,7 @@ public:
 	void setColor(D3DXCOLOR c) {return;}
 private:
 
-	const static DWORD mNumVertices = 12;
+	const static DWORD mNumVertices = 20;
 	const static DWORD mNumFaces = 16;	
 
 	ID3D10Device* md3dDevice;

@@ -130,6 +130,8 @@ private:
 
 	double alpha;
 
+	GeoObject tempO;
+
 	bool pigKilled, bearKilled, goblinsKilled, wraithKilled, endLevel;
 
 	int level;

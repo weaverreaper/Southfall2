@@ -29,11 +29,15 @@ public:
 	void setAudio(Audio* a) {audio = a;}
 	void setDiffuseMap(ID3D10ShaderResourceView* dm){mDiffuseMapRV = dm;}
 	
+	float getfiretime(){return firetime;}
+	void setfiretime(float time){firetime = time;}
 private:
 
+	bool evade;
 	std::vector<DamageSprites*> dmgfx;
 	bool firstDraw;
 	Vector3 direction, offset;
+	float firetime;
 
 	ID3D10Device* md3dDevice;	
 	ID3D10ShaderResourceView* mDiffuseMapRV;

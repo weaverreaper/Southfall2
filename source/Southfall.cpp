@@ -87,7 +87,7 @@ void Southfall::initApp()
 
 	D3DXMatrixRotationYawPitchRoll(&tm1, PI/2, 0, PI/2); 
 	splashObj.setWorldMatrix(tm1);
-		
+	
 	fireball.init(md3dDevice, 1);
 	fireball2.init(md3dDevice, 1);
 	fireball3.init(md3dDevice, 1);
@@ -112,7 +112,7 @@ void Southfall::initApp()
 	torch2Fireball.setLight(&lights.lights[FIREBALL3]);
 	wraithfireball.setDevice(md3dDevice); wraithfireball.setMFX(mFX);
 	wraithfireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball4, 100);	
-	wraithfireball.setLight(&lights.lights[FIREBALL4]);	
+	wraithfireball.setLight(&lights.lights[FIREBALL3]);	
 
 	torchObj2.setDevice(md3dDevice); torchObj2.setMFX(mFX);
 	torchObj2.init(mTech, mfxWVPVar, mfxWorldVar, &torch2Fireball, &fireballObj, &torch2, &audio, Vector3(1550,175,2500));
@@ -299,6 +299,9 @@ void Southfall::initApp()
 	portal.init(md3dDevice, centers, 1, L"Textures\\ForestPortal.png", 300, 400);
 	portal.setActive(false);
 
+	tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
+	tempO.setRadius(30);
+
 	camera.clearShake();
 }
 
@@ -331,11 +334,9 @@ void Southfall::updateScene(float dt)
 
 	Matrix tm1;
 	Box tembB;
-	GeoObject tempO;
 
-	tempO.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
+
 	tempO.setPosition(camera.getPos());
-	tempO.setRadius(30);
 
 	if(input.wasKeyPressed(VK_ESCAPE)) PostQuitMessage(0);
 	if(input.wasKeyPressed('P')){ camera.incSensitivity(); input.clearKeyPress('P'); }
@@ -349,8 +350,15 @@ void Southfall::updateScene(float dt)
 		if((input.wasKeyPressed(VK_SPACE)))
 		{
 			input.clearKeyPress(VK_SPACE);
-			gameState = CUT1;			
-			//gameState = LEVEL1;
+			gameState = CUT1;
+
+
+			gameState = LEVEL4;
+			wraith.setActive();
+			level = 3;
+			camera.init(Vector3(400,100,10), Vector3(250,100,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+			wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
+
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut = mTimer.getGameTime();
 			alpha = 20;	
@@ -522,8 +530,12 @@ void Southfall::updateScene(float dt)
 			goblin2.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin3.init(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &head, &body, &terrain[level]);
 			goblin1.setPosition(D3DXVECTOR3(450,120,1000));
+			goblin2.setPosition(D3DXVECTOR3(300,120,1400));
+			goblin3.setPosition(D3DXVECTOR3(600,120,1400));
 			bear.setPosition(D3DXVECTOR3(450,120,1200));
 			goblin1.health = 200;
+			goblin2.health = 200;
+			goblin3.health = 200;
 			goblin1.head.setActive();
 			goblin1.body.setActive();
 			goblin2.head.setActive();
@@ -687,11 +699,15 @@ void Southfall::updateScene(float dt)
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Miramar.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
 
+			wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
+			wraith.setPosition(D3DXVECTOR3(1800,120,1800));
 			wraith.setActive();
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.3,.3,.3,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.7f, .71f, .7f, 1.f);
 			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(1,-.45,0);	
+			wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
+
 
 			audio.stopCue(HEARTBEAT_CUE);
 			audio.playCue(BOSS_CUE);
@@ -718,6 +734,8 @@ void Southfall::updateScene(float dt)
 		else swordObj.rising = false;
 
 		wraith.update(dt, camera.getPos(), &fireballObj, &swordObj);	
+		wraithfireball.update(dt);
+
 
 		if(wraith.getActiveState() && (tempO.collided(&wraith)))
 		{
@@ -726,6 +744,18 @@ void Southfall::updateScene(float dt)
 			D3DXVec3Normalize(&diff, &diff);
 			camera.setPos(camera.getPos() + 5*diff);
 			audio.playCue(DAMAGE_CUE);
+		}
+
+		if(wraithfireball.getActiveState() && (tempO.collided(&wraith)))
+		{
+			//blood.addDamage(0.1);
+			wraithfireball.setInActive();
+		}
+		if(wraith.getfiretime() <= 0)
+		{
+			wraithfireball.setActive();
+			wraithfireball.shoot2(wraith.getPosition(),camera.getPos()+wraith.getPosition());
+			wraith.setfiretime(5.0f);
 		}
 
 		if (!wraith.getActiveState())
@@ -772,11 +802,23 @@ void Southfall::updateScene(float dt)
 
 	if (gameState != LOSE && blood.getDamage() > HEALTH)
 		{
-			gameState = LOSE; 
-			startCut = mTimer.getGameTime();
-			alpha = 0;
+			//if(level == 3)
 			audio.stopCue(BOSS_CUE);
 			audio.stopCue(FOREST_CUE);
+
+			Sleep(2000);
+
+			blood.setDamage(0);
+			--level;
+			camera.setPos(Vector3(0,0,(terrain[level].z-3)*terrain[level].scale));
+			endLevel = true;
+			gameState -= 2;
+			alpha = 0;
+			updateScene(0);
+			/*
+			gameState = LOSE; 
+			startCut = mTimer.getGameTime();
+			*/
 		}
 
 	if (birm) blood.setDamage(0);
@@ -1040,6 +1082,8 @@ void Southfall::drawScene()
 		swordObj.draw(&mWVP);
 		setShaderVals();
 		fireballObj.draw(&mWVP);
+		setShaderVals();
+		wraithfireball.draw(&mWVP);
 		
 		lights.setNoLight();
 		setShaderVals();

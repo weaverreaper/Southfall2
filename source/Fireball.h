@@ -36,6 +36,7 @@ public:
 	bool viable(){return getActiveState() && !rising;}
 
 	bool shoot(Vector3 pos, Vector3 dir);
+	void shoot2(Vector3 pos, Vector3 dir);
 	void Fireball::release(Vector3 pos, Vector3 dir);
 	Light* light;
 	float dist;

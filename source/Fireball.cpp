@@ -91,6 +91,22 @@ void Fireball::release(Vector3 pos, Vector3 dir)
 	fireballSprites.setPath(position, velocity);
 }
 
+void Fireball::shoot2(Vector3 pos, Vector3 dir)
+{
+	setPosition(pos + 200*dir);
+	fireballSprites.setPath(position, Vector3(0,0,0), false);
+	fireballSprites.scale = power;
+	setVelocity(dir);
+	power = MAX_FIRE_POWER;
+	light->dir = dir;
+	light->pos = position - 10*dir;
+	light->on = 1;
+	light->att = Vector3(0,.03,0)/power;
+	light->range = power*1000.0f;
+	rising = false;
+}
+
+
 bool Fireball::shoot(Vector3 pos, Vector3 dir)
 {
 	dist = 0;
