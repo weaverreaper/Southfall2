@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="source\audio.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Bear.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\BearObj.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Box.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Camera.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3dApp.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\d3dUtil.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DamageSprites.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Fireball.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\FireballSprites.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameTimer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GeoObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Goblinbody.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Goblinhead.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Goblin.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LadderBillboard.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Line.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\input.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Origin.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Pyramid.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sky.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Southfall.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Square.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Surroundings.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Sword.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SwordObj.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Terrain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\textDX.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TextureMgr.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Torch.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Waves.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Pig.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\PigObj.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Wraith.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WraithObj.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Blood.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\audio.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sky.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Bear.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\BearObj.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Box.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Camera.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\constants.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3dApp.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\d3dUtil.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DamageSprites.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Fireball.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\FireballSprites.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gameError.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GameTimer.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Geometry.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GeoObject.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Goblin.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Goblinbody.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Goblinhead.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\input.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\LadderBillboard.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Lighting.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Line.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Origin.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Pyramid.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Southfall.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Waves.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Square.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Surroundings.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Sword.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SwordObj.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Terrain.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\textDX.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TextureMgr.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Torch.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Vertex.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pig.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PigObj.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Wraith.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\WraithObj.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Blood.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\color.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="source\damage.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="source\fireball.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="source\lighthelper.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="source\random.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="source\sky.fx">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="source\tree.fx">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{a0eaa72f-93d2-4fc9-9f40-d5f57bee091f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{23a7f9a1-749d-43c0-b12b-3430ff824581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{8f07a581-fb7c-4fcd-abe5-136317f32f1c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
