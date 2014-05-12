@@ -30,13 +30,14 @@
 #include "TextureMgr.h"
 #include "DamageSprites.h"
 #include "Torch.h"
-#include "LadderBillboard.h"
+#include "Billboard.h"
 #include "pig.h"
 #include "PigObj.h"
 #include "Blood.h"
 #include "Wraith.h"
 #include "WraithObj.h"
-	const int LEVELS = 4;
+
+const int LEVELS = 4;
 
 //Global light and shader variables
 	ID3D10EffectMatrixVariable* mfxWorldVar;
@@ -72,7 +73,8 @@
 		CUT6,
 		LEVEL4,
 		CUT7,
-		END
+		END,
+		LOSE
 	};
 
 class Southfall : public D3DApp
@@ -122,12 +124,11 @@ private:
 	float mTheta;
 	float mPhi;
 
-	float startCut1;
-	float startCut2;
-	float startEndCut;
+	float startCut;
+
 	double alpha;
 
-	bool pigKilled, bearKilled, goblinsKilled, wraithKilled, torchLit;
+	bool pigKilled, bearKilled, goblinsKilled, wraithKilled, endLevel;
 
 	int level;
 	Terrain terrain[LEVELS];
@@ -154,7 +155,7 @@ private:
 
 	Torch torchObj1, torchObj2;
 
-	LadderBillboard ladder;
+	Billboard portal, ladder;
 };
 
 #endif

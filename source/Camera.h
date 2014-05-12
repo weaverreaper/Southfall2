@@ -25,7 +25,9 @@ public:
 	D3DXVECTOR3 getTarget(){return target;}
 	D3DXVECTOR3 getPosShake(){return position+right*shakeRight + up*shakeUp;}
 	D3DXVECTOR3 getPos(){return position;}
-	
+
+	void setPos(D3DXVECTOR3 p){position = p;}
+	void lockToTerrain(bool l = true){terrainLocked = l;}
 	float getPhi(){return mPhi;}
 	float getTheta(){return mTheta;}
 	Matrix getView(){return *mView;}
@@ -49,6 +51,7 @@ private:
 	float sensitivity;
 	float lookRadius;
 	bool onGround;
+	bool terrainLocked;
 	
 	
 	Vector3 velocity;

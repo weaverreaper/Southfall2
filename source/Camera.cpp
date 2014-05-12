@@ -24,6 +24,7 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Ma
 	mProj = proj;
 	terr = t;
 	onGround = true;
+	terrainLocked = true;
 	velocity = Vector3(0,0,0);
 	lights = l;
 	stepTime = STEP_LENGTH;
@@ -39,7 +40,7 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Ma
 void Camera::update(float dt)
 {
 	
-	if(input->anyKeyPressed() && onGround)
+	if(input->anyKeyPressed() && onGround && terrainLocked)
 	{
 		Vector3 dir = target - position;
 		dir.y = 0;
@@ -95,9 +96,11 @@ void Camera::update(float dt)
 	if(velocity.y < termYVel)
 		velocity.y = termYVel;
 
-	mPhi += input->getMouseRawY()*dt*sensitivity;
-	mTheta -= input->getMouseRawX()*dt*sensitivity;	
-
+	if(terrainLocked)
+	{
+		mPhi += input->getMouseRawY()*dt*sensitivity;
+		mTheta -= input->getMouseRawX()*dt*sensitivity;	
+	}
 	//Restrict angles	
 	if(mPhi > PI-.4) mPhi = PI-.4; 
 	if(mPhi < 0.4) mPhi = .4;
@@ -105,28 +108,30 @@ void Camera::update(float dt)
 	if (mTheta < 0)  mTheta += 2*PI;	
 	else if (mTheta > 2*PI)  mTheta -= 2*PI;	
 	
-	float d = 25;
-	if(position.x <= 0+d)
-		position.x = d;
-	else if(position.x >= (terr->x-2)*terr->scale-d)
-		position.x = (terr->x-2)*terr->scale - d;
-	if(position.z <= 0+d)
-		position.z = d;
-	else if(position.z >= (terr->z-1)*terr->scale-d)
-		position.z = (terr->z-1)*terr->scale - d;
-
-	if(position.x > 0 && position.x < (terr->x-1)*terr->scale && position.z > 0 && position.z < (terr->z-1)*terr->scale) 
+	if(terrainLocked)
 	{
-		onGround = false;
-		float terrY = getTerrHeight();
-		if(position.y < terrY*terr->scale + HEAD_HEIGHT)
+		float d = 25;
+		if(position.x <= 0+d)
+			position.x = d;
+		else if(position.x >= (terr->x-2)*terr->scale-d)
+			position.x = (terr->x-2)*terr->scale - d;
+		if(position.z <= 0+d)
+			position.z = d;
+		else if(position.z >= (terr->z-1)*terr->scale-d)
+			position.z = (terr->z-1)*terr->scale - d;
+
+		if(position.x > 0 && position.x < (terr->x-1)*terr->scale && position.z > 0 && position.z < (terr->z-1)*terr->scale) 
 		{
-			velocity = Vector3(0,0,0);
-			onGround = true;
-			position.y = terrY*terr->scale + HEAD_HEIGHT;
+			onGround = false;
+			float terrY = getTerrHeight();
+			if(position.y < terrY*terr->scale + HEAD_HEIGHT)
+			{
+				velocity = Vector3(0,0,0);
+				onGround = true;
+				position.y = terrY*terr->scale + HEAD_HEIGHT;
+			}
 		}
 	}
-
 	D3DXVec3Cross(&right, &(target - position), &up);
 	D3DXVec3Normalize(&right, &right);
 	D3DXVec3Normalize(&up, &up);

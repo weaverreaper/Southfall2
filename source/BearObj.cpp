@@ -73,6 +73,7 @@ void BearObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D
 }
 void BearObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
+	if (done()) return;
 	firstDraw = true;
 	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
 	while(ds != dmgfx.end())

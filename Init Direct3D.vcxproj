@@ -24,7 +24,7 @@
     <ClCompile Include="source\Goblin.cpp" />
     <ClCompile Include="source\Goblinbody.cpp" />
     <ClCompile Include="source\Goblinhead.cpp" />
-    <ClCompile Include="source\LadderBillboard.cpp" />
+    <ClCompile Include="source\Billboard.cpp" />
     <ClCompile Include="source\Pig.cpp" />
     <ClCompile Include="source\PigObj.cpp" />
     <ClCompile Include="source\Sky.cpp" />
@@ -78,7 +78,7 @@
     <ClInclude Include="source\Goblinbody.h" />
     <ClInclude Include="source\Goblinhead.h" />
     <ClInclude Include="source\input.h" />
-    <ClInclude Include="source\LadderBillboard.h" />
+    <ClInclude Include="source\Billboard.h" />
     <ClInclude Include="source\Lighting.h" />
     <ClInclude Include="source\Line.h" />
     <ClInclude Include="source\Origin.h" />
