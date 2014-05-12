@@ -1185,7 +1185,7 @@ void Southfall::initBirmingham()
 		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[2], 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[3], 0 ));
+		L"Textures\\RedBirmingham.png", 0, 0, &mDiffuseMapRV[3], 0 ));
 
 	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures\\Birmingham.png", 0, 0, &mWaterMapRV, 0 ));
