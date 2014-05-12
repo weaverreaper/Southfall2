@@ -15,6 +15,8 @@
 
 const static float delta = .000001f;
 
+float HEALTH = 1;
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 				   PSTR cmdLine, int showCmd)
 {
@@ -69,6 +71,8 @@ void Southfall::initApp()
 	DamageSprites::buildShaderResourceView(md3dDevice);
 	DamageSprites::buildFX();
 
+	birm = false;
+
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
@@ -83,8 +87,7 @@ void Southfall::initApp()
 
 	D3DXMatrixRotationYawPitchRoll(&tm1, PI/2, 0, PI/2); 
 	splashObj.setWorldMatrix(tm1);
-	
-	
+		
 	fireball.init(md3dDevice, 1);
 	fireball2.init(md3dDevice, 1);
 	fireball3.init(md3dDevice, 1);
@@ -134,7 +137,6 @@ void Southfall::initApp()
 	blood.init(mTech, mfxWVPVar, mfxWorldVar, &bloodSquare, Vertex(), Vertex());
 	blood.setActive();
 	
-
 	level = 0;
 	pigKilled = false;
 	bearKilled = false;
@@ -199,15 +201,8 @@ void Southfall::initApp()
 		terrainObj[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i], Vertex(), Vertex());
 		terrainObj[i].setPosition(Vector3(0,0,0));
 
-		surr[i].setDevice(md3dDevice); 
-		surr[i].setMFX(mFX);
 	}
-	surr[0].initTextures(NULL, L"Textures/sandBack.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
-	surr[1].initTextures(L"Textures/Rock1.jpg",NULL,L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
-	for(int i = 0; i < LEVELS; ++i)
-	{
-		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
-	}
+	
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	goblin1.setPosition(D3DXVECTOR3(450,120,800));
 	goblin1.setScale(5.0f);
@@ -348,6 +343,7 @@ void Southfall::updateScene(float dt)
 	{
 #pragma region SPLASH
 	case SPLASH1:
+		if (input.wasKeyPressed('B')) initBirmingham();
 		if((input.wasKeyPressed(VK_SPACE)))
 		{
 			input.clearKeyPress(VK_SPACE);
@@ -773,7 +769,7 @@ void Southfall::updateScene(float dt)
 #pragma endregion LOSE
 	}
 
-	if (gameState != LOSE && blood.getDamage() > 1)
+	if (gameState != LOSE && blood.getDamage() > HEALTH)
 		{
 			gameState = LOSE; 
 			startCut = mTimer.getGameTime();
@@ -781,6 +777,8 @@ void Southfall::updateScene(float dt)
 			audio.stopCue(BOSS_CUE);
 			audio.stopCue(FOREST_CUE);
 		}
+
+	if (birm) blood.setDamage(0);
 }
 
 void Southfall::setShaderVals()
@@ -958,7 +956,7 @@ void Southfall::drawScene()
 #pragma region LEVEL2
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+		
 		sky.draw();
 		setShaderVals();
 		goblin1.draw(&mWVP);
@@ -996,7 +994,7 @@ void Southfall::drawScene()
 #pragma region LEVEL3
 	case LEVEL3:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+		
 		sky.draw();
 		setShaderVals();
 		
@@ -1020,7 +1018,7 @@ void Southfall::drawScene()
 #pragma region LEVEL4
 	case LEVEL4:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+		
 		sky.draw();
 		setShaderVals();
 		wraith.draw(&mWVP);
@@ -1113,4 +1111,51 @@ void Southfall::buildVertexLayouts()
     mTech->GetPassByIndex(0)->GetDesc(&PassDesc);
     HR(md3dDevice->CreateInputLayout(vertexDesc, 3, PassDesc.pIAInputSignature,
 		PassDesc.IAInputSignatureSize, &mVertexLayout));
+}
+
+void Southfall::initBirmingham()
+{
+	birm = true;
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[0], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[1], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[2], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[3], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mWaterMapRV, 0 ))
+	
+	ID3D10ShaderResourceView* temp;
+	
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &temp, 0 ));
+
+	wraith.setDiffuseMap(temp);
+
+	audio.playCue(BIRMINGHAM_CUE);
+	
+	//Advance level;
+	input.clearKeyPress('B');
+	gameState = CUT1;			
+	audio.stopCue(BAR_BACKGROUND_CUE);
+	startCut = mTimer.getGameTime();
+	alpha = 20;	
+	for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
+			
+	lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(0.1064453125, 0.1123046875, 0.1337890625,1);
+	lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(0.9921, 0.9058, 0.5450, 1.f);
+	lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-.75,.75);	
+			
+	lights.lights[POINT1].pos		= Vector3(380, 600, (terrain[level].z-3)*terrain[level].scale);
+	lights.lights[POINT1].diffuse	= Color(.05f,.05f,.05f,.5f);
+	lights.lights[POINT1].att		= Vector3(0,.0008f,0);
+	lights.lights[POINT1].range		= 65.f;
+
 }

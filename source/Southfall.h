@@ -93,6 +93,8 @@ private:
 	void buildVertexLayouts();
 	void setShaderVals(); //called in draw, for modularity
 	void renderFire();
+	void initBirmingham();
+	bool birm;
 
 	int gameState;
 	float lastFrameTime;
@@ -133,8 +135,7 @@ private:
 	int level;
 	Terrain terrain[LEVELS];
 	GeoObject terrainObj[LEVELS];
-	
-	Surroundings surr[LEVELS];
+
 	Sky sky;
 	TextureMgr tm;
 
