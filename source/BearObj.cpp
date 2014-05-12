@@ -51,6 +51,8 @@ void BearObj::draw(D3DXMATRIX* vp)
 
 void BearObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D10EffectMatrixVariable* w,ID3D10Device* device, Geometry* g, Terrain* ter)
 {
+	health = 400;
+	
 	//md3dDevice = device;
 	md3dDevice = device;
 
