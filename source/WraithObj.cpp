@@ -53,6 +53,7 @@ void WraithObj::draw(D3DXMATRIX* vp)
 
 void WraithObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D10EffectMatrixVariable* w,ID3D10Device* device, Geometry* g, Terrain* ter)
 {
+	health = MAX_HEALTH;
 	//md3dDevice = device;
 	md3dDevice = device;
 	offset = Vector3(-1.0f,-2.5f,0.0f);
