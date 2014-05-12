@@ -113,6 +113,7 @@ void Southfall::initApp()
 	wraithfireball.setDevice(md3dDevice); wraithfireball.setMFX(mFX);
 	wraithfireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball4, 100);	
 	wraithfireball.setLight(&lights.lights[FIREBALL3]);	
+	wraithfireball.maxdist = 3*MAX_DIST;
 
 	torchObj2.setDevice(md3dDevice); torchObj2.setMFX(mFX);
 	torchObj2.init(mTech, mfxWVPVar, mfxWorldVar, &torch2Fireball, &fireballObj, &torch2, &audio, Vector3(1550,175,2500));
@@ -746,15 +747,15 @@ void Southfall::updateScene(float dt)
 			audio.playCue(DAMAGE_CUE);
 		}
 
-		if(wraithfireball.getActiveState() && (tempO.collided(&wraith)))
+		if(wraithfireball.getActiveState() && (tempO.collided(&wraithfireball)))
 		{
-			//blood.addDamage(0.1);
+			blood.addDamage(0.1);
 			wraithfireball.setInActive();
 		}
 		if(wraith.getfiretime() <= 0)
 		{
 			wraithfireball.setActive();
-			wraithfireball.shoot2(wraith.getPosition(),camera.getPos()+wraith.getPosition());
+			wraithfireball.shoot2(wraith.getPosition(),camera.getPos()-wraith.getPosition(), camera.getPos());
 			wraith.setfiretime(5.0f);
 		}
 
