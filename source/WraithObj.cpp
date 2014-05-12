@@ -97,6 +97,7 @@ void WraithObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		if(RandF(0,1) > float(health)/MAX_HEALTH)
 		{
 			evade = true;
+			audio->playCue(TELEPORT_CUE);
 		}
 		else
 		{
