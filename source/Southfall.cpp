@@ -338,6 +338,8 @@ void Southfall::updateScene(float dt)
 	tempO.setRadius(30);
 
 	if(input.wasKeyPressed(VK_ESCAPE)) PostQuitMessage(0);
+	if(input.wasKeyPressed('P')){ camera.incSensitivity(); input.clearKeyPress('P'); }
+	if(input.wasKeyPressed('O')){ camera.decSensitivity(); input.clearKeyPress('O'); }
 	
 	switch (gameState)
 	{
