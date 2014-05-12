@@ -15,7 +15,7 @@ void Fireball::init(	ID3D10EffectTechnique* t,
 	 dist = 0;	
 	 setRadius(1);
 	 velocity = Vector3(0,0,0);
-
+	 maxdist = MAX_DIST;
 	 cam = c;	
 	
 	fireballSprites.init(md3dDevice, count);	
@@ -49,7 +49,7 @@ void Fireball::update(float dt)
 		
 	dist += dt * D3DXVec3Length(&velocity);
 
-	if (dist > MAX_DIST)
+	if (dist > maxdist)
 	{
 		light->on = 0;
 		dist = 0;
@@ -91,19 +91,25 @@ void Fireball::release(Vector3 pos, Vector3 dir)
 	fireballSprites.setPath(position, velocity);
 }
 
-void Fireball::shoot2(Vector3 pos, Vector3 dir)
+void Fireball::shoot2(Vector3 pos, Vector3 dir, Vector3 cam)
 {
-	setPosition(pos + 200*dir);
-	fireballSprites.setPath(position, Vector3(0,0,0), false);
+
+	D3DXVec3Normalize(&dir,&dir);
+	power = 1;
+	setPosition(pos);
+	fireballSprites.setPath(position, dir, false);
 	fireballSprites.scale = power;
-	setVelocity(dir);
-	power = MAX_FIRE_POWER;
+	velocity = dir*20;
 	light->dir = dir;
 	light->pos = position - 10*dir;
 	light->on = 1;
 	light->att = Vector3(0,.03,0)/power;
 	light->range = power*1000.0f;
 	rising = false;
+	ready = false;
+	setPosition(pos + 200*dir);
+	setVelocity(dir*2*FIREBALL_SPEED);
+	fireballSprites.setPath(position, velocity);
 }
 
 
