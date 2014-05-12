@@ -137,7 +137,6 @@ float GeoObject::getTerrHeight()
 		y = max(findHeight2(terr->grid[tx+1][tz+1],terr->grid[tx][tz+1],terr->grid[tx][tz],1-rz,rx), 
 			findHeight2(terr->grid[tx][tz+1],terr->grid[tx][tz],terr->grid[tx+1][tz],rx,rz));
 	return y*terr->scale;
-
 }
 
 bool GeoObject::collided(GeoObject *gameObject)
@@ -147,6 +146,8 @@ bool GeoObject::collided(GeoObject *gameObject)
 	float length = D3DXVec3LengthSq(&diff);
 	float radii = radiusSquared + gameObject->getRadiusSquare();
 	if (length <= radii)
+	{
 		return true;
+	}
 	return false;
 }

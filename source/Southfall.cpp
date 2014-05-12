@@ -15,6 +15,8 @@
 
 const static float delta = .000001f;
 
+float HEALTH = 1;
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance,
 				   PSTR cmdLine, int showCmd)
 {
@@ -69,6 +71,8 @@ void Southfall::initApp()
 	DamageSprites::buildShaderResourceView(md3dDevice);
 	DamageSprites::buildFX();
 
+	birm = false;
+
 	if(theText.initialize(md3dDevice, 18, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
 
@@ -83,7 +87,6 @@ void Southfall::initApp()
 
 	D3DXMatrixRotationYawPitchRoll(&tm1, PI/2, 0, PI/2); 
 	splashObj.setWorldMatrix(tm1);
-	
 	
 	fireball.init(md3dDevice, 1);
 	fireball2.init(md3dDevice, 1);
@@ -134,7 +137,6 @@ void Southfall::initApp()
 	blood.init(mTech, mfxWVPVar, mfxWorldVar, &bloodSquare, Vertex(), Vertex());
 	blood.setActive();
 	
-
 	level = 0;
 	pigKilled = false;
 	bearKilled = false;
@@ -199,15 +201,8 @@ void Southfall::initApp()
 		terrainObj[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i], Vertex(), Vertex());
 		terrainObj[i].setPosition(Vector3(0,0,0));
 
-		surr[i].setDevice(md3dDevice); 
-		surr[i].setMFX(mFX);
 	}
-	surr[0].initTextures(NULL, L"Textures/sandBack.png",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
-	surr[1].initTextures(L"Textures/Rock1.jpg",NULL,L"Textures/Foliage1.jpg",L"Textures/Foliage1.jpg",L"Textures/Rock1.jpg",L"Textures/Sky2.jpg");
-	for(int i = 0; i < LEVELS; ++i)
-	{
-		surr[i].init(mTech, mfxWVPVar, mfxWorldVar, &terrain[i]);
-	}
+	
 	originObj.init(mTech, mfxWVPVar, mfxWorldVar, &origin, Vertex(), Vertex());
 	goblin1.setPosition(D3DXVECTOR3(450,120,800));
 	goblin1.setScale(5.0f);
@@ -344,11 +339,14 @@ void Southfall::updateScene(float dt)
 	tempO.setPosition(camera.getPos());
 
 	if(input.wasKeyPressed(VK_ESCAPE)) PostQuitMessage(0);
+	if(input.wasKeyPressed('P')){ camera.incSensitivity(); input.clearKeyPress('P'); }
+	if(input.wasKeyPressed('O')){ camera.decSensitivity(); input.clearKeyPress('O'); }
 	
 	switch (gameState)
 	{
 #pragma region SPLASH
 	case SPLASH1:
+		if (input.wasKeyPressed('B')) initBirmingham();
 		if((input.wasKeyPressed(VK_SPACE)))
 		{
 			input.clearKeyPress(VK_SPACE);
@@ -404,7 +402,7 @@ void Southfall::updateScene(float dt)
 			lights.lights[4].pos.y = 2*cosf(time);
 			
 			Vector3 up(0,1,0);
-			Vector3 position(2.5,2.5,-7);
+			Vector3 position(2.5,2.5,-15);
 			Vector3 target(2.5,2.5,0);
 
 			position.x += 2.5*cosf(time);
@@ -506,8 +504,7 @@ void Southfall::updateScene(float dt)
 		mWaterTexOffset.y += 0.1f*dt;
 		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
 		mWaves.update(dt);
-		if(pig.health <= 0)
-			blood.setDamage(0);
+		if(pig.health <= 0){ blood.setDamage(0); score = 99; }
 		if (!endLevel && torchObj1.isLit() && pig.health <= 0)
 		{
 			lights.lights[POINT1].on = 1;
@@ -588,21 +585,37 @@ void Southfall::updateScene(float dt)
 		}
 		else swordObj.rising = false;
 		
-		if(goblin1.head.getActiveState() && (tempO.collided(&goblin1.head) || tempO.collided(&goblin1.body)))
+		if(goblin1.head.getActiveState() && goblin1.collided(&tempO))
 		{
-			blood.addDamage(.005);
+			blood.addDamage(.05);
+			Vector3 diff = goblin1.body.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
-		if(goblin2.head.getActiveState() && (tempO.collided(&goblin2.head) || tempO.collided(&goblin2.body)))
+		if(goblin2.head.getActiveState() && goblin2.collided(&tempO))
 		{
-			blood.addDamage(.005);
+			blood.addDamage(.05);
+			Vector3 diff = goblin2.body.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
-		if(goblin3.head.getActiveState() && (tempO.collided(&goblin3.head) || tempO.collided(&goblin3.body)))
-		{
-			blood.addDamage(.005);
+		if(goblin3.head.getActiveState() && goblin3.collided(&tempO))
+		{			
+			blood.addDamage(.05);
+			Vector3 diff = goblin3.body.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
-		if(bear.getActiveState() && (tempO.collided(&bear)))
+		if(bear.getActiveState() && bear.collided(&tempO))
 		{
-			blood.addDamage(.01);
+			blood.addDamage(.1);
+			Vector3 diff = bear.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
 		
 		goblin1.update(dt,camera.getPos(), &fireballObj, &swordObj);		
@@ -720,7 +733,11 @@ void Southfall::updateScene(float dt)
 
 		if(wraith.getActiveState() && (tempO.collided(&wraith)))
 		{
-			blood.addDamage(.01);
+			blood.addDamage(.25);	
+			Vector3 diff = wraith.getVelocity();
+			D3DXVec3Normalize(&diff, &diff);
+			camera.setPos(camera.getPos() + 5*diff);
+			audio.playCue(DAMAGE_CUE);
 		}
 
 		if(wraithfireball.getActiveState() && (tempO.collided(&wraith)))
@@ -777,7 +794,7 @@ void Southfall::updateScene(float dt)
 #pragma endregion LOSE
 	}
 
-	if (gameState != LOSE && blood.getDamage() > 1)
+	if (gameState != LOSE && blood.getDamage() > HEALTH)
 		{
 			gameState = LOSE; 
 			startCut = mTimer.getGameTime();
@@ -785,6 +802,8 @@ void Southfall::updateScene(float dt)
 			audio.stopCue(BOSS_CUE);
 			audio.stopCue(FOREST_CUE);
 		}
+
+	if (birm) blood.setDamage(0);
 }
 
 void Southfall::setShaderVals()
@@ -827,7 +846,17 @@ void Southfall::drawScene()
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
 		splashObj.draw(&mWVP);
 		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
-		theText.print("Press Space to continue",GAME_WIDTH/2 - 25,GAME_HEIGHT - 50);	
+
+		theText.print("Press Space to move forward",GAME_WIDTH/2 - 100,GAME_HEIGHT - 50);
+
+		theText.print("Movement - WASD",GAME_WIDTH - 400,GAME_HEIGHT/2-50);	
+		theText.print("Camera - Mouse",GAME_WIDTH - 400,GAME_HEIGHT/2-25);	
+		theText.print("Adjust sensitivity - O and P",GAME_WIDTH - 400,GAME_HEIGHT/2);
+		theText.print("Swing Sword - Left Click (hold to charge)",GAME_WIDTH - 400,GAME_HEIGHT/2+25);
+		theText.print("Shoot Fireball - Right Click (hold to charge)",GAME_WIDTH - 400,GAME_HEIGHT/2+50);
+
+		theText.print("Enter Birmingham Mode - B",200,GAME_HEIGHT/2);	
+
 		break;
 	case CUT1:
 		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
@@ -948,6 +977,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 
@@ -962,7 +992,7 @@ void Southfall::drawScene()
 #pragma region LEVEL2
 	case LEVEL2:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+		
 		sky.draw();
 		setShaderVals();
 		goblin1.draw(&mWVP);
@@ -987,6 +1017,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
@@ -1000,7 +1031,7 @@ void Southfall::drawScene()
 #pragma region LEVEL3
 	case LEVEL3:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+		
 		sky.draw();
 		setShaderVals();
 		
@@ -1014,6 +1045,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
@@ -1024,7 +1056,7 @@ void Southfall::drawScene()
 #pragma region LEVEL4
 	case LEVEL4:
 		terrainObj[level].draw(&mWVP);
-		//surr[level].draw(&mWVP);
+		
 		sky.draw();
 		setShaderVals();
 		wraith.draw(&mWVP);
@@ -1041,6 +1073,7 @@ void Southfall::drawScene()
 		lights.resetLight();
 		setShaderVals();
 		
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
 		q << "Bacon: " << score;
 		theText.print(q.str(),0, 0);
 		break;
@@ -1119,4 +1152,51 @@ void Southfall::buildVertexLayouts()
     mTech->GetPassByIndex(0)->GetDesc(&PassDesc);
     HR(md3dDevice->CreateInputLayout(vertexDesc, 3, PassDesc.pIAInputSignature,
 		PassDesc.IAInputSignatureSize, &mVertexLayout));
+}
+
+void Southfall::initBirmingham()
+{
+	birm = true;
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[0], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[1], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[2], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mDiffuseMapRV[3], 0 ));
+
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &mWaterMapRV, 0 ));
+	
+	ID3D10ShaderResourceView* temp;
+	
+	HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
+		L"Textures\\Birmingham.png", 0, 0, &temp, 0 ));
+
+	wraith.setDiffuseMap(temp);
+
+	audio.playCue(BIRMINGHAM_CUE);
+	
+	//Advance level;
+	input.clearKeyPress('B');
+	gameState = CUT1;			
+	audio.stopCue(BAR_BACKGROUND_CUE);
+	startCut = mTimer.getGameTime();
+	alpha = 20;	
+	for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
+			
+	lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(0.1064453125, 0.1123046875, 0.1337890625,1);
+	lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(0.9921, 0.9058, 0.5450, 1.f);
+	lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(0,-.75,.75);	
+			
+	lights.lights[POINT1].pos		= Vector3(380, 600, (terrain[level].z-3)*terrain[level].scale);
+	lights.lights[POINT1].diffuse	= Color(.05f,.05f,.05f,.5f);
+	lights.lights[POINT1].att		= Vector3(0,.0008f,0);
+	lights.lights[POINT1].range		= 65.f;
+
 }

@@ -27,6 +27,8 @@ public:
 	void WraithObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
 	bool done(){return dmgfx.empty() && health < 0;}
 	void setAudio(Audio* a) {audio = a;}
+	void setDiffuseMap(ID3D10ShaderResourceView* dm){mDiffuseMapRV = dm;}
+	
 	float getfiretime(){return firetime;}
 	void setfiretime(float time){firetime = time;}
 private:

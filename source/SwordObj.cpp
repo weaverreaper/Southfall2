@@ -20,7 +20,7 @@ void SwordObj::init(	ID3D10EffectTechnique* t,
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
-		L"Textures\\Metal1.jpg", 0, 0, &mDiffuseMapRV, 0 ));
+		L"Textures\\metal1.jpg", 0, 0, &mDiffuseMapRV, 0 ));
 	 
 	 HR(D3DX10CreateShaderResourceViewFromFile(md3dDevice, 
 		L"Textures/defaultspec.dds", 0, 0, &mSpecMapRV, 0 ));

@@ -134,6 +134,21 @@ void Goblin::draw(D3DXMATRIX* vp)
 		++ds;
 	}
 }
-//BREAK------------------------------
-//
-//-----------------------------------
+
+bool Goblin::collided(GeoObject* o)
+{
+	bool ret = head.collided(o) || body.collided(o);
+
+	if (ret)
+	{
+		Vector3 diffhead = head.getPosition() - o->getPosition();
+		Vector3 diffbody = body.getPosition() - o->getPosition();
+		D3DXVec3Normalize(&diffhead, &diffhead);
+		D3DXVec3Normalize(&diffbody, &diffbody);
+		head.setPosition(head.getPosition() + KNOCKBACK*diffhead);
+		body.setPosition(body.getPosition() + KNOCKBACK*diffbody);
+		return true;
+	}
+
+	return false;
+}
