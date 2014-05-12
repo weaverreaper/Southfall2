@@ -628,7 +628,7 @@ void Southfall::updateScene(float dt)
 		goblin3.update(dt,camera.getPos(), &fireballObj, &swordObj);		
 		bear.update(dt,camera.getPos(), &fireballObj, &swordObj);
 
-		if (!bearKilled && (input.isKeyDown('O') || bear.health <= 0))
+		if (!bearKilled && (input.isKeyDown('B') || bear.health <= 0))
 		{
 			bear.health = 1;
 			lights.lights[POINT1].on = 1;
@@ -743,10 +743,9 @@ void Southfall::updateScene(float dt)
 			blood.addDamage(.25);	
 			Vector3 diff = wraith.getVelocity();
 			D3DXVec3Normalize(&diff, &diff);
-			camera.setPos(camera.getPos() + 5*diff);
+			camera.setPos(camera.getPos() + 60*diff);
 			audio.playCue(DAMAGE_CUE);
 		}
-
 		if(wraithfireball.getActiveState() && (tempO.collided(&wraithfireball)))
 		{
 			blood.addDamage(0.1);
