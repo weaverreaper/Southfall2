@@ -29,6 +29,7 @@ public:
 	//Setters
 	void setPosition (Vector3 pos)			{position = pos;}
 	void setVelocity (Vector3 vel)			{velocity = vel;}
+	void setOffset (Vector3 off)			{offset = off;}
 	void setSpeed(float s)					{speed = s;}
 	void setRadius(float r)					{radius = r; radiusSquared = (scale*r)*(scale*r);}
 	void setScale(float s)					{scale = s; radiusSquared = (s*radius)*(s*radius);}
@@ -67,6 +68,7 @@ protected:
 
 	Vector3 position;
 	Vector3 velocity;
+	Vector3 offset;
 	Terrain* terr;
 	float speed;
 	float radius;

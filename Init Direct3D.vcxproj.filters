@@ -46,9 +46,6 @@
     <ClCompile Include="source\Goblin.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="source\LadderBillboard.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="source\Line.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -107,6 +104,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="source\Blood.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Billboard.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -171,9 +171,6 @@
     <ClInclude Include="source\input.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="source\LadderBillboard.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="source\Lighting.h">
       <Filter>Header</Filter>
     </ClInclude>
@@ -232,6 +229,9 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="source\Blood.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Billboard.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

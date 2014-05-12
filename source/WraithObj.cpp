@@ -53,7 +53,7 @@ void WraithObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID
 {
 	//md3dDevice = device;
 	md3dDevice = device;
-
+	offset = Vector3(-1.0f,-2.5f,0.0f);
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
@@ -133,6 +133,8 @@ void WraithObj::update(float dt, Vector3 cam)
 	Identity(&temp);
 	Identity(&world);
 	position.y = getTerrHeight()+45;
+	Translate(&temp, offset.x, offset.y, offset.z);
+	world *= temp;
 	D3DXMatrixRotationYawPitchRoll(&temp, roty, rotz, rotx);
 	world *= temp;
 	Scale(&temp,scale,scale,scale);

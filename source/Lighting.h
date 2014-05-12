@@ -19,7 +19,7 @@ enum
 	FIREBALL,
 	FIREBALL2,
 	FIREBALL3,
-
+	FIREBALL4,
 	//Accurate if last
 	LIGHT_COUNT
 };
@@ -88,6 +88,11 @@ public:
 		lights[FIREBALL3].att		= Vector3(0,.03,0);
 		lights[FIREBALL3].range		= 1000.f;
 		lights[FIREBALL3].on		= 0;
+
+		lights[FIREBALL4].diffuse	= Color(1.f,0.8039f,0.3922f,1.f);		
+		lights[FIREBALL4].att		= Vector3(0,.03,0);
+		lights[FIREBALL4].range		= 1000.f;
+		lights[FIREBALL4].on		= 0;
 	}	
 
 	Light lights[LIGHT_COUNT];

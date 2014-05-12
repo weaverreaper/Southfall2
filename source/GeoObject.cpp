@@ -48,6 +48,7 @@ void GeoObject::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3
 	fxWorld = w;
 	tech = t;
 	terr = ter;
+	offset = Vector3(0,0,0);
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&wvp);
 }
@@ -63,6 +64,7 @@ void GeoObject::init(ID3D10EffectTechnique* t,
 	tech = t;
 	geom->setVert1(v1);
 	geom->setVert2(v2);
+	offset = Vector3(0,0,0);
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&wvp);
 }
@@ -104,6 +106,8 @@ void GeoObject::update2(float dt)
 	Identity(&temp);
 	Identity(&world);
 	position.y = getTerrHeight()+15;
+	Translate(&temp, offset.x, offset.y, offset.z);
+	world *= temp;
 	D3DXMatrixRotationYawPitchRoll(&temp, roty, rotz, rotx);
 	world *= temp;
 	Scale(&temp,scale,scale,scale);

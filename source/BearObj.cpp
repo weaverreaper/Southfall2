@@ -68,6 +68,7 @@ void BearObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID3D
 	fxWorld = w;
 	tech = t;
 	terr = ter;
+	offset = Vector3(-3.0f,-1.2f,0.0f);
 	D3DXMatrixIdentity(&world);
 	D3DXMatrixIdentity(&wvp);
 }
@@ -134,6 +135,8 @@ void BearObj::update(float dt, Vector3 cam)
 	Identity(&temp);
 	Identity(&world);
 	position.y = getTerrHeight()+15;
+	Translate(&temp, offset.x, offset.y, offset.z);
+	world *= temp;
 	D3DXMatrixRotationYawPitchRoll(&temp, roty, rotz, rotx);
 	world *= temp;
 	Scale(&temp,scale,scale,scale);

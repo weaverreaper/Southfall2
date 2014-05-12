@@ -29,7 +29,7 @@ public:
 	void setAudio(Audio* a) {audio = a;}
 	
 private:
-
+	Vector3 offset;
 	std::vector<DamageSprites*> dmgfx;
 	bool firstDraw;
 	Vector3 direction;

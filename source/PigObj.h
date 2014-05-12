@@ -33,6 +33,7 @@ private:
 	std::vector<DamageSprites*> dmgfx;
 	bool firstDraw;
 	Vector3 direction;
+	Vector3 offset;
 
 	ID3D10Device* md3dDevice;	
 	ID3D10ShaderResourceView* mDiffuseMapRV;

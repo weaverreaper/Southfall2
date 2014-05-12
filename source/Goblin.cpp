@@ -96,7 +96,7 @@ void Goblin::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D1
 	head.setRadius(20);
 	body.setRadius(20);
 	direction = Vector3(0,0,0);
-
+	offset = Vector3(-1.0f,-2.4f,0.0f);
 	mfxDiffuseMapVar = mFX->GetVariableByName("gDiffuseMap")->AsShaderResource();
 	mfxSpecMapVar    = mFX->GetVariableByName("gSpecMap")->AsShaderResource();
 	mfxTexMtxVar     = mFX->GetVariableByName("gTexMtx")->AsMatrix();
@@ -112,6 +112,8 @@ void Goblin::init(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f, ID3D1
 
 	head.init(t,f,w,h,ter);
 	body.init(t,f,w,b,ter);
+	head.setOffset(offset);
+	body.setOffset(offset);
 }
 
 void Goblin::draw(D3DXMATRIX* vp)

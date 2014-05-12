@@ -88,6 +88,7 @@ void Southfall::initApp()
 	fireball.init(md3dDevice, 1);
 	fireball2.init(md3dDevice, 1);
 	fireball3.init(md3dDevice, 1);
+	fireball4.init(md3dDevice, 1);
 	fireballObj.setDevice(md3dDevice); fireballObj.setMFX(mFX);
 	fireballObj.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball);
 	fireballObj.setInActive();
@@ -105,7 +106,10 @@ void Southfall::initApp()
 
 	torch2Fireball.setDevice(md3dDevice); torch2Fireball.setMFX(mFX);
 	torch2Fireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball3, 100);	
-	torch2Fireball.setLight(&lights.lights[FIREBALL3]);		
+	torch2Fireball.setLight(&lights.lights[FIREBALL3]);
+	/*wraithfireball.setDevice(md3dDevice); torch2Fireball.setMFX(mFX);
+	wraithfireball.init(mTech, mfxWVPVar, mfxWorldVar, &camera, &fireball4, 100);	
+	wraithfireball.setLight(&lights.lights[FIREBALL4]);	*/
 
 	torchObj2.setDevice(md3dDevice); torchObj2.setMFX(mFX);
 	torchObj2.init(mTech, mfxWVPVar, mfxWorldVar, &torch2Fireball, &fireballObj, &torch2, &audio, Vector3(1550,175,2500));
