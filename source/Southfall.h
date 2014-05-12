@@ -124,9 +124,8 @@ private:
 	float mTheta;
 	float mPhi;
 
-	float startCut1;
-	float startCut2;
-	float startEndCut;
+	float startCut;
+
 	double alpha;
 
 	bool pigKilled, bearKilled, goblinsKilled, wraithKilled, endLevel;

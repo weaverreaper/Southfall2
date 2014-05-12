@@ -350,7 +350,7 @@ void Southfall::updateScene(float dt)
 			gameState = CUT1;			
 			//gameState = LEVEL1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
-			startCut1 = mTimer.getGameTime();
+			startCut = mTimer.getGameTime();
 			alpha = 20;	
 			for (int i=POINT1; i<=POINT4; i++) lights.lights[i].on=0;
 			
@@ -413,12 +413,12 @@ void Southfall::updateScene(float dt)
 
 #pragma region CUT1
 	case CUT1:
-		if (mTimer.getGameTime() - startCut1 > 8 || (input.wasKeyPressed(VK_SPACE)))
+		if (mTimer.getGameTime() - startCut > 8 || (input.wasKeyPressed(VK_SPACE)))
 		{
 			input.clearKeyPress(VK_SPACE);
 			gameState = CUT2;
 			camera.update(dt);
-			startCut2 = mTimer.getGameTime();
+			startCut = mTimer.getGameTime();
 			alpha = 20;
 			Sleep(400);
 			break;
@@ -432,7 +432,7 @@ void Southfall::updateScene(float dt)
 
 #pragma region CUT2
 	case CUT2:
-		if (mTimer.getGameTime() - startCut2 > 4 || (input.wasKeyPressed(VK_SPACE)))
+		if (mTimer.getGameTime() - startCut > 4 || (input.wasKeyPressed(VK_SPACE)))
 		{
 			input.clearKeyPress(VK_SPACE);
 			gameState = CUT3;
@@ -539,6 +539,10 @@ void Southfall::updateScene(float dt)
 
 			mEnvMapRV = tm.createCubeTex(L"Textures\\CubeMaps\\Level2Forest.dds");
 			sky.init(md3dDevice, mEnvMapRV, 15000.0f);
+
+			startCut = mTimer.getGameTime();
+			input.clearKeyPress(VK_SPACE);
+			alpha = 20;
 		}
 #pragma endregion END_LEVEL1
 
@@ -548,7 +552,17 @@ void Southfall::updateScene(float dt)
 
 #pragma region CUT4
 	case CUT4:
-		++gameState;
+		if (mTimer.getGameTime() - startCut > 8 || (input.wasKeyPressed(VK_SPACE)))
+		{
+			input.clearKeyPress(VK_SPACE);
+			gameState++;
+			camera.update(dt);
+			alpha = 20;		
+			break;
+		}
+		alpha += 25*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
 		break;
 #pragma endregion CUT4
 
@@ -589,8 +603,7 @@ void Southfall::updateScene(float dt)
 			bear.health = 1;
 			lights.lights[POINT1].on = 1;
 			audio.playCue(ZELDA_CUE);
-			bearKilled = true;			
-			alpha = 0;
+			bearKilled = true;				
 			ladder.setActive(true);
 		}
 
@@ -609,9 +622,11 @@ void Southfall::updateScene(float dt)
 
 			lights.lights[AMBIENT_DIFFUSE].ambient	 = Color(.9,.9,.9,1);
 			lights.lights[AMBIENT_DIFFUSE].diffuse	 = Color(.8f, .8f, .8f, 1.f);
-			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(-1,-.25,0);	
+			lights.lights[AMBIENT_DIFFUSE].dir		 = Vector3(-1,-.25,0);				
 
-			audio.playCue(HEARTBEAT_CUE);	
+			startCut = mTimer.getGameTime();
+			input.clearKeyPress(VK_SPACE);
+			alpha = 20;
 		}
 #pragma endregion END_LEVEL2
 
@@ -620,7 +635,18 @@ void Southfall::updateScene(float dt)
 
 #pragma region CUT5
 	case CUT5:
-		++gameState;
+		if (mTimer.getGameTime() - startCut > 8 || (input.wasKeyPressed(VK_SPACE)))
+		{
+			input.clearKeyPress(VK_SPACE);
+			gameState = LEVEL3;
+			camera.update(dt);
+			alpha = 20;		
+			audio.playCue(HEARTBEAT_CUE);
+			break;
+		}
+		alpha += 25*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;		
 		break;
 #pragma endregion CUT5
 
@@ -685,7 +711,7 @@ void Southfall::updateScene(float dt)
 		{			
 			alpha = 0;
 			++gameState;				
-			startEndCut = mTimer.getGameTime();
+			startCut = mTimer.getGameTime();
 			audio.stopCue(BOSS_CUE);
 			audio.playCue(VICTORY_CUE);	
 		}
@@ -702,7 +728,7 @@ void Southfall::updateScene(float dt)
 
 #pragma region END
 	case END:		
-		if (mTimer.getGameTime() - startEndCut > 10) PostQuitMessage(0);
+		if (mTimer.getGameTime() - startCut > 10) PostQuitMessage(0);
 		
 		alpha += 80*dt;
 		if (alpha > 255) alpha = 255;
@@ -713,7 +739,7 @@ void Southfall::updateScene(float dt)
 
 #pragma region LOSE
 	case LOSE:		
-		if (mTimer.getGameTime() - startEndCut > 5) PostQuitMessage(0);
+		if (mTimer.getGameTime() - startCut > 5) PostQuitMessage(0);
 		
 		alpha += 80*dt;
 		if (alpha > 255) alpha = 255;
@@ -726,7 +752,7 @@ void Southfall::updateScene(float dt)
 	if (gameState != LOSE && blood.getDamage() > 1)
 		{
 			gameState = LOSE; 
-			startEndCut = mTimer.getGameTime();
+			startCut = mTimer.getGameTime();
 			alpha = 0;
 			audio.stopCue(BOSS_CUE);
 			audio.stopCue(FOREST_CUE);
@@ -772,6 +798,8 @@ void Southfall::drawScene()
 		mfxEyePosVar->SetRawValue(&temp, 0, sizeof(D3DXVECTOR3));
 		mfxDiffuseMapVar->SetResource(mSplashTextureRV);
 		splashObj.draw(&mWVP);
+		theText.setFontColor(SETCOLOR_ARGB(255, 255,255,255));
+		theText.print("Press Space to continue",GAME_WIDTH/2 - 25,GAME_HEIGHT - 50);	
 		break;
 	case CUT1:
 		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
@@ -899,6 +927,8 @@ void Southfall::drawScene()
 #pragma endregion LEVEL1
 
 	case CUT4:
+		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
+		theText.print("You enter the portal, \n and find yourself transported to a forest. \n            Everything seems calm...",GAME_WIDTH/2 - 200,GAME_HEIGHT/2);	
 		break;
 
 #pragma region LEVEL2
@@ -935,6 +965,8 @@ void Southfall::drawScene()
 #pragma endregion LEVEL2
 
 	case CUT5:
+		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
+		theText.print("The ladder leads up up into the clouds. \n \"How strange.\" you wonder...",GAME_WIDTH/2 - 50,GAME_HEIGHT/2);	
 		break;
 
 #pragma region LEVEL3
