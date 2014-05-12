@@ -6,9 +6,11 @@
 
 const float KNOCKBACK = 50;
 
+const int MAX_HEALTH = 1000;
+
 WraithObj::WraithObj()
 {
-	health = 400;
+	health = MAX_HEALTH;
 	radius = 25;
 }
  
@@ -73,6 +75,7 @@ void WraithObj::init2(ID3D10EffectTechnique* t, ID3D10EffectMatrixVariable* f,ID
 }
 void WraithObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 {
+	evade = false;
 	firstDraw = true;
 	std::vector<DamageSprites*>::iterator ds = dmgfx.begin();
 	while(ds != dmgfx.end())
@@ -90,14 +93,21 @@ void WraithObj::update(float dt, Vector3 cam, Fireball* fo, SwordObj* so)
 		return;
 	if(this->collided(fo) && fo->viable())
 	{		
-		int dHealth = fo->getDamage();
-		health -= dHealth;
-		dmgfx.push_back(new DamageSprites());
-		dmgfx.back()->init(md3dDevice, dHealth);
-		fo->setInActive();
-		//fo->light->on = 0;
-		//fo->dist = 0;
-		audio->playCue(DAMAGE_CUE);
+		if(RandF(0,1) > float(health)/MAX_HEALTH)
+		{
+			evade = true;
+		}
+		else
+		{
+			int dHealth = fo->getDamage();
+			health -= dHealth;
+			dmgfx.push_back(new DamageSprites());
+			dmgfx.back()->init(md3dDevice, dHealth);
+			fo->setInActive();
+			fo->light->on = 0;
+			//fo->dist = 0;
+			audio->playCue(DAMAGE_CUE);
+		}
 	}
 	if(this->collided(so) && so->viable())
 	{
@@ -120,15 +130,35 @@ void WraithObj::update(float dt, Vector3 cam)
 {
 	direction = position - cam;
 	float rot = atan2f(direction.x,direction.z)+ToRadian(90);
-	if(D3DXVec3Length(&direction) < 10000)
-	{
+	//if(D3DXVec3Length(&direction) < 10000)
+	//{
 	D3DXVec3Normalize(&direction,&direction);
+	if(evade)
+	{
+		Vector3 evadeDir = direction;
+		Matrix rot;
+		RotateY(&rot, PI/2 - rand()%2*PI);
+		D3DXVec3TransformCoord(&evadeDir, &evadeDir, &rot);
+		position += evadeDir*400;
+
+		float d = 25;
+		if(position.x <= 0+d)
+			position.x = d;
+		else if(position.x >= (terr->x-2)*terr->scale-d)
+			position.x = (terr->x-2)*terr->scale - d;
+		if(position.z <= 0+d)
+			position.z = d;
+		else if(position.z >= (terr->z-1)*terr->scale-d)
+			position.z = (terr->z-1)*terr->scale - d;
+
+	}
+	
 	Vector3 v = -direction*100;
 	v.y = 0;
 	roty = rot;
 	velocity = v;
 	position += velocity*dt;
-	}
+	//}
 	Matrix temp;
 	Identity(&temp);
 	Identity(&world);

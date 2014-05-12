@@ -30,6 +30,7 @@ public:
 	
 private:
 
+	bool evade;
 	std::vector<DamageSprites*> dmgfx;
 	bool firstDraw;
 	Vector3 direction, offset;
