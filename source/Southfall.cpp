@@ -138,6 +138,7 @@ void Southfall::initApp()
 	wraithKilled = false;
 
 	camera.init(Vector3(400,20,10), Vector3(400,50,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+	camera.lockToTerrain(false);
 
 	wraith.setMFX(mFX);
 	wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
@@ -315,6 +316,10 @@ void Southfall::updateScene(float dt)
 
 	D3DApp::updateScene(dt);
 	fireballObj.update(dt);
+
+	if(gameState == CUT3)
+		camera.setVelocity(Vector3(0, 50*sin(PI/2*mTimer.getGameTime()),125));
+
 	camera.update(dt);
 
 	blood.setPosition(camera.getPosShake() + (camera.getTarget()-camera.getPosShake())/camera.getRadius()*.101);
@@ -339,10 +344,11 @@ void Southfall::updateScene(float dt)
 	{
 #pragma region SPLASH
 	case SPLASH1:
-		if(input.anyKeyPressed())
+		if((input.wasKeyPressed(VK_SPACE)))
 		{
+			input.clearKeyPress(VK_SPACE);
 			gameState = CUT1;			
-			gameState = LEVEL1;
+			//gameState = LEVEL1;
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut1 = mTimer.getGameTime();
 			alpha = 20;	
@@ -407,8 +413,9 @@ void Southfall::updateScene(float dt)
 
 #pragma region CUT1
 	case CUT1:
-		if (mTimer.getGameTime() - startCut1 > 8)
+		if (mTimer.getGameTime() - startCut1 > 8 || (input.wasKeyPressed(VK_SPACE)))
 		{
+			input.clearKeyPress(VK_SPACE);
 			gameState = CUT2;
 			camera.update(dt);
 			startCut2 = mTimer.getGameTime();
@@ -425,11 +432,17 @@ void Southfall::updateScene(float dt)
 
 #pragma region CUT2
 	case CUT2:
-		if (mTimer.getGameTime() - startCut2 > 4)
+		if (mTimer.getGameTime() - startCut2 > 4 || (input.wasKeyPressed(VK_SPACE)))
 		{
-			gameState = LEVEL1;
-			camera.update(dt);
+			input.clearKeyPress(VK_SPACE);
+			gameState = CUT3;
+			blood.addDamage(.35);
+			//camera.init(Vector3(400,100,-1000), Vector3(400,100,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+			camera.lockToTerrain(false);
+			camera.setPos(Vector3(terrain[level].x*terrain[level].scale/2,150,-2000));
+			//camera.update(dt);
 			audio.playCue(BEACH_CUE);
+			alpha = 20;
 			break;
 		}
 		alpha += 35*dt;
@@ -442,7 +455,23 @@ void Southfall::updateScene(float dt)
 #pragma region CUT3
 	case CUT3:
 		//Intro "cut scene," camera bobbing and moving toward the island like on a boat
-		//Can we get a boat model?
+		if (camera.getPos().z >= 0 || (input.wasKeyPressed(VK_SPACE)))
+		{
+			input.clearKeyPress(VK_SPACE);
+			camera.lockToTerrain(true);
+			
+			gameState = LEVEL1;
+			break;
+		}
+		
+		alpha += 25*dt;
+		if (alpha > 255) alpha = 255;
+		if (alpha < 0) alpha = 0;
+
+		mWaterTexOffset.y += 0.1f*dt;
+		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
+
+		mWaves.update(dt);
 
 		break;
 #pragma endregion CUT3
@@ -465,7 +494,8 @@ void Southfall::updateScene(float dt)
 		mWaterTexOffset.y += 0.1f*dt;
 		mWaterTexOffset.x = 0.25f*sinf(4.0f*mWaterTexOffset.y);
 		mWaves.update(dt);
-
+		if(pig.health <= 0)
+			blood.setDamage(0);
 		if (!endLevel && torchObj1.isLit() && pig.health <= 0)
 		{
 			lights.lights[POINT1].on = 1;
@@ -751,7 +781,51 @@ void Southfall::drawScene()
 		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
 		theText.print("One wraith remains. \n   You approach his secret lair...",GAME_WIDTH/2 + 200,GAME_HEIGHT/2+100);		
 		break;
-	case CUT3: break;
+	case CUT3: 
+		terrainObj[level].draw(&mWVP);
+		setShaderVals();
+		sky.draw();
+		setShaderVals();
+		
+		D3DXMatrixScaling(&S, 5.0f, 5.0f, 5.0f);
+	
+		// Scale and translate the texture.
+		
+		D3DXMatrixTranslation(&T, mWaterTexOffset.x, mWaterTexOffset.y, 0.0f);
+		waterTexMtx = S*T;
+		
+		md3dDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		md3dDevice->IASetInputLayout(mVertexLayout);
+
+		D3D10_TECHNIQUE_DESC techDesc0;
+		mTech->GetDesc( &techDesc0 );
+
+		for(UINT i = 0; i < techDesc0.Passes; ++i)
+		{
+			ID3D10EffectPass* pass = mTech->GetPassByIndex(i);
+
+			Matrix mWavesWorld; Identity(&mWavesWorld);
+			mWVP = mWavesWorld*mView*mProj;
+			mfxWVPVar->SetMatrix((float*)&mWVP);
+			mfxWorldVar->SetMatrix((float*)&mWavesWorld);
+			mfxTexMtxVar->SetMatrix((float*)&waterTexMtx);
+			mfxDiffuseMapVar->SetResource(mWaterMapRV);
+			mfxSpecMapVar->SetResource(mSpecMapRV);
+			pass->Apply(0);
+			float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};			
+			md3dDevice->OMSetBlendState(mTransparentBS, blendFactor, 0xffffffff);
+			mWaves.draw();
+		}
+
+		lights.setNoLight();
+		setShaderVals();
+		blood.draw(&mWVP);
+		lights.resetLight();
+		setShaderVals();
+
+		theText.setFontColor(SETCOLOR_ARGB((int)alpha, 255,255,255));
+		theText.print("After weeks of sailing, \n   you espy the coast. \n You must find something to eat \nbefore starvation claims you....",GAME_WIDTH/2 + 200,GAME_HEIGHT/2-100);		
+		break;
 
 #pragma region LEVEL1
 	case LEVEL1:
@@ -925,7 +999,11 @@ void Southfall::drawScene()
 	
 #pragma endregion LOSE
 	}
-
+	/*stringstream ss;
+	string bs;
+	ss << blood.getDamage();
+	ss >> bs;
+	theText.print(bs.c_str(),GAME_WIDTH/2,GAME_HEIGHT/2);	*/
 	mSwapChain->Present(0, 0);
 }
 
