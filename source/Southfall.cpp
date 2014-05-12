@@ -354,11 +354,11 @@ void Southfall::updateScene(float dt)
 			gameState = CUT1;
 
 
-			gameState = LEVEL4;
-			wraith.setActive();
-			level = 3;
-			camera.init(Vector3(400,100,10), Vector3(250,100,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
-			wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
+			////gameState = LEVEL4;
+			//wraith.setActive();
+			//level = 3;
+			//camera.init(Vector3(400,100,10), Vector3(250,100,200), &input, &audio, &mView, &mProj, &terrain[level], &lights);
+			//wraith.init2(mTech,mfxWVPVar, mfxWorldVar, md3dDevice, &wraithmodel, &terrain[level]);
 
 			audio.stopCue(BAR_BACKGROUND_CUE);
 			startCut = mTimer.getGameTime();
