@@ -28,11 +28,11 @@ public:
 	void update(float dt);
 	void update(float dt, Vector3 cam, Fireball* fo, SwordObj* so);
 	void setMFX(ID3D10Effect* fx) {mFX = fx; head.setMFX(fx); body.setMFX(fx);}
-	bool done(){return dmgfx.empty() && health < 0;}
+	bool done(){return dmgfx.empty() && health < 0;}\
+	bool collided(GeoObject* o);
 
 	int health;
-	GeoObject head, body;
-	
+	GeoObject head, body;	
 	
 private:
 	

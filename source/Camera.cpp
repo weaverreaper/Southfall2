@@ -3,7 +3,6 @@
 const float speed = 300;
 const float yAcc = -500;
 const float termYVel = -1000;
-const float STEP_LENGTH = .5;
 
 float findHeight(float z3, float z1, float z2, float a, float b)
 {
@@ -27,7 +26,6 @@ void Camera::init(Vector3 pos, Vector3 tar, Input* i, Audio* a, Matrix* view, Ma
 	terrainLocked = true;
 	velocity = Vector3(0,0,0);
 	lights = l;
-	stepTime = STEP_LENGTH;
 
 	Vector3 temp(target - position);
 	lookRadius = D3DXVec3Length(&temp);

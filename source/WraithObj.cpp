@@ -172,6 +172,3 @@ void WraithObj::update(float dt, Vector3 cam)
 	Translate(&temp, position.x, position.y, position.z);
 	world *= temp;
 }
-//BREAK------------------------------
-//
-//-----------------------------------

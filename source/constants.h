@@ -39,6 +39,7 @@ const char SWING_CUE[] = "Hooh";
 const char HEARTBEAT_CUE[] = "Heartbeat";
 const char BOSS_CUE[] = "Pokemon_battle";
 const char VICTORY_CUE[] = "Pokemon_victory";
+const char BIRMINGHAM_CUE[] = "Birmingham";
 
 //const double PI = 3.14159265;
 const int GAME_WIDTH =  1280;               // width of game in pixels
